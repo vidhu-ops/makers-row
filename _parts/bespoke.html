@@ -1,0 +1,60 @@
+<!-- ============ BESPOKE ============ -->
+<section class="page" id="page-bespoke">
+  <div class="wrap">
+    <div class="studio-banner">
+      <div class="studio-cover"></div>
+      <div class="studio-body">
+        <div class="studio-logo">MR</div>
+        <div class="studio-title-row">
+          <div>
+            <h2>Makers' Row Studio</h2>
+            <div class="studio-meta">
+              <span class="pill green">★ 4.9 · 2.3k orders</span>
+              <span class="pill">⚡ ~1 hr delivery</span>
+              <span>Digital services · Email delivery</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-ghost" onclick="document.getElementById('svcSearch').focus()">Search menu</button>
+        </div>
+        <div class="studio-offers">🎉 Express deal — add 2+ services and get priority delivery on the whole order</div>
+      </div>
+    </div>
+
+    <div class="svc-toolbar">
+      <input type="text" class="svc-search" id="svcSearch" placeholder="Search for logo, pitch deck, social post…" oninput="renderServices()">
+      <div class="svc-filters">
+        <button class="svc-filter active" data-filter="all" onclick="setSvcFilter('all')">All</button>
+        <button class="svc-filter" data-filter="express" onclick="setSvcFilter('express')">Express</button>
+        <button class="svc-filter" data-filter="popular" onclick="setSvcFilter('popular')">Popular</button>
+        <button class="svc-filter" data-filter="under20" onclick="setSvcFilter('under20')">Under $20</button>
+      </div>
+    </div>
+
+    <div class="svc-layout">
+      <aside class="svc-cats" id="svcCats"></aside>
+      <div class="svc-menu" id="svcMenu"></div>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-cart" id="stickyCart" onclick="showPage('cart')">
+  <div class="sc-left">
+    <span class="sc-count" id="stickyCount">0 items</span>
+    <span class="sc-total" id="stickyTotal">$0.00</span>
+  </div>
+  <button class="sc-go" type="button">View cart →</button>
+</div>
+
+<div class="svc-modal-backdrop" id="svcModal" onclick="if(event.target===this)closeSvcModal()">
+  <div class="svc-sheet" role="dialog" aria-modal="true">
+    <h3 id="svcModalTitle">Add notes</h3>
+    <p class="sheet-sub" id="svcModalSub">Tell the designer what you need. You can add more services after this.</p>
+    <div class="field"><label>Brief / notes (optional)</label><textarea id="svcNotes" rows="3" placeholder="Brand colors, text to include, size, references…"></textarea></div>
+    <div class="field"><label>Delivery email</label><input type="email" id="svcEmail" placeholder="you@email.com"></div>
+    <div class="field"><label>Phone (optional)</label><input type="tel" id="svcPhone" placeholder="For clarifications"></div>
+    <div class="svc-sheet-actions">
+      <button class="btn btn-ghost" type="button" onclick="closeSvcModal()">Cancel</button>
+      <button class="btn btn-coral" type="button" onclick="confirmAddService()">Add to cart</button>
+    </div>
+  </div>
+</div>

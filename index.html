@@ -1,0 +1,1630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Makers' Row — Buy, Edit, Sell &amp; Commission Design Work</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<style>
+
+  :root{
+    --bg:#E8EDF4;
+    --bg-deep:#D5DDE8;
+    --ink:#12141A;
+    --ink-soft:#5A6474;
+    --line:#B8C2D1;
+    --white:#FBFCFE;
+    --cobalt:#1F4BFF;
+    --cobalt-deep:#1636C9;
+    --amber:#F5B942;
+    --coral:#E84D3D;
+    --mist:rgba(251,252,254,0.72);
+    --radius:12px;
+    --shadow:0 18px 40px rgba(18,20,26,0.08);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    background:
+      radial-gradient(1200px 600px at 12% -10%, rgba(31,75,255,0.14), transparent 55%),
+      radial-gradient(900px 500px at 88% 8%, rgba(245,185,66,0.16), transparent 50%),
+      linear-gradient(180deg, #F2F5FA 0%, var(--bg) 40%, #E4EAF3 100%);
+    background-attachment:fixed;
+    min-height:100vh;
+  }
+  body::before{
+    content:'';
+    position:fixed;inset:0;pointer-events:none;z-index:0;opacity:0.35;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.45'/%3E%3C/svg%3E");
+  }
+  h1,h2,h3,.display{
+    font-family:'Syne',sans-serif;
+    letter-spacing:-0.03em;
+    margin:0;
+    font-weight:700;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;}
+  :focus-visible{outline:3px solid var(--cobalt);outline-offset:2px;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
+
+  /* ---------- HEADER ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    backdrop-filter:blur(14px);
+    background:rgba(242,245,250,0.82);
+    border-bottom:1px solid rgba(18,20,26,0.08);
+  }
+  .headbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 28px;max-width:1180px;margin:0 auto;gap:16px;
+  }
+  .logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:'Syne',sans-serif;font-size:1.35rem;font-weight:800;letter-spacing:-0.04em;
+  }
+  .logo .mark{
+    width:28px;height:28px;border-radius:8px;
+    background:linear-gradient(135deg,var(--cobalt),#5B7CFF);
+    box-shadow:3px 3px 0 var(--ink);
+    position:relative;
+  }
+  .logo .mark::after{
+    content:'';position:absolute;inset:7px;border-radius:3px;background:var(--amber);
+  }
+  .cart-btn{
+    display:flex;align-items:center;gap:8px;
+    background:var(--ink);color:var(--white);
+    border:none;padding:10px 16px;border-radius:999px;font-weight:600;font-size:0.88rem;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cart-btn:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(18,20,26,0.2);}
+  .cart-btn .count{
+    background:var(--coral);color:white;border-radius:50%;
+    width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:0.72rem;font-family:'JetBrains Mono',monospace;
+  }
+  .trust-bar{
+    background:var(--ink);color:#D7DCE6;
+    display:flex;justify-content:center;gap:28px;flex-wrap:wrap;
+    padding:8px 20px;font-size:0.74rem;font-family:'JetBrains Mono',monospace;letter-spacing:.02em;
+  }
+  .trust-bar span{display:flex;align-items:center;gap:6px;white-space:nowrap;}
+  .trust-bar svg{flex-shrink:0;color:var(--amber);}
+  nav.tabs{
+    display:flex;gap:6px;overflow-x:auto;padding:10px 22px 12px;max-width:1180px;margin:0 auto;
+    scrollbar-width:none;
+  }
+  nav.tabs::-webkit-scrollbar{display:none;}
+  nav.tabs button{
+    background:transparent;
+    border:1px solid transparent;
+    border-radius:999px;
+    padding:9px 16px;
+    font-weight:600;
+    font-size:0.86rem;
+    white-space:nowrap;
+    color:var(--ink-soft);
+    transition:background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  nav.tabs button:hover{color:var(--ink);background:rgba(18,20,26,0.04);}
+  nav.tabs button.active{
+    background:var(--ink);
+    color:var(--white);
+    border-color:var(--ink);
+  }
+  nav.tabs button.bespoke-tab.active,
+  nav.tabs button.bespoke-tab:hover{color:var(--coral);}
+  nav.tabs button.bespoke-tab.active{background:var(--coral);color:white;border-color:#B83A2E;}
+
+  /* ---------- GENERIC SECTIONS ---------- */
+  section.page{display:none;padding:40px 0 90px;position:relative;z-index:1;}
+  section.page.active{display:block;animation:fadeIn .35s ease;}
+  @media (prefers-reduced-motion: reduce){section.page.active{animation:none;}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  @keyframes floaty{
+    0%,100%{transform:translateY(0) rotate(var(--r,0deg));}
+    50%{transform:translateY(-10px) rotate(var(--r,0deg));}
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.74rem;text-transform:uppercase;letter-spacing:.14em;
+    color:var(--cobalt-deep);font-weight:600;margin-bottom:12px;display:block;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 22px;border-radius:10px;border:2px solid var(--ink);
+    font-weight:650;font-size:0.92rem;background:transparent;color:var(--ink);
+    transition:transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink);}
+  .btn-solid{background:var(--ink);color:var(--white);}
+  .btn-cobalt{background:var(--cobalt);color:white;border-color:var(--cobalt-deep);}
+  .btn-coral{background:var(--coral);color:white;border-color:#B83A2E;}
+  .btn-sm{padding:8px 14px;font-size:0.82rem;border-radius:8px;}
+  .btn-ghost{border-color:var(--line);background:var(--mist);}
+
+  /* ---------- HOME HERO ---------- */
+  .hero{
+    position:relative;
+    margin:0 -28px 20px;
+    padding:48px 28px 56px;
+    border-radius:0 0 28px 28px;
+    overflow:hidden;
+    background:
+      linear-gradient(135deg, rgba(18,20,26,0.92) 0%, rgba(31,75,255,0.88) 55%, rgba(24,40,90,0.95) 100%);
+    color:var(--white);
+    min-height:min(78vh,640px);
+    display:flex;align-items:center;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 50% 60% at 78% 40%, rgba(245,185,66,0.28), transparent 60%),
+      radial-gradient(circle at 20% 80%, rgba(255,255,255,0.08), transparent 40%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:'';
+    position:absolute;right:-40px;bottom:-60px;width:420px;height:420px;
+    border-radius:50%;
+    border:1px solid rgba(255,255,255,0.12);
+    pointer-events:none;
+  }
+  .hero-grid{display:grid;grid-template-columns:1.15fr 0.85fr;gap:36px;align-items:center;position:relative;z-index:1;width:100%;max-width:1180px;margin:0 auto;}
+  .hero .brand-lockup{
+    font-family:'Syne',sans-serif;
+    font-size:clamp(2.8rem, 6vw, 4.4rem);
+    font-weight:800;
+    letter-spacing:-0.05em;
+    line-height:0.95;
+    margin-bottom:18px;
+  }
+  .hero .brand-lockup span{
+    display:block;
+    color:var(--amber);
+    font-style:italic;
+    font-weight:700;
+  }
+  .hero h1{
+    font-size:clamp(1.35rem, 2.4vw, 1.75rem);
+    line-height:1.25;
+    font-weight:600;
+    letter-spacing:-0.02em;
+    margin-bottom:16px;
+    max-width:34ch;
+    color:rgba(251,252,254,0.92);
+  }
+  .hero h1 em{font-style:italic;color:var(--amber);font-family:'Syne',sans-serif;}
+  .hero p.lead{
+    font-size:1.02rem;color:rgba(231,236,245,0.78);
+    max-width:42ch;margin-bottom:26px;line-height:1.55;
+  }
+  .hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:0;}
+  .hero .btn{border-color:rgba(255,255,255,0.35);color:var(--white);}
+  .hero .btn-solid{background:var(--white);color:var(--ink);border-color:var(--white);}
+  .hero .btn-solid:hover{box-shadow:4px 4px 0 rgba(0,0,0,0.35);}
+  .hero .btn-coral{background:var(--coral);border-color:#B83A2E;}
+  .hero .btn-ghost{background:rgba(255,255,255,0.08);}
+  .rating-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,255,255,0.1);
+    border:1px solid rgba(255,255,255,0.22);border-radius:30px;padding:7px 14px 7px 10px;
+    font-size:0.8rem;font-weight:600;margin-bottom:18px;backdrop-filter:blur(8px);
+  }
+  .rating-pill .stars{color:var(--amber);letter-spacing:1px;}
+  .rating-pill .divider{color:rgba(255,255,255,0.35);}
+  .rating-pill .muted{color:rgba(231,236,245,0.7);font-weight:500;}
+  .sticker-board{position:relative;height:380px;}
+  .sticker{
+    position:absolute;background:var(--white);border:2px solid var(--ink);border-radius:12px;
+    padding:12px;width:168px;box-shadow:8px 8px 0 rgba(0,0,0,0.35);
+    color:var(--ink);
+    animation:floaty 6s ease-in-out infinite;
+  }
+  .sticker:nth-child(1){--r:-5deg;animation-delay:0s;}
+  .sticker:nth-child(3){--r:4deg;animation-delay:0.8s;}
+  .sticker:nth-child(5){--r:-3deg;animation-delay:1.4s;}
+  .sticker img{width:100%;height:90px;object-fit:cover;border-radius:6px;display:block;margin-bottom:8px;}
+  .sticker .cap{font-size:0.78rem;font-weight:700;}
+  .price-tag{
+    position:absolute;background:var(--amber);border:2px solid var(--ink);color:var(--ink);
+    padding:4px 12px 4px 20px;border-radius:4px;font-family:'JetBrains Mono',monospace;
+    font-weight:600;font-size:0.85rem;box-shadow:3px 3px 0 var(--ink);
+  }
+  .price-tag::before{
+    content:'';position:absolute;left:7px;top:50%;transform:translateY(-50%);
+    width:7px;height:7px;border-radius:50%;background:var(--white);border:1.5px solid var(--ink);
+  }
+
+  .features{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:56px;}
+  .feature-card{
+    border:1px solid rgba(18,20,26,0.1);border-radius:14px;padding:22px;
+    background:var(--mist);backdrop-filter:blur(8px);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  .feature-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+  .feature-card .icon{width:36px;height:36px;margin-bottom:14px;}
+  .feature-card h3{font-size:1.05rem;margin-bottom:8px;}
+  .feature-card p{font-size:0.88rem;color:var(--ink-soft);line-height:1.5;margin:0;}
+
+  .how{margin-top:80px;}
+  .how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:32px;}
+  .how-steps::before{
+    content:'';position:absolute;top:22px;left:5%;right:5%;height:2px;
+    background:repeating-linear-gradient(to right,var(--ink) 0 8px,transparent 8px 16px);
+    opacity:0.35;
+  }
+  .how-step{position:relative;padding-right:20px;}
+  .how-num{
+    width:44px;height:44px;border-radius:50%;background:var(--cobalt);color:white;
+    display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;
+    font-weight:600;position:relative;z-index:2;margin-bottom:14px;
+    border:2px solid var(--ink);box-shadow:3px 3px 0 var(--ink);
+  }
+  .how-step h4{font-size:1rem;margin-bottom:6px;font-family:'Syne',sans-serif;}
+  .how-step p{font-size:0.85rem;color:var(--ink-soft);margin:0;line-height:1.5;}
+
+  .section-title{font-size:2rem;font-weight:700;margin-bottom:8px;}
+  .section-sub{color:var(--ink-soft);max-width:560px;line-height:1.5;margin-bottom:30px;}
+
+  /* ---------- TESTIMONIALS ---------- */
+  .testimonials{margin-top:80px;}
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;}
+  .testi-card{
+    background:var(--white);border:1px solid rgba(18,20,26,0.1);border-radius:14px;
+    padding:22px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);
+  }
+  .testi-card .stars{color:var(--amber);letter-spacing:2px;font-size:0.95rem;}
+  .testi-card p{margin:0;color:var(--ink);line-height:1.55;font-size:0.93rem;}
+  .testi-who{display:flex;align-items:center;gap:10px;margin-top:auto;}
+  .testi-avatar{
+    width:36px;height:36px;border-radius:50%;background:var(--cobalt);color:white;
+    display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;flex-shrink:0;
+    border:2px solid var(--ink);
+  }
+  .testi-who .name{font-weight:700;font-size:0.85rem;}
+  .testi-who .role{font-size:0.76rem;color:var(--ink-soft);}
+
+  /* ---------- MARKETPLACE ---------- */
+  .market-toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:26px;}
+  .search-input{
+    flex:1;min-width:220px;padding:12px 16px;border:2px solid var(--ink);border-radius:10px;
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:0.95rem;background:var(--white);
+  }
+  .cat-pills{display:flex;gap:8px;flex-wrap:wrap;}
+  .cat-pill{
+    padding:9px 16px;border:2px solid var(--ink);border-radius:30px;background:var(--white);
+    font-size:0.83rem;font-weight:600;
+  }
+  .cat-pill.active{background:var(--ink);color:var(--white);}
+  .cat-pill .n{opacity:0.6;font-family:'JetBrains Mono',monospace;font-size:0.74rem;margin-left:3px;}
+  .sort-select{
+    padding:10px 14px;border:2px solid var(--ink);border-radius:10px;background:var(--white);
+    font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.83rem;
+  }
+  .product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:20px;}
+  .card{
+    background:var(--white);border:2px solid var(--ink);border-radius:14px;overflow:visible;
+    display:flex;flex-direction:column;position:relative;
+    transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:6px 6px 0 var(--ink);}
+  .card .thumb-wrap{position:relative;border-bottom:2px solid var(--ink);}
+  .card img.thumb{width:100%;height:150px;object-fit:cover;display:block;border-radius:12px 12px 0 0;}
+  .card .price-tag{top:-10px;right:12px;transform:rotate(4deg);}
+  .card .ribbon{
+    position:absolute;top:10px;left:-2px;background:var(--coral);color:white;
+    font-family:'JetBrains Mono',monospace;font-size:0.66rem;font-weight:600;letter-spacing:.04em;
+    padding:4px 10px 4px 8px;border-radius:0 4px 4px 0;box-shadow:2px 2px 0 rgba(27,27,30,0.35);
+  }
+  .card .body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:6px;flex:1;}
+  .card .cat-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--cobalt-deep);text-transform:uppercase;letter-spacing:.06em;}
+  .card h4{font-size:1rem;margin:0;font-family:'Syne',sans-serif;}
+  .card .meta-row{display:flex;align-items:center;gap:6px;font-size:0.78rem;color:var(--ink-soft);}
+  .card .meta-row .stars{color:var(--amber);font-size:0.82rem;letter-spacing:1px;}
+  .card .seller{font-size:0.78rem;color:var(--ink-soft);}
+  .card .card-actions{display:flex;gap:8px;margin-top:auto;padding-top:10px;}
+  .card .card-actions .btn{flex:1;justify-content:center;padding:9px 10px;font-size:0.8rem;}
+
+  /* ---------- EDITOR ---------- */
+  .editor-shell{display:grid;grid-template-columns:250px 1fr 260px;gap:18px;}
+  .panel{background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:16px;}
+  .panel h4{font-size:0.8rem;text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:12px;color:var(--ink-soft);}
+  .tool-btn{
+    width:100%;text-align:left;padding:10px 12px;margin-bottom:8px;border:2px solid var(--line);
+    border-radius:8px;background:var(--bg);font-weight:600;font-size:0.85rem;
+    display:flex;align-items:center;gap:8px;
+  }
+  .tool-btn:hover{border-color:var(--ink);}
+  .canvas-stage{
+    background:var(--bg-deep);border:2px solid var(--ink);border-radius:14px;
+    display:flex;align-items:center;justify-content:center;padding:20px;min-height:560px;
+  }
+  .row2{display:flex;gap:8px;}
+  .row2 .tool-btn{flex:1;text-align:center;justify-content:center;}
+  input[type=color]{width:100%;height:38px;border:2px solid var(--line);border-radius:6px;padding:2px;background:var(--white);}
+  input[type=range]{width:100%;}
+  .stock-results{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px;max-height:220px;overflow-y:auto;}
+  .stock-results img{width:100%;height:60px;object-fit:cover;border-radius:5px;border:2px solid var(--ink);}
+  .field{margin-bottom:12px;}
+  .field label{display:block;font-size:0.78rem;font-weight:600;margin-bottom:5px;color:var(--ink-soft);}
+  .field input, .field select, .field textarea{
+    width:100%;padding:9px 11px;border:2px solid var(--line);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;background:var(--bg);
+  }
+  .editor-note{font-size:0.76rem;color:var(--ink-soft);line-height:1.5;margin-top:10px;background:var(--bg);padding:10px;border-radius:8px;border:1px dashed var(--line);}
+
+﻿  /* ---------- BESPOKE (Swiggy-style services) ---------- */
+  .file-drop{
+    border:2px dashed var(--line);border-radius:10px;padding:20px;text-align:center;font-size:0.85rem;color:var(--ink-soft);
+    cursor:pointer;background:var(--bg);
+  }
+  .file-drop.has-files{border-color:var(--cobalt);color:var(--cobalt-deep);}
+
+  #page-bespoke{padding-bottom:110px;}
+  .studio-banner{
+    background:var(--white);
+    border:1px solid rgba(18,20,26,0.1);
+    border-radius:18px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    margin-bottom:18px;
+  }
+  .studio-cover{
+    height:120px;
+    background:
+      linear-gradient(135deg, rgba(18,20,26,0.55), rgba(31,75,255,0.65)),
+      url('https://picsum.photos/seed/studiobanner/1200/280') center/cover;
+  }
+  .studio-body{padding:0 22px 20px;position:relative;}
+  .studio-logo{
+    width:72px;height:72px;border-radius:14px;border:3px solid var(--white);
+    background:linear-gradient(135deg,var(--cobalt),#5B7CFF);
+    box-shadow:0 6px 16px rgba(18,20,26,0.18);
+    margin-top:-36px;display:flex;align-items:center;justify-content:center;
+    color:white;font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;
+  }
+  .studio-title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-top:10px;flex-wrap:wrap;}
+  .studio-title-row h2{font-size:1.65rem;}
+  .studio-meta{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:8px;font-size:0.85rem;color:var(--ink-soft);}
+  .studio-meta .pill{
+    display:inline-flex;align-items:center;gap:5px;
+    background:#EEF2FF;color:var(--cobalt-deep);padding:4px 10px;border-radius:999px;font-weight:600;font-size:0.78rem;
+  }
+  .studio-meta .pill.green{background:#E8F8EF;color:#1B7A45;}
+  .studio-offers{
+    margin-top:14px;padding:12px 14px;border-radius:12px;
+    background:linear-gradient(90deg,#FFF6E0,#FFE8D6);
+    border:1px dashed #E0B45A;font-size:0.84rem;font-weight:600;color:#7A4E00;
+  }
+  .svc-toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;position:sticky;top:118px;z-index:20;padding:10px 0;background:rgba(242,245,250,0.92);backdrop-filter:blur(10px);}
+  .svc-search{
+    flex:1;min-width:200px;padding:11px 14px 11px 38px;border:1.5px solid var(--line);border-radius:12px;
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:0.92rem;background:var(--white);
+  }
+  .svc-filters{display:flex;gap:8px;flex-wrap:wrap;}
+  .svc-filter{
+    padding:8px 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--white);
+    font-size:0.8rem;font-weight:650;color:var(--ink-soft);
+  }
+  .svc-filter.active{border-color:var(--ink);background:var(--ink);color:var(--white);}
+  .svc-layout{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start;}
+  .svc-cats{
+    position:sticky;top:180px;
+    background:var(--white);border-radius:14px;border:1px solid rgba(18,20,26,0.08);
+    padding:8px;box-shadow:var(--shadow);
+  }
+  .svc-cat{
+    width:100%;text-align:left;padding:12px 14px;border:none;background:transparent;
+    border-radius:10px;font-weight:650;font-size:0.86rem;color:var(--ink-soft);
+    display:flex;justify-content:space-between;align-items:center;gap:8px;
+  }
+  .svc-cat .n{font-family:'JetBrains Mono',monospace;font-size:0.72rem;opacity:0.7;}
+  .svc-cat.active{background:#EEF2FF;color:var(--cobalt-deep);}
+  .svc-menu{display:flex;flex-direction:column;gap:0;}
+  .svc-section-title{
+    font-family:'Syne',sans-serif;font-size:1.15rem;margin:8px 0 4px;padding-top:8px;
+    border-top:1px solid rgba(18,20,26,0.06);
+  }
+  .svc-section-title:first-child{border-top:none;padding-top:0;margin-top:0;}
+  .svc-item{
+    display:grid;grid-template-columns:1fr 118px;gap:16px;
+    padding:18px 4px;border-bottom:1px solid rgba(18,20,26,0.08);
+    background:transparent;
+  }
+  .svc-item:last-child{border-bottom:none;}
+  .svc-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
+  .svc-badge{
+    font-size:0.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:3px 7px;border-radius:4px;font-family:'JetBrains Mono',monospace;
+  }
+  .svc-badge.popular{background:#FFF0E8;color:#C2410C;}
+  .svc-badge.express{background:#E8F8EF;color:#1B7A45;}
+  .svc-badge.best{background:#EEF2FF;color:var(--cobalt-deep);}
+  .svc-item h4{font-family:'Syne',sans-serif;font-size:1.02rem;margin:0 0 4px;}
+  .svc-rating{
+    display:inline-flex;align-items:center;gap:4px;font-size:0.78rem;font-weight:700;
+    color:#1B7A45;background:#E8F8EF;padding:2px 7px;border-radius:4px;margin-bottom:6px;
+  }
+  .svc-desc{font-size:0.84rem;color:var(--ink-soft);line-height:1.45;margin:0 0 8px;max-width:48ch;}
+  .svc-price{font-weight:750;font-size:0.95rem;}
+  .svc-eta{font-size:0.76rem;color:var(--ink-soft);margin-left:8px;}
+  .svc-media{position:relative;}
+  .svc-media img{
+    width:118px;height:118px;object-fit:cover;border-radius:14px;
+    border:1px solid rgba(18,20,26,0.08);display:block;background:var(--bg-deep);
+  }
+  .svc-add{
+    position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);
+    background:var(--white);border:1.5px solid #1B7A45;color:#1B7A45;
+    font-weight:800;font-size:0.78rem;letter-spacing:.04em;
+    padding:7px 18px;border-radius:8px;box-shadow:0 4px 12px rgba(18,20,26,0.12);
+    min-width:86px;text-align:center;
+  }
+  .svc-add:hover{background:#E8F8EF;}
+  .svc-stepper{
+    position:absolute;left:50%;bottom:-12px;transform:translateX(-50%);
+    display:flex;align-items:center;gap:0;
+    background:#1B7A45;color:white;border-radius:8px;overflow:hidden;
+    box-shadow:0 4px 12px rgba(18,20,26,0.12);min-width:96px;
+  }
+  .svc-stepper button{
+    background:transparent;border:none;color:white;font-weight:800;font-size:1rem;
+    width:32px;height:34px;display:flex;align-items:center;justify-content:center;
+  }
+  .svc-stepper span{flex:1;text-align:center;font-weight:800;font-size:0.85rem;font-family:'JetBrains Mono',monospace;}
+
+  .sticky-cart{
+    position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(120%);
+    width:min(560px,calc(100% - 28px));
+    background:var(--ink);color:var(--white);border-radius:14px;
+    padding:12px 14px 12px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+    z-index:90;box-shadow:0 12px 40px rgba(18,20,26,0.35);
+    transition:transform .25s ease;cursor:pointer;
+  }
+  .sticky-cart.show{transform:translateX(-50%) translateY(0);}
+  .sticky-cart .sc-left{display:flex;flex-direction:column;gap:2px;}
+  .sticky-cart .sc-count{font-size:0.78rem;opacity:0.75;font-family:'JetBrains Mono',monospace;}
+  .sticky-cart .sc-total{font-weight:750;font-size:1.05rem;}
+  .sticky-cart .sc-go{
+    background:var(--coral);color:white;border:none;border-radius:10px;
+    padding:11px 16px;font-weight:750;font-size:0.88rem;white-space:nowrap;
+  }
+
+  .svc-modal-backdrop{
+    position:fixed;inset:0;background:rgba(18,20,26,0.45);z-index:100;
+    display:none;align-items:flex-end;justify-content:center;
+  }
+  .svc-modal-backdrop.open{display:flex;}
+  .svc-sheet{
+    background:var(--white);width:min(520px,100%);border-radius:18px 18px 0 0;
+    padding:22px 22px 28px;max-height:85vh;overflow:auto;
+    animation:fadeIn .25s ease;
+  }
+  .svc-sheet h3{font-size:1.2rem;margin-bottom:4px;}
+  .svc-sheet .sheet-sub{color:var(--ink-soft);font-size:0.88rem;margin-bottom:16px;}
+  .svc-sheet-actions{display:flex;gap:10px;margin-top:14px;}
+  .svc-sheet-actions .btn{flex:1;justify-content:center;}
+
+  @media(max-width:860px){
+    .svc-layout{grid-template-columns:1fr;}
+    .svc-cats{display:flex;overflow-x:auto;position:static;gap:6px;padding:8px;scrollbar-width:none;}
+    .svc-cat{white-space:nowrap;width:auto;}
+    .svc-toolbar{top:100px;}
+  }
+
+  /* ---------- SELL ---------- */
+  .sell-wrap{display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  .sell-form{background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:28px;}
+  .sell-preview{background:var(--bg-deep);border:2px dashed var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;}
+  .sell-preview img{max-width:100%;border-radius:10px;border:2px solid var(--ink);margin-bottom:14px;}
+
+  /* ---------- CART ---------- */
+  .cart-layout{display:grid;grid-template-columns:1.4fr 0.9fr;gap:30px;}
+  .cart-line{
+    display:flex;gap:14px;align-items:center;border-bottom:1px dashed var(--line);padding:14px 0;
+  }
+  .cart-line img{width:64px;height:64px;object-fit:cover;border-radius:8px;border:2px solid var(--ink);}
+  .cart-line .info{flex:1;}
+  .cart-line .info .t{font-weight:700;font-size:0.92rem;}
+  .cart-line .info .s{font-size:0.78rem;color:var(--ink-soft);}
+  .qty-ctrl{display:flex;align-items:center;gap:8px;}
+  .qty-ctrl button{width:26px;height:26px;border:2px solid var(--ink);border-radius:6px;background:var(--white);font-weight:700;}
+  .receipt{
+    background:var(--white);border:2px solid var(--ink);border-radius:10px;padding:26px;
+    font-family:'JetBrains Mono',monospace;font-size:0.85rem;
+    box-shadow:var(--shadow);
+  }
+  .receipt hr{border:none;border-top:1px dashed var(--ink);margin:12px 0;}
+  .receipt .rline{display:flex;justify-content:space-between;margin-bottom:6px;}
+  .receipt .total{font-weight:700;font-size:1rem;}
+  .empty-state{
+    border:2px dashed var(--line);border-radius:14px;padding:50px 20px;text-align:center;color:var(--ink-soft);
+    background:var(--mist);
+  }
+  .trust-list{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:9px;}
+  .trust-list li{display:flex;align-items:center;gap:9px;font-size:0.8rem;color:var(--ink-soft);font-family:'Plus Jakarta Sans',sans-serif;}
+  .trust-list svg{flex-shrink:0;color:var(--cobalt);}
+  .order-confirm{
+    background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:22px;margin-top:16px;
+  }
+  .order-confirm .ok-badge{
+    width:40px;height:40px;border-radius:50%;background:var(--cobalt);color:white;
+    display:flex;align-items:center;justify-content:center;margin-bottom:12px;border:2px solid var(--ink);
+  }
+  .order-confirm h4{font-size:1.05rem;margin-bottom:4px;}
+  .order-confirm .ordno{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--ink-soft);margin-bottom:14px;}
+  .order-confirm .deliverable{
+    display:flex;justify-content:space-between;align-items:center;gap:10px;
+    padding:10px 0;border-top:1px dashed var(--line);font-size:0.85rem;
+  }
+  .order-confirm .deliverable:first-of-type{border-top:none;}
+
+  /* ---------- ABOUT ---------- */
+  .about-block{max-width:760px;margin-bottom:40px;}
+  .about-block p{line-height:1.7;color:var(--ink-soft);font-size:1rem;margin-bottom:14px;}
+  .faq-item{border-bottom:1px solid var(--line);padding:18px 0;}
+  .faq-item h4{font-size:1rem;margin-bottom:8px;font-family:'Syne',sans-serif;}
+  .faq-item p{color:var(--ink-soft);font-size:0.92rem;line-height:1.6;margin:0;}
+
+  .toast{
+    position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--ink);color:var(--white);padding:14px 22px;border-radius:10px;
+    font-weight:600;font-size:0.88rem;opacity:0;transition:all .25s ease;z-index:200;
+    box-shadow:0 8px 24px rgba(0,0,0,0.25);
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  footer{border-top:1px solid rgba(18,20,26,0.12);padding:34px 0;margin-top:60px;position:relative;z-index:1;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;font-size:0.85rem;color:var(--ink-soft);}
+
+  @media(max-width:960px){
+    .hero{min-height:auto;padding:36px 22px 44px;}
+    .hero-grid{grid-template-columns:1fr;}
+    .sticker-board{display:none;}
+    .features{grid-template-columns:repeat(2,1fr);}
+    .how-steps{grid-template-columns:repeat(2,1fr);row-gap:24px;}
+    .how-steps::before{display:none;}
+    .editor-shell{grid-template-columns:1fr;}
+    .bespoke-form-wrap{grid-template-columns:1fr;}
+    .sell-wrap{grid-template-columns:1fr;}
+    .cart-layout{grid-template-columns:1fr;}
+    .testi-grid{grid-template-columns:1fr;}
+    .trust-bar{gap:14px;font-size:0.68rem;}
+  }
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="headbar">
+    <div class="logo"><span class="mark" aria-hidden="true"></span>Makers' Row</div>
+    <button class="cart-btn" onclick="showPage('cart')">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      Cart <span class="count" id="cartCount">0</span>
+    </button>
+  </div>
+  <nav class="tabs" id="navTabs">
+    <button data-page="home" class="active" onclick="showPage('home')">Home</button>
+    <button data-page="marketplace" onclick="showPage('marketplace')">Marketplace</button>
+    <button data-page="editor" onclick="showPage('editor')">Editor</button>
+    <button data-page="bespoke" class="bespoke-tab" onclick="showPage('bespoke')">✦ Bespoke</button>
+    <button data-page="sell" onclick="showPage('sell')">Sell Your Work</button>
+    <button data-page="cart" onclick="showPage('cart')">Cart</button>
+    <button data-page="about" onclick="showPage('about')">About</button>
+  </nav>
+</header>
+<div class="trust-bar">
+  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>4.9/5 from 2,300+ buyers</span>
+  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure checkout</span>
+  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Instant downloads</span>
+  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>7-day money-back guarantee</span>
+</div>
+
+<!-- ============ HOME ============ -->
+<section class="page active" id="page-home">
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="brand-lockup">Makers' <span>Row</span></div>
+          <div class="rating-pill"><span class="stars">★★★★★</span><span>4.9</span><span class="divider">·</span><span class="muted">2,300+ buyers</span></div>
+          <h1>Buy ready-made work, <em>edit it live</em>, or hand it off entirely.</h1>
+          <p class="lead">Independent designers sell templates and assets here. Pick one, tweak it in-browser, or commission a human designer in about an hour.</p>
+          <div class="hero-ctas">
+            <button class="btn btn-solid" onclick="showPage('marketplace')">Browse the marketplace</button>
+            <button class="btn btn-coral" onclick="showPage('bespoke')">Get bespoke work →</button>
+          </div>
+        </div>
+        <div class="sticker-board">
+          <div class="sticker" style="top:0;left:10%;transform:rotate(-5deg);">
+            <img src="https://picsum.photos/seed/homecard1/300/180" alt="">
+            <div class="cap">Social Post Template</div>
+          </div>
+          <div class="price-tag" style="top:6px;left:52%;">$8.00</div>
+          <div class="sticker" style="top:150px;left:42%;transform:rotate(4deg);">
+            <img src="https://picsum.photos/seed/homecard2/300/180" alt="">
+            <div class="cap">Icon Set, 120 pcs</div>
+          </div>
+          <div class="price-tag" style="top:130px;left:8%;transform:rotate(-8deg);">$12.00</div>
+          <div class="sticker" style="top:280px;left:6%;transform:rotate(-3deg);">
+            <img src="https://picsum.photos/seed/homecard3/300/180" alt="">
+            <div class="cap">Pitch Deck Kit</div>
+          </div>
+          <div class="price-tag" style="top:260px;left:60%;transform:rotate(6deg);background:var(--coral);color:white;">Bespoke</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--cobalt)" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 12h8M8 16h5"/></svg>
+        <h3>Buy it as-is</h3>
+        <p>Add any template, graphic or asset pack straight to your cart and check out in a couple of clicks. No account needed to browse.</p>
+      </div>
+      <div class="feature-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--cobalt)" stroke-width="1.6"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
+        <h3>Edit it right here</h3>
+        <p>Open anything in the built-in editor — move text, swap colors, pull in new stock images — and download your version, no other software required.</p>
+      </div>
+      <div class="feature-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--cobalt)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+        <h3>Sell what you make</h3>
+        <p>Upload your own templates, graphics or AI-generated packs, set your price, and list them for other people to buy or customize.</p>
+      </div>
+      <div class="feature-card">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <h3>Or go bespoke</h3>
+        <p>Describe what you need, attach references, leave your number — a designer starts on it right away and it lands in your inbox within the hour.</p>
+      </div>
+    </div>
+
+    <div class="how">
+      <h2 class="section-title">How it works</h2>
+      <p class="section-sub">Three ways in, depending on how hands-on you want to be.</p>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-num">1</div>
+          <h4>Browse or search</h4>
+          <p>Filter the marketplace by templates, graphics or AI services, or jump straight to a bespoke request.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">2</div>
+          <h4>Buy, edit, or commission</h4>
+          <p>Add to cart as-is, open it in the editor and make it yours, or hand the brief to a designer entirely.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">3</div>
+          <h4>Checkout</h4>
+          <p>One cart holds everything — off-the-shelf purchases, edited files, and bespoke requests alike.</p>
+        </div>
+        <div class="how-step">
+          <div class="how-num">4</div>
+          <h4>Receive your files</h4>
+          <p>Downloads are instant. Bespoke work arrives by email (or wherever you tell us) within the hour.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonials">
+      <h2 class="section-title">What buyers are saying</h2>
+      <p class="section-sub">A few notes from people who've bought, edited, or commissioned work here.</p>
+      <div class="testi-grid">
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"Grabbed a pitch deck template, swapped in our colors in the editor, and had it ready before my next meeting."</p>
+          <div class="testi-who"><div class="testi-avatar">R</div><div><div class="name">Rhea M.</div><div class="role">Startup founder</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"Sent a bespoke request for a logo at 11pm and had three concepts in my inbox before noon the next day."</p>
+          <div class="testi-who"><div class="testi-avatar">D</div><div><div class="name">Daniel O.</div><div class="role">Small business owner</div></div></div>
+        </div>
+        <div class="testi-card">
+          <div class="stars">★★★★★</div>
+          <p>"I list my icon packs here between client work — the checkout and payout flow just gets out of the way."</p>
+          <div class="testi-who"><div class="testi-avatar">L</div><div><div class="name">Lena K.</div><div class="role">Freelance illustrator</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MARKETPLACE ============ -->
+<section class="page" id="page-marketplace">
+  <div class="wrap">
+    <span class="eyebrow">The marketplace</span>
+    <h2 class="section-title">Templates, graphics &amp; AI services, made by independent creators</h2>
+    <p class="section-sub">Everything here is buyable instantly and editable in your browser before you check out. Prices are set by each seller.</p>
+
+    <div class="market-toolbar">
+      <input type="text" class="search-input" id="marketSearch" placeholder="Search for a template, icon set, logo pack…" oninput="renderMarket()">
+      <select class="sort-select" id="marketSort" onchange="renderMarket()">
+        <option value="popular">Sort: Most popular</option>
+        <option value="price-asc">Sort: Price, low to high</option>
+        <option value="price-desc">Sort: Price, high to low</option>
+        <option value="rating">Sort: Highest rated</option>
+      </select>
+      <div class="cat-pills" id="catPills">
+        <button class="cat-pill active" data-cat="all" onclick="setCategory('all')">All <span class="n" id="cnt-all"></span></button>
+        <button class="cat-pill" data-cat="Templates" onclick="setCategory('Templates')">Templates <span class="n" id="cnt-Templates"></span></button>
+        <button class="cat-pill" data-cat="Graphics" onclick="setCategory('Graphics')">Graphics &amp; Stock <span class="n" id="cnt-Graphics"></span></button>
+        <button class="cat-pill" data-cat="AI Services" onclick="setCategory('AI Services')">AI Services <span class="n" id="cnt-ai"></span></button>
+      </div>
+    </div>
+
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+</section>
+
+<!-- ============ EDITOR ============ -->
+<section class="page" id="page-editor">
+  <div class="wrap">
+    <span class="eyebrow">Live editor</span>
+    <h2 class="section-title" id="editorTitle">Design canvas</h2>
+    <p class="section-sub" id="editorSub">Add text, shapes, upload your own images, or pull in a stock photo — then add your finished design straight to your cart.</p>
+
+    <div class="editor-shell">
+      <div class="panel">
+        <h4>Add</h4>
+        <button class="tool-btn" onclick="addHeading()">＋ Heading text</button>
+        <button class="tool-btn" onclick="addBody()">＋ Body text</button>
+        <div class="row2">
+          <button class="tool-btn" onclick="addShape('rect')">▭ Rect</button>
+          <button class="tool-btn" onclick="addShape('circle')">◯ Circle</button>
+          <button class="tool-btn" onclick="addShape('triangle')">△ Tri</button>
+        </div>
+        <button class="tool-btn" onclick="document.getElementById('imgUpload').click()">⭱ Upload image</button>
+        <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleUpload(event)">
+
+        <h4 style="margin-top:18px;">Find images</h4>
+        <input type="text" class="search-input" id="stockQuery" placeholder="e.g. coffee, mountains, office" style="padding:9px 11px;font-size:0.85rem;">
+        <button class="tool-btn" style="margin-top:8px;" onclick="searchStock()">🔍 Search stock photos</button>
+        <div class="stock-results" id="stockResults"></div>
+        <div class="editor-note">Stock search here pulls placeholder demo photos. In production this panel calls a licensed image API (Google/Shutterstock-style search) the same way Canva's photo panel does.</div>
+      </div>
+
+      <div class="canvas-stage">
+        <canvas id="editorCanvas" width="600" height="480"></canvas>
+      </div>
+
+      <div class="panel">
+        <h4>Selected object</h4>
+        <div class="field"><label>Fill color</label><input type="color" id="fillColor" value="#2B4EFF" oninput="applyFill(this.value)"></div>
+        <div class="field"><label>Font size</label><input type="range" min="10" max="120" value="32" id="fontSize" oninput="applyFontSize(this.value)"></div>
+        <div class="row2">
+          <button class="tool-btn" onclick="layerAction('front')">Bring forward</button>
+          <button class="tool-btn" onclick="layerAction('back')">Send back</button>
+        </div>
+        <div class="row2">
+          <button class="tool-btn" onclick="duplicateObj()">⧉ Duplicate</button>
+          <button class="tool-btn" onclick="deleteObj()">🗑 Delete</button>
+        </div>
+
+        <h4 style="margin-top:18px;">Canvas</h4>
+        <div class="field"><label>Background color</label><input type="color" id="bgColor" value="#ffffff" oninput="applyBg(this.value)"></div>
+        <div class="row2">
+          <button class="tool-btn" onclick="historyUndo()">↺ Undo</button>
+          <button class="tool-btn" onclick="historyRedo()">↻ Redo</button>
+        </div>
+        <div class="row2">
+          <button class="tool-btn" onclick="zoomCanvas(0.85)">－ Zoom</button>
+          <button class="tool-btn" onclick="zoomCanvas(1.15)">＋ Zoom</button>
+        </div>
+
+        <h4 style="margin-top:18px;">Finish up</h4>
+        <button class="tool-btn" onclick="downloadPNG()">⬇ Download PNG</button>
+        <div class="field" style="margin-top:10px;">
+          <label>Price for this design</label>
+          <input type="number" id="editorPrice" value="8" min="0" step="0.5">
+        </div>
+        <button class="btn btn-cobalt" style="width:100%;justify-content:center;" onclick="addEditorToCart()">Add design to cart</button>
+        <div class="editor-note">Prefer a person to finish this for you instead? <a href="#" onclick="showPage('bespoke');return false;" style="color:var(--cobalt-deep);font-weight:600;">Send it to Bespoke →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BESPOKE ============ -->
+<section class="page" id="page-bespoke">
+  <div class="wrap">
+    <div class="studio-banner">
+      <div class="studio-cover"></div>
+      <div class="studio-body">
+        <div class="studio-logo">MR</div>
+        <div class="studio-title-row">
+          <div>
+            <h2>Makers' Row Studio</h2>
+            <div class="studio-meta">
+              <span class="pill green">★ 4.9 · 2.3k orders</span>
+              <span class="pill">⚡ ~1 hr delivery</span>
+              <span>Digital services · Email delivery</span>
+            </div>
+          </div>
+          <button class="btn btn-sm btn-ghost" onclick="document.getElementById('svcSearch').focus()">Search menu</button>
+        </div>
+        <div class="studio-offers">🎉 Express deal — add 2+ services and get priority delivery on the whole order</div>
+      </div>
+    </div>
+
+    <div class="svc-toolbar">
+      <input type="text" class="svc-search" id="svcSearch" placeholder="Search for logo, pitch deck, social post…" oninput="renderServices()">
+      <div class="svc-filters">
+        <button class="svc-filter active" data-filter="all" onclick="setSvcFilter('all')">All</button>
+        <button class="svc-filter" data-filter="express" onclick="setSvcFilter('express')">Express</button>
+        <button class="svc-filter" data-filter="popular" onclick="setSvcFilter('popular')">Popular</button>
+        <button class="svc-filter" data-filter="under20" onclick="setSvcFilter('under20')">Under $20</button>
+      </div>
+    </div>
+
+    <div class="svc-layout">
+      <aside class="svc-cats" id="svcCats"></aside>
+      <div class="svc-menu" id="svcMenu"></div>
+    </div>
+  </div>
+</section>
+
+<div class="sticky-cart" id="stickyCart" onclick="showPage('cart')">
+  <div class="sc-left">
+    <span class="sc-count" id="stickyCount">0 items</span>
+    <span class="sc-total" id="stickyTotal">$0.00</span>
+  </div>
+  <button class="sc-go" type="button">View cart →</button>
+</div>
+
+<div class="svc-modal-backdrop" id="svcModal" onclick="if(event.target===this)closeSvcModal()">
+  <div class="svc-sheet" role="dialog" aria-modal="true">
+    <h3 id="svcModalTitle">Add notes</h3>
+    <p class="sheet-sub" id="svcModalSub">Tell the designer what you need. You can add more services after this.</p>
+    <div class="field"><label>Brief / notes (optional)</label><textarea id="svcNotes" rows="3" placeholder="Brand colors, text to include, size, references…"></textarea></div>
+    <div class="field"><label>Delivery email</label><input type="email" id="svcEmail" placeholder="you@email.com"></div>
+    <div class="field"><label>Phone (optional)</label><input type="tel" id="svcPhone" placeholder="For clarifications"></div>
+    <div class="svc-sheet-actions">
+      <button class="btn btn-ghost" type="button" onclick="closeSvcModal()">Cancel</button>
+      <button class="btn btn-coral" type="button" onclick="confirmAddService()">Add to cart</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SELL ============ -->
+<section class="page" id="page-sell">
+  <div class="wrap">
+    <span class="eyebrow">For creators</span>
+    <h2 class="section-title">List your work for sale</h2>
+    <p class="section-sub">Upload a template, graphic, icon set, or AI-generated pack. Set your own price. Buyers can purchase it as-is or open it in the editor to customize before they buy.</p>
+
+    <div class="sell-wrap">
+      <form class="sell-form" id="sellForm" onsubmit="submitListing(event)">
+        <div class="field"><label>Title *</label><input type="text" id="slTitle" placeholder="e.g. Minimal Instagram Story Pack" required></div>
+        <div class="field">
+          <label>Category *</label>
+          <select id="slCategory" required>
+            <option value="Templates">Templates</option>
+            <option value="Graphics">Graphics &amp; Stock</option>
+            <option value="AI Services">AI Services</option>
+          </select>
+        </div>
+        <div class="field"><label>Price (USD) *</label><input type="number" id="slPrice" min="1" step="0.5" value="10" required></div>
+        <div class="field"><label>Short description</label><textarea id="slDesc" rows="3" placeholder="What's included, file formats, sizes…"></textarea></div>
+        <div class="field">
+          <label>Preview image / file</label>
+          <div class="file-drop" id="sellDrop" onclick="document.getElementById('slFile').click()">Click to upload a preview image</div>
+          <input type="file" id="slFile" accept="image/*" style="display:none" onchange="handleSellFile(event)">
+        </div>
+        <button type="submit" class="btn btn-solid" style="width:100%;justify-content:center;">Publish listing</button>
+      </form>
+      <div class="sell-preview">
+        <h4 class="mono" style="font-size:0.78rem;text-transform:uppercase;color:var(--ink-soft);letter-spacing:.06em;margin-bottom:14px;">Live preview</h4>
+        <img id="sellPreviewImg" src="https://picsum.photos/seed/sellplaceholder/400/260" alt="">
+        <div style="font-weight:700;font-size:1.05rem;" id="sellPreviewTitle">Your listing title</div>
+        <div style="color:var(--ink-soft);font-size:0.85rem;margin:4px 0 10px;" id="sellPreviewCat">Category</div>
+        <div class="price-tag" style="position:static;display:inline-block;transform:rotate(-2deg);" id="sellPreviewPrice">$10.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CART ============ -->
+<section class="page" id="page-cart">
+  <div class="wrap">
+    <span class="eyebrow">Checkout</span>
+    <h2 class="section-title">Your cart</h2>
+    <div class="cart-layout">
+      <div id="cartItemsWrap">
+        <div class="empty-state" id="cartEmpty">Your cart is empty. Head to the <a href="#" onclick="showPage('marketplace');return false;" style="color:var(--cobalt-deep);font-weight:600;">marketplace</a> or start a <a href="#" onclick="showPage('bespoke');return false;" style="color:var(--coral);font-weight:600;">bespoke request</a>.</div>
+        <div id="cartLines"></div>
+      </div>
+      <div>
+        <div class="receipt">
+          <div style="text-align:center;font-weight:700;margin-bottom:10px;">MAKERS' ROW RECEIPT</div>
+          <hr>
+          <div id="receiptLines"></div>
+          <hr>
+          <div class="rline total"><span>TOTAL</span><span id="receiptTotal">$0.00</span></div>
+          <button class="btn btn-cobalt" style="width:100%;justify-content:center;margin-top:16px;" onclick="checkout()">Checkout</button>
+          <ul class="trust-list">
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Encrypted, secure checkout</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>7-day money-back guarantee</li>
+          </ul>
+        </div>
+        <div id="checkoutMsg"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="page" id="page-about">
+  <div class="wrap">
+    <span class="eyebrow">About Makers' Row</span>
+    <h2 class="section-title">One marketplace, three ways to get design work done</h2>
+
+    <div class="about-block">
+      <p>Makers' Row exists because "make it yourself" and "hire someone" shouldn't be two completely different products. Most people need something in between: a good starting point they can bend to their needs, made by someone who's good at this, at a price that doesn't require a full agency retainer.</p>
+      <p>So the marketplace works three ways. You can buy a finished template, graphic or AI-service pack outright and download it immediately. You can open anything — bought or not yet bought — in the built-in editor and rework it yourself: swap text, recolor, drop in a new photo, resize, then add your version to the cart. Or, if you'd rather not touch a single layer, you can describe what you need on the Bespoke tab and have a designer build it around your brief, delivered to your email in about an hour.</p>
+    </div>
+
+    <div class="about-block">
+      <h3 style="margin-bottom:12px;">For buyers</h3>
+      <p>Browsing doesn't require an account. Filter by Templates, Graphics &amp; Stock, or AI Services, or search directly. Every listing shows the seller, the price, and whether it's ready to download or worth customizing first. Add as many items as you like — off-the-shelf purchases, edited designs, and bespoke requests all sit in the same cart, and checkout is a single step.</p>
+    </div>
+
+    <div class="about-block">
+      <h3 style="margin-bottom:12px;">For sellers</h3>
+      <p>The Sell tab is open to anyone with something worth listing: a template pack, an icon set, stock photography, or a bundle of AI-generated assets. Set your title, category, price and a preview image, and it's live in the marketplace immediately, ready for buyers to purchase or customize.</p>
+    </div>
+
+    <div class="about-block">
+      <h3 style="margin-bottom:12px;">The editor</h3>
+      <p>The in-browser editor covers the core of what you'd expect from a design tool: text and headings, shapes, your own uploaded images, a stock-photo search panel, color and font controls, layering, undo/redo, zoom, and a one-click PNG export. It's built for quick, practical edits — not for replacing a full design suite, but for getting a template from "close enough" to "exactly right" without leaving the page.</p>
+    </div>
+
+    <div class="about-block">
+      <h3 style="margin-bottom:16px;">Frequently asked</h3>
+      <div class="faq-item">
+        <h4>How fast is a bespoke request, really?</h4>
+        <p>Typical turnaround is about an hour for a single graphic, logo concept, or short deck. More involved briefs (full brand kits, multi-page decks) take a note in the confirmation email with a realistic estimate.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Can I edit something before I buy it?</h4>
+        <p>Yes. Opening a marketplace listing in the editor doesn't charge you — you only pay when you add the finished result to your cart and check out.</p>
+      </div>
+      <div class="faq-item">
+        <h4>Where do the stock photos come from?</h4>
+        <p>In this demo, image search returns placeholder photos so you can see how the panel works. A live version would connect to a licensed stock/image API for real, rights-cleared results.</p>
+      </div>
+      <div class="faq-item">
+        <h4>What do I get after checkout?</h4>
+        <p>Marketplace purchases and anything you've built in the editor download right away. Bespoke requests are delivered to the email (or contact) you provide, generally within the hour.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>© 2026 Makers' Row — a marketplace for design work, done your way.</div>
+    <div>Home · Marketplace · Editor · Bespoke · Sell · About</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   STATE
+============================================================ */
+let marketplace = [
+  {id:'p1',title:"Instagram Post Template Pack (12)",category:'Templates',price:8,seller:'Studio Nine',seed:'insta1',rating:4.9,sales:412,trending:true},
+  {id:'p2',title:"Minimal One-Page Resume Template",category:'Templates',price:6,seller:'Ana R.',seed:'resume1',rating:4.7,sales:265},
+  {id:'p3',title:"Community Event Flyer Template",category:'Templates',price:7,seller:'PixelForge',seed:'flyer1',rating:4.6,sales:98},
+  {id:'p4',title:"Startup Pitch Deck Template (18 slides)",category:'Templates',price:15,seller:'Deckhouse',seed:'deck1',rating:5.0,sales:331,trending:true},
+  {id:'p5',title:"Hand-drawn Icon Set, 120 icons",category:'Graphics',price:12,seller:'Line & Loop',seed:'icons1',rating:4.8,sales:520,trending:true},
+  {id:'p6',title:"Abstract Gradient Background Bundle",category:'Graphics',price:5,seller:'Gradienz',seed:'grad1',rating:4.5,sales:140},
+  {id:'p7',title:"City Skyline Photo Pack",category:'Graphics',price:4,seller:'Frame Co.',seed:'city1',rating:4.4,sales:76},
+  {id:'p8',title:"Coffee Shop Moodboard Photos",category:'Graphics',price:4,seller:'Frame Co.',seed:'coffee1',rating:4.3,sales:61},
+  {id:'p9',title:"Seamless Pattern Bundle (30)",category:'Graphics',price:9,seller:'Tilewerk',seed:'pattern1',rating:4.7,sales:189},
+  {id:'p10',title:"AI Logo Concept Pack (10 directions)",category:'AI Services',price:20,seller:'Nova Studio',seed:'logo1',rating:4.9,sales:298,trending:true},
+  {id:'p11',title:"AI Background Removal, 5 images",category:'AI Services',price:10,seller:'ClipAI',seed:'bgremove1',rating:4.6,sales:410},
+  {id:'p12',title:"AI Product Photo Enhancement",category:'AI Services',price:14,seller:'ClipAI',seed:'product1',rating:4.7,sales:150},
+  {id:'p13',title:"AI Social Caption Bundle (30 captions)",category:'AI Services',price:6,seller:'Wordsmith AI',seed:'captions1',rating:4.4,sales:87},
+  {id:'p14',title:"Editorial Illustration Set",category:'Graphics',price:11,seller:'Ink & Ivy',seed:'illust1',rating:4.8,sales:132},
+  {id:'p15',title:"Wedding Invitation Template Suite",category:'Templates',price:9,seller:'Paper & Pine',seed:'wedding1',rating:4.9,sales:203},
+  {id:'p16',title:"YouTube Thumbnail Template Pack (10)",category:'Templates',price:8,seller:'ClickCraft',seed:'yt1',rating:4.5,sales:174}
+];
+let activeCategory = 'all';
+let cart = []; // {id, kind:'product'|'custom'|'bespoke', title, price, qty, thumb, meta}
+let sellFileURL = null;
+
+function thumbURL(item){ return item.customThumb || ('https://picsum.photos/seed/'+item.seed+'/400/260'); }
+
+/* ============================================================
+   NAVIGATION
+============================================================ */
+function showPage(id){
+  document.querySelectorAll('section.page').forEach(s=>s.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
+  const btn = document.querySelector('nav.tabs button[data-page="'+id+'"]');
+  if(btn) btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'instant' in window ? 'instant':'auto'});
+  if(id==='editor' && fabricCanvas){ setTimeout(()=>fabricCanvas.renderAll(),50); }
+  if(id==='bespoke'){ renderServices(); }
+  updateStickyCart();
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+/* ============================================================
+   MARKETPLACE
+============================================================ */
+function setCategory(cat){
+  activeCategory = cat;
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.toggle('active', p.dataset.cat===cat));
+  renderMarket();
+}
+
+function starString(rating){
+  const full = Math.round(rating);
+  return '★★★★★'.slice(0,full) + '☆☆☆☆☆'.slice(0,5-full);
+}
+
+function renderMarket(){
+  const q = document.getElementById('marketSearch').value.toLowerCase();
+  const sortBy = document.getElementById('marketSort').value;
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML='';
+
+  // category counts (always reflect current search, not current category filter)
+  const bySearch = marketplace.filter(it=> it.title.toLowerCase().includes(q) || it.seller.toLowerCase().includes(q));
+  document.getElementById('cnt-all').textContent = bySearch.length;
+  document.getElementById('cnt-Templates').textContent = bySearch.filter(i=>i.category==='Templates').length;
+  document.getElementById('cnt-Graphics').textContent = bySearch.filter(i=>i.category==='Graphics').length;
+  document.getElementById('cnt-ai').textContent = bySearch.filter(i=>i.category==='AI Services').length;
+
+  let items = bySearch.filter(it=> activeCategory==='all' || it.category===activeCategory);
+
+  if(sortBy==='price-asc') items = items.slice().sort((a,b)=>a.price-b.price);
+  else if(sortBy==='price-desc') items = items.slice().sort((a,b)=>b.price-a.price);
+  else if(sortBy==='rating') items = items.slice().sort((a,b)=>b.rating-a.rating);
+  else items = items.slice().sort((a,b)=>(b.sales||0)-(a.sales||0));
+
+  if(items.length===0){
+    grid.innerHTML = `<div class="empty-state">No listings match "${q||''}". <button class="btn btn-sm btn-ghost" style="margin-top:10px;" onclick="document.getElementById('marketSearch').value='';setCategory('all');">Clear filters</button></div>`;
+    return;
+  }
+  items.forEach(it=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML = `
+      <div class="thumb-wrap">
+        ${it.trending ? '<div class="ribbon">🔥 Bestseller</div>' : ''}
+        <img class="thumb" src="${thumbURL(it)}" alt="${it.title}" loading="lazy">
+        <div class="price-tag">$${it.price.toFixed(2)}</div>
+      </div>
+      <div class="body">
+        <span class="cat-label">${it.category}</span>
+        <h4>${it.title}</h4>
+        <div class="meta-row"><span class="stars">${starString(it.rating||4.5)}</span><span>${(it.rating||4.5).toFixed(1)}</span><span>· ${it.sales||0} sold</span></div>
+        <div class="seller">by ${it.seller}</div>
+        <div class="card-actions">
+          <button class="btn btn-solid" onclick="quickAdd('${it.id}')">Add to cart</button>
+          <button class="btn btn-ghost" onclick="customize('${it.id}')">Customize</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+function quickAdd(id){
+  const it = marketplace.find(m=>m.id===id);
+  addToCart({id:'cart_'+Date.now(), kind:'product', title:it.title, price:it.price, qty:1, thumb:thumbURL(it), meta:it.seller});
+  toast('Added "'+it.title+'" to your cart');
+}
+
+function customize(id){
+  const it = marketplace.find(m=>m.id===id);
+  showPage('editor');
+  loadIntoEditor(it);
+}
+
+/* ============================================================
+   CART
+============================================================ */
+function addToCart(entry){
+  if(entry.kind==='product'){
+    const existing = cart.find(c=>c.kind==='product' && c.title===entry.title);
+    if(existing){ existing.qty += 1; }
+    else { cart.push(entry); }
+  } else if(entry.kind==='bespoke' && entry.serviceId){
+    const existing = cart.find(c=>c.kind==='bespoke' && c.serviceId===entry.serviceId);
+    if(existing){ existing.qty += (entry.qty||1); }
+    else { cart.push(entry); }
+  } else {
+    cart.push(entry);
+  }
+  renderCart();
+}
+
+function changeQty(id,delta){
+  const line = cart.find(c=>c.id===id);
+  if(!line) return;
+  line.qty += delta;
+  if(line.qty<=0){ cart = cart.filter(c=>c.id!==id); }
+  renderCart();
+}
+
+function removeLine(id){
+  cart = cart.filter(c=>c.id!==id);
+  renderCart();
+}
+
+function renderCart(){
+  document.getElementById('cartCount').textContent = cart.reduce((s,c)=>s+c.qty,0);
+  const linesWrap = document.getElementById('cartLines');
+  const empty = document.getElementById('cartEmpty');
+  linesWrap.innerHTML='';
+  empty.style.display = cart.length===0 ? 'block':'none';
+
+  let total = 0;
+  const receiptLines = document.getElementById('receiptLines');
+  receiptLines.innerHTML='';
+
+  cart.forEach(line=>{
+    total += line.price * line.qty;
+    const div = document.createElement('div');
+    div.className='cart-line';
+    div.innerHTML = `
+      <img src="${line.thumb}" alt="">
+      <div class="info">
+        <div class="t">${line.title}</div>
+        <div class="s">${line.kind==='bespoke' ? 'Bespoke request · '+line.meta : (line.meta||'')}</div>
+      </div>
+      <div class="qty-ctrl">
+        <button onclick="changeQty('${line.id}',-1)">−</button><span class="mono">${line.qty}</span><button onclick="changeQty('${line.id}',1)">+</button>
+      </div>
+      <div class="mono" style="width:70px;text-align:right;">$${(line.price*line.qty).toFixed(2)}</div>
+      <button class="btn btn-sm btn-ghost" onclick="removeLine('${line.id}')">✕</button>
+    `;
+    linesWrap.appendChild(div);
+
+    const rl = document.createElement('div');
+    rl.className='rline';
+    rl.innerHTML = `<span>${line.title.slice(0,26)}${line.qty>1?' x'+line.qty:''}</span><span>$${(line.price*line.qty).toFixed(2)}</span>`;
+    receiptLines.appendChild(rl);
+  });
+
+  document.getElementById('receiptTotal').textContent = '$'+total.toFixed(2);
+  updateStickyCart();
+  if(document.getElementById('page-bespoke').classList.contains('active')) renderServices();
+}
+
+function checkout(){
+  if(cart.length===0){ toast('Your cart is empty'); return; }
+  const orderNo = 'MR-'+Math.floor(100000+Math.random()*900000);
+  const lines = cart.map(line=>{
+    const ready = line.kind!=='bespoke';
+    return `<div class="deliverable">
+      <span>${line.title}</span>
+      ${ready ? `<button class="btn btn-sm btn-solid" onclick="toast('Downloading ${line.title.replace(/'/g,"")}…')">Download</button>`
+              : `<span class="mono" style="font-size:0.76rem;color:var(--ink-soft);">Emailed within 1hr</span>`}
+    </div>`;
+  }).join('');
+  document.getElementById('checkoutMsg').innerHTML = `
+    <div class="order-confirm">
+      <div class="ok-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h4>Order confirmed</h4>
+      <div class="ordno">Order ${orderNo} · receipt sent to your email</div>
+      ${lines}
+    </div>`;
+  toast('Checkout complete — thank you!');
+  cart = [];
+  renderCart();
+}
+
+/* ============================================================
+   BESPOKE SERVICES (Swiggy-style menu)
+============================================================ */
+const serviceCategories = ['Branding','Social','Presentations','Print','Product','AI Assist'];
+const bespokeServices = [
+  {id:'s1',cat:'Branding',title:'Logo & brand mark',desc:'Primary logo + 2 concepts, PNG/SVG delivery, one revision round.',price:45,eta:'~60 min',rating:4.9,orders:820,seed:'svc-logo',tags:['popular','best']},
+  {id:'s2',cat:'Branding',title:'Brand color & type kit',desc:'Palette, type pairing, and usage notes for your brand.',price:28,eta:'~45 min',rating:4.7,orders:210,seed:'svc-kit',tags:['express']},
+  {id:'s3',cat:'Branding',title:'Favicon + app icon set',desc:'App icon, favicon, and social avatar from your mark.',price:18,eta:'~30 min',rating:4.6,orders:140,seed:'svc-favicon',tags:['express']},
+  {id:'s4',cat:'Social',title:'Instagram post (single)',desc:'One feed post sized for IG, editable text, brand colors.',price:12,eta:'~25 min',rating:4.8,orders:1100,seed:'svc-ig',tags:['popular','express']},
+  {id:'s5',cat:'Social',title:'Instagram story pack (5)',desc:'Five stories with templates + your copy/images.',price:32,eta:'~50 min',rating:4.8,orders:540,seed:'svc-stories',tags:['popular']},
+  {id:'s6',cat:'Social',title:'LinkedIn banner + post',desc:'Profile banner and one announcement graphic.',price:22,eta:'~40 min',rating:4.5,orders:190,seed:'svc-li',tags:['express']},
+  {id:'s7',cat:'Social',title:'YouTube thumbnail',desc:'Click-focused thumbnail with title treatment.',price:15,eta:'~30 min',rating:4.7,orders:460,seed:'svc-yt',tags:['popular','express']},
+  {id:'s8',cat:'Presentations',title:'Pitch deck (up to 10 slides)',desc:'Narrative deck from your outline — clean startup style.',price:85,eta:'~90 min',rating:4.9,orders:310,seed:'svc-deck',tags:['best','popular']},
+  {id:'s9',cat:'Presentations',title:'One-pager / one-sheet',desc:'Single-page PDF for investors or sales.',price:35,eta:'~45 min',rating:4.6,orders:175,seed:'svc-onepager',tags:['express']},
+  {id:'s10',cat:'Presentations',title:'Slide redesign (3 slides)',desc:'Polish 3 existing slides — layout, type, charts.',price:40,eta:'~50 min',rating:4.7,orders:98,seed:'svc-redesign',tags:[]},
+  {id:'s11',cat:'Print',title:'Flyer / poster (A4)',desc:'Print-ready PDF with bleed, for events or promos.',price:30,eta:'~45 min',rating:4.6,orders:240,seed:'svc-flyer',tags:['express']},
+  {id:'s12',cat:'Print',title:'Business card (front+back)',desc:'Double-sided card, print-ready CMYK.',price:20,eta:'~35 min',rating:4.5,orders:160,seed:'svc-card',tags:['express']},
+  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu layout for cafe, salon, or clinic.',price:38,eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[]},
+  {id:'s14',cat:'Product',title:'Packaging mockup',desc:'Product on packaging mock with your art.',price:42,eta:'~60 min',rating:4.7,orders:130,seed:'svc-pack',tags:['popular']},
+  {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup.',price:36,eta:'~50 min',rating:4.6,orders:88,seed:'svc-hero',tags:[]},
+  {id:'s16',cat:'AI Assist',title:'AI logo concept pack (8)',desc:'Curated AI directions + designer shortlist notes.',price:25,eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express']},
+  {id:'s17',cat:'AI Assist',title:'Background remove (5 imgs)',desc:'Clean cutouts, transparent PNG.',price:14,eta:'~20 min',rating:4.8,orders:700,seed:'svc-bg',tags:['express','popular']},
+  {id:'s18',cat:'AI Assist',title:'Product photo polish (3)',desc:'Lighting/color cleanup for store listings.',price:24,eta:'~40 min',rating:4.6,orders:210,seed:'svc-photo',tags:['express']}
+];
+
+let activeSvcCat = 'All';
+let activeSvcFilter = 'all';
+let pendingService = null;
+
+function svcQty(serviceId){
+  const line = cart.find(c=>c.kind==='bespoke' && c.serviceId===serviceId);
+  return line ? line.qty : 0;
+}
+
+function setSvcCat(cat){
+  activeSvcCat = cat;
+  renderServices();
+}
+
+function setSvcFilter(f){
+  activeSvcFilter = f;
+  document.querySelectorAll('.svc-filter').forEach(b=>b.classList.toggle('active', b.dataset.filter===f));
+  renderServices();
+}
+
+function filteredServices(){
+  const q = (document.getElementById('svcSearch')?.value||'').toLowerCase();
+  return bespokeServices.filter(s=>{
+    if(activeSvcCat!=='All' && s.cat!==activeSvcCat) return false;
+    if(q && !(s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q))) return false;
+    if(activeSvcFilter==='express' && !s.tags.includes('express')) return false;
+    if(activeSvcFilter==='popular' && !s.tags.includes('popular')) return false;
+    if(activeSvcFilter==='under20' && s.price>=20) return false;
+    return true;
+  });
+}
+
+function renderServices(){
+  const catsEl = document.getElementById('svcCats');
+  const menuEl = document.getElementById('svcMenu');
+  if(!catsEl || !menuEl) return;
+
+  const counts = {All: bespokeServices.length};
+  serviceCategories.forEach(c=> counts[c] = bespokeServices.filter(s=>s.cat===c).length);
+
+  catsEl.innerHTML = ['All', ...serviceCategories].map(c=>`
+    <button class="svc-cat ${activeSvcCat===c?'active':''}" onclick="setSvcCat('${c}')">
+      <span>${c}</span><span class="n">${counts[c]||0}</span>
+    </button>`).join('');
+
+  const items = filteredServices();
+  if(items.length===0){
+    menuEl.innerHTML = `<div class="empty-state">No services match. <button class="btn btn-sm btn-ghost" style="margin-top:10px" onclick="document.getElementById('svcSearch').value='';setSvcFilter('all');setSvcCat('All')">Clear</button></div>`;
+    return;
+  }
+
+  const grouped = {};
+  items.forEach(s=>{ (grouped[s.cat]=grouped[s.cat]||[]).push(s); });
+
+  let html = '';
+  Object.keys(grouped).forEach(cat=>{
+    html += `<div class="svc-section-title" id="svc-sec-${cat}">${cat}</div>`;
+    grouped[cat].forEach(s=>{
+      const qty = svcQty(s.id);
+      const badges = [
+        s.tags.includes('popular') ? '<span class="svc-badge popular">Popular</span>' : '',
+        s.tags.includes('express') ? '<span class="svc-badge express">Express</span>' : '',
+        s.tags.includes('best') ? '<span class="svc-badge best">Bestseller</span>' : ''
+      ].join('');
+      const ctrl = qty>0
+        ? `<div class="svc-stepper"><button onclick="event.stopPropagation();changeSvcQty('${s.id}',-1)">−</button><span>${qty}</span><button onclick="event.stopPropagation();changeSvcQty('${s.id}',1)">+</button></div>`
+        : `<button class="svc-add" onclick="event.stopPropagation();openSvcModal('${s.id}')">ADD</button>`;
+      html += `
+        <div class="svc-item">
+          <div>
+            <div class="svc-badges">${badges}</div>
+            <h4>${s.title}</h4>
+            <div class="svc-rating">★ ${s.rating.toFixed(1)} · ${s.orders}+ orders</div>
+            <p class="svc-desc">${s.desc}</p>
+            <div><span class="svc-price">$${s.price.toFixed(2)}</span><span class="svc-eta">${s.eta} turnaround</span></div>
+          </div>
+          <div class="svc-media">
+            <img src="https://picsum.photos/seed/${s.seed}/240/240" alt="" loading="lazy">
+            ${ctrl}
+          </div>
+        </div>`;
+    });
+  });
+  menuEl.innerHTML = html;
+}
+
+function openSvcModal(id){
+  pendingService = bespokeServices.find(s=>s.id===id);
+  if(!pendingService) return;
+  document.getElementById('svcModalTitle').textContent = pendingService.title;
+  document.getElementById('svcModalSub').textContent = `$${pendingService.price.toFixed(2)} · ${pendingService.eta} · Add notes, then keep browsing for more services.`;
+  document.getElementById('svcNotes').value = '';
+  document.getElementById('svcModal').classList.add('open');
+}
+
+function closeSvcModal(){
+  document.getElementById('svcModal').classList.remove('open');
+  pendingService = null;
+}
+
+function confirmAddService(){
+  if(!pendingService) return;
+  const notes = document.getElementById('svcNotes').value.trim();
+  const email = document.getElementById('svcEmail').value.trim();
+  const phone = document.getElementById('svcPhone').value.trim();
+  const metaParts = [pendingService.eta];
+  if(email) metaParts.push(email);
+  if(phone) metaParts.push(phone);
+  if(notes) metaParts.push(notes.slice(0,60));
+  addToCart({
+    id:'bespoke_'+pendingService.id,
+    serviceId: pendingService.id,
+    kind:'bespoke',
+    title: pendingService.title,
+    price: pendingService.price,
+    qty: 1,
+    thumb: 'https://picsum.photos/seed/'+pendingService.seed+'/200/200',
+    meta: metaParts.join(' · ')
+  });
+  toast('Added "'+pendingService.title+'" — add more or view cart');
+  closeSvcModal();
+}
+
+function changeSvcQty(serviceId, delta){
+  const line = cart.find(c=>c.kind==='bespoke' && c.serviceId===serviceId);
+  if(!line){
+    if(delta>0) openSvcModal(serviceId);
+    return;
+  }
+  changeQty(line.id, delta);
+}
+
+function updateStickyCart(){
+  const bar = document.getElementById('stickyCart');
+  if(!bar) return;
+  const total = cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const allCount = cart.reduce((s,c)=>s+c.qty,0);
+  document.getElementById('stickyCount').textContent = allCount===1 ? '1 item' : allCount+' items';
+  document.getElementById('stickyTotal').textContent = '$'+total.toFixed(2);
+  const onBespoke = document.getElementById('page-bespoke')?.classList.contains('active');
+  bar.classList.toggle('show', onBespoke && allCount>0);
+}
+
+/* ============================================================
+   SELL
+============================================================ */
+function handleSellFile(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  sellFileURL = URL.createObjectURL(file);
+  document.getElementById('sellPreviewImg').src = sellFileURL;
+  document.getElementById('sellDrop').textContent = file.name;
+  document.getElementById('sellDrop').classList.add('has-files');
+}
+
+['slTitle','slCategory','slPrice'].forEach(id=>{
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const el = document.getElementById(id);
+    if(el) el.addEventListener('input', updateSellPreview);
+    if(el && el.tagName==='SELECT') el.addEventListener('change', updateSellPreview);
+  });
+});
+function updateSellPreview(){
+  document.getElementById('sellPreviewTitle').textContent = document.getElementById('slTitle').value || 'Your listing title';
+  document.getElementById('sellPreviewCat').textContent = document.getElementById('slCategory').value;
+  const p = parseFloat(document.getElementById('slPrice').value)||0;
+  document.getElementById('sellPreviewPrice').textContent = '$'+p.toFixed(2);
+}
+
+function submitListing(e){
+  e.preventDefault();
+  const title = document.getElementById('slTitle').value;
+  const category = document.getElementById('slCategory').value;
+  const price = parseFloat(document.getElementById('slPrice').value)||1;
+  const newItem = {
+    id:'p_new_'+Date.now(),
+    title, category, price,
+    seller:'You',
+    seed:'new'+Date.now(),
+    customThumb: sellFileURL || null
+  };
+  marketplace.unshift(newItem);
+  toast('"'+title+'" is live in the marketplace');
+  e.target.reset();
+  sellFileURL=null;
+  document.getElementById('sellDrop').textContent='Click to upload a preview image';
+  document.getElementById('sellDrop').classList.remove('has-files');
+  document.getElementById('sellPreviewImg').src='https://picsum.photos/seed/sellplaceholder2/400/260';
+  updateSellPreview();
+  setCategory('all');
+  showPage('marketplace');
+}
+
+/* ============================================================
+   EDITOR (Fabric.js)
+============================================================ */
+let fabricCanvas;
+let historyStack = [];
+let historyIndex = -1;
+let suppressHistory = false;
+
+function initEditor(){
+  fabricCanvas = new fabric.Canvas('editorCanvas', {backgroundColor:'#ffffff'});
+  fabricCanvas.setWidth(600);
+  fabricCanvas.setHeight(480);
+  pushHistory();
+  fabricCanvas.on('object:added', ()=>{ if(!suppressHistory) pushHistory(); });
+  fabricCanvas.on('object:modified', ()=>{ if(!suppressHistory) pushHistory(); });
+  fabricCanvas.on('object:removed', ()=>{ if(!suppressHistory) pushHistory(); });
+}
+
+function pushHistory(){
+  historyStack = historyStack.slice(0, historyIndex+1);
+  historyStack.push(JSON.stringify(fabricCanvas.toJSON()));
+  if(historyStack.length>30) historyStack.shift();
+  historyIndex = historyStack.length-1;
+}
+function historyUndo(){
+  if(historyIndex<=0) return;
+  historyIndex--;
+  suppressHistory=true;
+  fabricCanvas.loadFromJSON(historyStack[historyIndex], ()=>{ fabricCanvas.renderAll(); suppressHistory=false; });
+}
+function historyRedo(){
+  if(historyIndex>=historyStack.length-1) return;
+  historyIndex++;
+  suppressHistory=true;
+  fabricCanvas.loadFromJSON(historyStack[historyIndex], ()=>{ fabricCanvas.renderAll(); suppressHistory=false; });
+}
+
+function addHeading(){
+  const t = new fabric.IText('Your heading here', {left:60,top:60,fontFamily:'Syne, sans-serif',fontSize:40,fontWeight:600,fill:'#1B1B1E'});
+  fabricCanvas.add(t).setActiveObject(t);
+}
+function addBody(){
+  const t = new fabric.IText('Body text goes here', {left:60,top:140,fontFamily:'Plus Jakarta Sans, sans-serif',fontSize:20,fill:'#1B1B1E'});
+  fabricCanvas.add(t).setActiveObject(t);
+}
+function addShape(type){
+  let obj;
+  const opts={left:150,top:150,fill:'#2B4EFF',width:120,height:90};
+  if(type==='rect') obj = new fabric.Rect(opts);
+  else if(type==='circle') obj = new fabric.Circle({...opts,radius:60});
+  else obj = new fabric.Triangle(opts);
+  fabricCanvas.add(obj).setActiveObject(obj);
+}
+function handleUpload(e){
+  const file = e.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(ev){
+    fabric.Image.fromURL(ev.target.result, img=>{
+      img.scaleToWidth(220);
+      img.set({left:80,top:80});
+      fabricCanvas.add(img).setActiveObject(img);
+    });
+  };
+  reader.readAsDataURL(file);
+}
+function searchStock(){
+  const q = document.getElementById('stockQuery').value.trim() || 'design';
+  const results = document.getElementById('stockResults');
+  results.innerHTML='';
+  for(let i=0;i<6;i++){
+    const seed = q.replace(/\s+/g,'')+i;
+    const img = document.createElement('img');
+    img.src = 'https://picsum.photos/seed/'+seed+'/200/140';
+    img.title='Click to add to canvas';
+    img.onclick = ()=>addStockImage(img.src);
+    results.appendChild(img);
+  }
+}
+function addStockImage(url){
+  fabric.Image.fromURL(url, img=>{
+    img.scaleToWidth(240);
+    img.set({left:100,top:100});
+    fabricCanvas.add(img).setActiveObject(img);
+  }, {crossOrigin:'anonymous'});
+}
+function applyFill(color){
+  const o = fabricCanvas.getActiveObject();
+  if(!o) { toast('Select an object first'); return; }
+  o.set('fill', color);
+  fabricCanvas.renderAll();
+  pushHistory();
+}
+function applyFontSize(size){
+  const o = fabricCanvas.getActiveObject();
+  if(!o || o.type!=='i-text') return;
+  o.set('fontSize', parseInt(size));
+  fabricCanvas.renderAll();
+}
+function layerAction(dir){
+  const o = fabricCanvas.getActiveObject();
+  if(!o) { toast('Select an object first'); return; }
+  if(dir==='front') fabricCanvas.bringForward(o);
+  else fabricCanvas.sendBackwards(o);
+  pushHistory();
+}
+function duplicateObj(){
+  const o = fabricCanvas.getActiveObject();
+  if(!o) { toast('Select an object first'); return; }
+  o.clone(clone=>{
+    clone.set({left:o.left+20, top:o.top+20});
+    fabricCanvas.add(clone).setActiveObject(clone);
+  });
+}
+function deleteObj(){
+  const o = fabricCanvas.getActiveObject();
+  if(!o) { toast('Select an object first'); return; }
+  fabricCanvas.remove(o);
+}
+function applyBg(color){
+  fabricCanvas.setBackgroundColor(color, ()=>fabricCanvas.renderAll());
+  pushHistory();
+}
+function zoomCanvas(factor){
+  let z = fabricCanvas.getZoom();
+  z = Math.max(0.4, Math.min(2.5, z*factor));
+  fabricCanvas.setZoom(z);
+}
+function downloadPNG(){
+  const dataURL = fabricCanvas.toDataURL({format:'png', quality:1});
+  const a = document.createElement('a');
+  a.href = dataURL;
+  a.download = 'design.png';
+  a.click();
+}
+function loadIntoEditor(item){
+  document.getElementById('editorTitle').textContent = 'Editing: '+item.title;
+  document.getElementById('editorSub').textContent = 'Customize this listing (originally $'+item.price.toFixed(2)+' from '+item.seller+'), then add your version to the cart.';
+  fabricCanvas.clear();
+  fabricCanvas.setBackgroundColor('#ffffff', ()=>fabricCanvas.renderAll());
+  fabric.Image.fromURL(thumbURL(item), img=>{
+    img.scaleToWidth(560);
+    img.set({left:20,top:20, selectable:true});
+    fabricCanvas.add(img);
+    const t = new fabric.IText(item.title, {left:30,top:30,fontFamily:'Syne, sans-serif',fontSize:28,fontWeight:600,fill:'#ffffff', backgroundColor:'rgba(27,27,30,0.55)'});
+    fabricCanvas.add(t).setActiveObject(t);
+    pushHistory();
+  }, {crossOrigin:'anonymous'});
+  document.getElementById('editorPrice').value = item.price;
+}
+function addEditorToCart(){
+  const price = parseFloat(document.getElementById('editorPrice').value)||1;
+  const thumb = fabricCanvas.toDataURL({format:'png', quality:0.8, multiplier:0.3});
+  addToCart({id:'custom_'+Date.now(), kind:'custom', title:'Custom design', price, qty:1, thumb, meta:'Edited by you'});
+  toast('Your custom design was added to the cart');
+}
+
+/* ============================================================
+   INIT
+============================================================ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  renderMarket();
+  renderCart();
+  initEditor();
+  updateSellPreview();
+  renderServices();
+  updateStickyCart();
+});
+</script>
+</body>
+</html>
