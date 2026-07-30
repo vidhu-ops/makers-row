@@ -2,6 +2,8 @@
 
 Design marketplace with live editor, bespoke commissions, and seller listings.
 
+**Repository:** https://github.com/vidhu-ops/makers-row
+
 ## Run locally
 
 ```powershell
