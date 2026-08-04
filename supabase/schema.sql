@@ -39,3 +39,7 @@ create table if not exists public.project_files (
 alter table public.projects enable row level security;
 alter table public.project_messages enable row level security;
 alter table public.project_files enable row level security;
+
+insert into storage.buckets (id, name, public)
+values ('project-files', 'project-files', true)
+on conflict (id) do update set public = true;
