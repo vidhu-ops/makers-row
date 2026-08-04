@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+<script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <style>
 
   :root{
@@ -749,6 +750,15 @@
   .payment-total{display:flex;justify-content:space-between;border-top:1px dashed var(--line);padding-top:12px;font-weight:800;font-family:'JetBrains Mono',monospace;}
   .payment-trust{display:flex;gap:7px;align-items:flex-start;color:#1B7A45;font-size:.72rem;line-height:1.4;margin-top:14px;}
   .payment-disclaimer{font-size:.7rem;line-height:1.45;color:var(--ink-soft);margin:12px 0 0;}
+  .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;}
+  .portfolio-card{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
+  .portfolio-art{height:190px;padding:20px;display:flex;align-items:flex-end;background:linear-gradient(135deg,#1f4bff,#dbe3ff 55%,#f5b942);}
+  .portfolio-art.art-two{background:linear-gradient(135deg,#12141a,#e84d3d 55%,#f5b942);}
+  .portfolio-art.art-three{background:linear-gradient(135deg,#e8edf4,#6f83aa 48%,#12141a);}
+  .portfolio-art span{background:rgba(251,252,254,.92);border-radius:9px;padding:8px 10px;font:600 .72rem 'JetBrains Mono',monospace;}
+  .portfolio-copy{padding:17px}.portfolio-copy h3{margin:0 0 7px;font-size:1rem}.portfolio-copy p{margin:0;color:var(--ink-soft);font-size:.8rem;line-height:1.5}
+  .portfolio-link{display:inline-flex;margin-top:12px;color:var(--cobalt-deep);font-size:.78rem;font-weight:700;text-decoration:none}
+  .portfolio-link:hover{text-decoration:underline}
 
   /* ---------- ABOUT ---------- */
   .about-block{max-width:760px;margin-bottom:40px;}
@@ -838,6 +848,7 @@
     .account-stats{grid-template-columns:1fr 1fr 1fr;}
     .account-panel{padding:16px;}
     .payment-layout{grid-template-columns:1fr;}
+    .portfolio-grid{grid-template-columns:1fr;}
     .payment-sheet{padding:20px;}
     .creator-row{grid-template-columns:1fr 1fr;gap:7px;}
     .creator-row.head{display:none;}
@@ -866,6 +877,7 @@
     <button data-page="home" onclick="showPage('home')">Home</button>
     <button data-page="marketplace" onclick="showPage('marketplace')">Marketplace</button>
     <button data-page="editor" onclick="showPage('editor')">Editor</button>
+    <button data-page="portfolio" onclick="showPage('portfolio')">Portfolio</button>
     <button data-page="sell" onclick="showPage('sell')">Creator Studio</button>
     <button data-page="cart" onclick="showPage('cart')">Cart</button>
     <button data-page="about" onclick="showPage('about')">About</button>
@@ -1011,6 +1023,22 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ PORTFOLIO ============ -->
+<section class="page" id="page-portfolio">
+  <div class="wrap">
+    <div class="marketplace-hero">
+      <div><span class="eyebrow">Selected work</span><h1>See the quality before you order.</h1><p>Explore selected identity, packaging, editorial, and campaign work by the Makers' Row designer. The full live portfolio is on Behance.</p></div>
+      <a class="btn btn-coral" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">Open full Behance portfolio ↗</a>
+    </div>
+    <div class="portfolio-grid">
+      <article class="portfolio-card"><div class="portfolio-art"><span>PACKAGING / PRODUCT</span></div><div class="portfolio-copy"><h3>Packaging & product worlds</h3><p>Commercial packaging directions with a clear shelf presence, visual hierarchy, and campaign-ready artwork.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance ↗</a></div></article>
+      <article class="portfolio-card"><div class="portfolio-art art-two"><span>INFOGRAPHICS / EDITORIAL</span></div><div class="portfolio-copy"><h3>Infographics & editorial systems</h3><p>Information made easier to scan through structured layouts, strong typography, and clear visual storytelling.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance ↗</a></div></article>
+      <article class="portfolio-card"><div class="portfolio-art art-three"><span>BROCHURE / CAMPAIGN</span></div><div class="portfolio-copy"><h3>Brochures and campaign creatives</h3><p>Brand-led print and digital work for products, events, businesses, and customer-facing campaigns.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance ↗</a></div></article>
+    </div>
+    <div class="bespoke-intro" style="margin-top:36px;"><div class="bespoke-promise"><span class="eyebrow" style="color:var(--coral);">Like what you see?</span><h2>Start with the service that fits your brief.</h2><p>Choose a ready-made service, upload references, and receive the finished product within the day for typical creative requests.</p><button class="btn btn-coral" onclick="showPage('bespoke')">Start a bespoke brief →</button></div><div class="revision-card"><h3>Portfolio-led ordering</h3><p>Use the work above as a visual reference when you tell us what you want. Your references stay attached to the project for the designer and CRM.</p></div></div>
   </div>
 </section>
 
@@ -1256,12 +1284,10 @@
     <form id="paymentForm" onsubmit="submitPayment(event)">
       <div class="payment-layout">
         <div class="payment-form">
-          <h4>Payment details</h4>
-          <div class="field"><label for="paymentName">Name on card</label><input id="paymentName" type="text" autocomplete="cc-name" placeholder="Your name" required></div>
-          <div class="field"><label for="paymentCard">Card number</label><input id="paymentCard" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" minlength="12" required></div>
-          <div class="payment-row"><div class="field"><label for="paymentExpiry">Expiry</label><input id="paymentExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" required></div><div class="field"><label for="paymentCvc">CVC</label><input id="paymentCvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" minlength="3" required></div></div>
-          <button class="btn btn-coral auth-submit" type="submit">Pay <span id="paymentButtonTotal">$0.00</span></button>
-          <p class="payment-disclaimer">Prototype payment screen: no real charge is made here. Production checkout should replace this form with Stripe, Razorpay, or another PCI-compliant provider.</p>
+          <h4>Pay securely with Cashfree</h4>
+          <p class="account-muted">You’ll be redirected to Cashfree to choose UPI, cards, net banking, or other available methods. Your order is saved before payment starts.</p>
+          <button class="btn btn-coral auth-submit" id="cashfreePayButton" type="submit">Continue to Cashfree <span id="paymentButtonTotal">₹0</span></button>
+          <p class="payment-disclaimer">Cashfree checkout is currently processed in INR. The final payment confirmation comes from the verified Cashfree webhook.</p>
         </div>
         <aside class="payment-summary">
           <h4>Order summary</h4>
@@ -1578,9 +1604,9 @@ function persistAccountState(){
     localStorage.setItem(SAVED_ITEMS_KEY, JSON.stringify(savedItems));
   }catch(error){ /* storage is optional */ }
 }
-async function trackAccount(){
+async function trackAccount(isNewSignup=false){
   if(!currentUser?.email) return;
-  try{ await fetch('/api/accounts/upsert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentUser.email,name:currentUser.name,role:currentUser.role})}); }catch(error){ /* tracking is best effort */ }
+  try{ await fetch('/api/accounts/upsert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentUser.email,name:currentUser.name,role:currentUser.role,is_new_signup:isNewSignup})}); }catch(error){ /* tracking is best effort */ }
 }
 async function loadBuyerData(){
   if(!currentUser?.email || buyerDataLoading) return;
@@ -1660,7 +1686,7 @@ function submitAuth(event){
     toast('Welcome back, '+(currentUser.name||'there'));
   }
   persistAccountState();
-  trackAccount();
+  trackAccount(window.authMode==='signup');
   updateAccountButton();
   closeAuth();
   showPage('account');
@@ -2030,9 +2056,7 @@ function openPayment(){
   if(!currentUser || !cart.length) return;
   document.getElementById('paymentEmail').textContent=currentUser.email;
   updatePaymentSummary();
-  document.getElementById('paymentName').value=currentUser.name||'';
   document.getElementById('paymentModal').classList.add('open');
-  setTimeout(()=>document.getElementById('paymentName').focus(),30);
 }
 function updatePaymentSummary(){
   const items=document.getElementById('paymentItems');
@@ -2040,16 +2064,37 @@ function updatePaymentSummary(){
   const buttonTotal=document.getElementById('paymentButtonTotal');
   if(!items || !totalEl || !buttonTotal) return;
   const total=cart.reduce((sum,line)=>sum+line.price*line.qty,0);
-  totalEl.textContent=formatMoney(total);
-  buttonTotal.textContent=formatMoney(total);
+  const cashfreeTotal=Math.max(150,Math.round(total*USD_TO_INR));
+  totalEl.textContent='₹'+cashfreeTotal.toLocaleString('en-IN');
+  buttonTotal.textContent='₹'+cashfreeTotal.toLocaleString('en-IN');
   items.innerHTML=cart.map(line=>`<div class="payment-item"><span>${line.title}${line.qty>1?' ×'+line.qty:''}</span><strong>${formatMoney(line.price*line.qty)}</strong></div>`).join('');
 }
 function closePayment(){ document.getElementById('paymentModal').classList.remove('open'); }
 function submitPayment(event){
   event.preventDefault();
-  if(!document.getElementById('paymentForm').checkValidity()){ document.getElementById('paymentForm').reportValidity(); return; }
-  closePayment();
-  completeCheckout();
+  startCashfreeCheckout();
+}
+async function startCashfreeCheckout(){
+  if(!currentUser || !cart.length) return;
+  const button=document.getElementById('cashfreePayButton');
+  if(button){ button.disabled=true; button.innerHTML='Creating secure payment…'; }
+  const orderNo='MR-'+Date.now().toString(36).toUpperCase();
+  const displayTotal=cart.reduce((sum,line)=>sum+line.price*line.qty,0);
+  const inrTotal=Math.max(150,Math.round(displayTotal*USD_TO_INR));
+  const order={id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_pending',deliverables:cart.map(line=>({title:line.title,kind:line.kind,thumb:line.thumb,files:line.assetFiles||['Digital delivery'],downloadable:line.kind!=='bespoke'}))};
+  try{
+    const response=await fetch('/api/commerce?action=create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:orderNo,buyer_email:currentUser.email,buyer_name:currentUser.name||'',total:inrTotal,items:order.deliverables})});
+    const payload=await response.json();
+    if(!response.ok) throw new Error(payload.error||'Could not start Cashfree checkout.');
+    order.cashfreeOrderId=payload.order_id; orderHistory.unshift(order); persistAccountState();
+    cart=[]; persistCart(); closePayment(); renderCart();
+    if(!window.Cashfree) throw new Error('Cashfree checkout script did not load.');
+    const cashfree=Cashfree({mode:payload.mode==='production'?'production':'sandbox'});
+    await cashfree.checkout({paymentSessionId:payload.payment_session_id,redirectTarget:'_self'});
+  }catch(error){
+    toast(error.message);
+    if(button){ button.disabled=false; button.innerHTML='Continue to Cashfree <span id="paymentButtonTotal">₹0</span>'; }
+  }
 }
 function completeCheckout(){
   window.lastOrderLines = cart.map(line=>({...line}));
@@ -2755,6 +2800,19 @@ function addEditorToCart(){
   toast('Your custom design was added to the cart');
 }
 
+async function handlePaymentReturn(){
+  const params=new URLSearchParams(window.location.search);
+  if(params.get('payment')!=='return'||!params.get('order_id')) return;
+  const orderId=params.get('order_id');
+  try{
+    const response=await fetch('/api/commerce?action=verify-payment&order_id='+encodeURIComponent(orderId));
+    const payload=await response.json();
+    if(payload.paid){ toast('Payment confirmed. Your receipt is on its way by email.'); if(currentUser){ await loadBuyerData(); showPage('account'); renderAccount(); } }
+    else toast('Payment is still being confirmed. Check your account shortly.');
+  }catch(error){ toast('We are confirming your payment. Check your account shortly.'); }
+  history.replaceState({},'',window.location.pathname);
+}
+
 /* ============================================================
    INIT
 ============================================================ */
@@ -2772,6 +2830,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderServices();
   updateStickyCart();
   loadBrandKit();
+  handlePaymentReturn();
   const params = new URLSearchParams(window.location.search);
   if(params.get('page') === 'bespoke') showPage('bespoke');
 });
