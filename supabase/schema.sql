@@ -36,9 +36,38 @@ create table if not exists public.project_files (
   created_at timestamptz not null default now()
 );
 
+create table if not exists public.orders (
+  id uuid primary key default gen_random_uuid(),
+  order_number text not null unique,
+  buyer_email text not null,
+  buyer_name text,
+  total numeric(12,2) not null default 0,
+  currency text not null default 'USD' check (currency in ('USD','INR')),
+  status text not null default 'received' check (status in ('received','in_progress','ready','delivered','closed')),
+  items jsonb not null default '[]'::jsonb,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.accounts (
+  id uuid primary key default gen_random_uuid(),
+  email text not null unique,
+  name text,
+  role text not null default 'buyer' check (role in ('buyer','creator')),
+  last_seen_at timestamptz not null default now(),
+  created_at timestamptz not null default now()
+);
+
+create index if not exists projects_buyer_email_idx on public.projects (buyer_email);
+create index if not exists projects_status_idx on public.projects (status);
+create index if not exists orders_buyer_email_idx on public.orders (buyer_email);
+create index if not exists orders_created_at_idx on public.orders (created_at desc);
+
 alter table public.projects enable row level security;
 alter table public.project_messages enable row level security;
 alter table public.project_files enable row level security;
+alter table public.orders enable row level security;
+alter table public.accounts enable row level security;
 
 insert into storage.buckets (id, name, public)
 values ('project-files', 'project-files', true)

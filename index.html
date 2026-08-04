@@ -719,6 +719,19 @@
   .creator-row strong{display:block;font-size:.82rem;}
   .creator-row span{color:var(--ink-soft);font-size:.7rem;}
   .creator-status{display:inline-flex;justify-content:center;background:#E8F8EF;color:#1B7A45;border-radius:999px;padding:4px 7px;font-size:.68rem;font-weight:750;}
+  .crm-card{box-shadow:0 8px 22px rgba(18,20,26,.06);}
+  .crm-card-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap;}
+  .crm-card-head h4{margin:7px 0 3px;font-size:1rem;}
+  .crm-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line);}
+  .crm-grid h5,.crm-card h5{margin:0 0 7px;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);}
+  .crm-grid p{margin:0;color:var(--ink-soft);font-size:.8rem;line-height:1.5;}
+  .crm-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:8px;}
+  .crm-file{border:1px solid var(--line);border-radius:10px;padding:8px;background:var(--bg);}
+  .crm-file img{width:100%;height:110px;object-fit:cover;border-radius:7px;background:var(--white);display:block;margin-bottom:7px;}
+  .crm-file strong{display:block;font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .crm-file a{font-size:.7rem;color:var(--cobalt-deep);}
+  .crm-file-icon{display:flex;height:110px;align-items:center;justify-content:center;background:var(--white);border-radius:7px;font:700 .7rem 'JetBrains Mono',monospace;color:var(--ink-soft);margin-bottom:7px;}
+  @media(max-width:700px){.crm-grid{grid-template-columns:1fr;}}
   .auth-submit{width:100%;justify-content:center;margin-top:4px;}
   .auth-note{font-size:.72rem;color:var(--ink-soft);line-height:1.45;margin:14px 0 0;}
   .payment-sheet{width:min(720px,100%);max-height:calc(100vh - 32px);overflow:auto;}
@@ -1447,6 +1460,10 @@ let currentUser = null;
 let orderHistory = [];
 let savedItems = [];
 let activeAccountPanel = 'overview';
+let remoteOrders = [];
+let buyerProjects = [];
+let crmOrders = [];
+let buyerDataLoading = false;
 const CART_STORAGE_KEY = 'makers-row-cart-v1';
 const ACCOUNT_PROFILE_KEY = 'makers-row-account-profile-v1';
 const ACCOUNT_SESSION_KEY = 'makers-row-account-session-v1';
@@ -1561,6 +1578,26 @@ function persistAccountState(){
     localStorage.setItem(SAVED_ITEMS_KEY, JSON.stringify(savedItems));
   }catch(error){ /* storage is optional */ }
 }
+async function trackAccount(){
+  if(!currentUser?.email) return;
+  try{ await fetch('/api/accounts/upsert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentUser.email,name:currentUser.name,role:currentUser.role})}); }catch(error){ /* tracking is best effort */ }
+}
+async function loadBuyerData(){
+  if(!currentUser?.email || buyerDataLoading) return;
+  buyerDataLoading=true;
+  try{
+    const [ordersResponse,projectsResponse]=await Promise.all([
+      fetch('/api/orders/list?buyer_email='+encodeURIComponent(currentUser.email)),
+      fetch('/api/projects/list?buyer_email='+encodeURIComponent(currentUser.email))
+    ]);
+    const ordersPayload=await ordersResponse.json();
+    const projectsPayload=await projectsResponse.json();
+    if(ordersResponse.ok) remoteOrders=ordersPayload.orders||[];
+    if(projectsResponse.ok) buyerProjects=projectsPayload.projects||[];
+    renderAccountPanel();
+  }catch(error){ /* local account data remains available */ }
+  finally{ buyerDataLoading=false; }
+}
 function restoreAccountState(){
   try{
     currentUser = JSON.parse(localStorage.getItem(ACCOUNT_SESSION_KEY) || 'null');
@@ -1623,6 +1660,7 @@ function submitAuth(event){
     toast('Welcome back, '+(currentUser.name||'there'));
   }
   persistAccountState();
+  trackAccount();
   updateAccountButton();
   closeAuth();
   showPage('account');
@@ -1661,10 +1699,12 @@ function renderAccountPanel(){
     renderCreatorPanel();
     return;
   }
-  const totalOrders=orderHistory.length;
-  const totalSpent=orderHistory.reduce((sum,order)=>sum+Number(order.total||0),0);
+  const combinedOrders=[...remoteOrders.map(normalizeRemoteOrder),...orderHistory.filter(local=>!remoteOrders.some(remote=>remote.order_number===local.id))];
+  const totalOrders=combinedOrders.length;
+  const totalSpent=combinedOrders.reduce((sum,order)=>sum+Number(order.total||0),0);
   if(activeAccountPanel==='orders'){
-    panel.innerHTML='<h3>Your orders</h3><p class="account-muted">Every template, Bespoke brief, and edited design in one place.</p>'+renderOrderHistory();
+    panel.innerHTML='<h3>Your orders &amp; projects</h3><p class="account-muted">Your purchases, briefs, messages, and finished files stay connected to your account.</p>'+renderOrderHistory()+renderBuyerProjects();
+    loadBuyerData();
     return;
   }
   if(activeAccountPanel==='saved'){
@@ -1672,7 +1712,16 @@ function renderAccountPanel(){
     panel.innerHTML='<h3>Saved items</h3><p class="account-muted">Keep promising creative ideas here until you are ready to buy or customize.</p>'+(saved.length?'<div class="account-orders">'+saved.map(item=>`<div class="account-order"><div><strong>${item.title}</strong><span>${item.seller} · ${formatMoney(item.price)}</span></div><button class="btn btn-sm btn-solid" onclick="customize('${item.id}')">Customize</button></div>`).join('')+'</div>':'<div class="account-empty">You have not saved anything yet. Browse the Marketplace and tap Save on an item you like.</div>');
     return;
   }
-  panel.innerHTML=`<h3>Your creative shelf</h3><p class="account-muted">Keep your shopping, downloads, and Bespoke work organized in one account.</p><div class="account-stats"><div class="account-stat"><strong>${totalOrders}</strong><span>Orders</span></div><div class="account-stat"><strong>${savedItems.length}</strong><span>Saved items</span></div><div class="account-stat"><strong>${formatMoney(totalSpent)}</strong><span>Total demo spend</span></div></div><h4 style="margin:18px 0 0;">Recent orders</h4>${renderOrderHistory(3)}`;
+  panel.innerHTML=`<h3>Your creative shelf</h3><p class="account-muted">Keep your shopping, downloads, and Bespoke work organized in one account.</p><div class="account-stats"><div class="account-stat"><strong>${totalOrders}</strong><span>Orders</span></div><div class="account-stat"><strong>${savedItems.length}</strong><span>Saved items</span></div><div class="account-stat"><strong>${formatMoney(totalSpent)}</strong><span>Total spend</span></div></div><h4 style="margin:18px 0 0;">Recent orders</h4>${renderOrderHistory(3)}${renderBuyerProjects(3)}`;
+  loadBuyerData();
+}
+function normalizeRemoteOrder(order){
+  return {id:order.order_number,date:new Date(order.created_at).toLocaleDateString(),items:(order.items||[]).reduce((sum,item)=>sum+Number(item.qty||1),0),total:Number(order.total||0),email:order.buyer_email,status:order.status,deliverables:(order.items||[]).map(item=>({...item,downloadable:item.kind!=='bespoke'}))};
+}
+function renderBuyerProjects(limit){
+  const projects=typeof limit==='number'?buyerProjects.slice(0,limit):buyerProjects;
+  if(!projects.length) return '';
+  return '<h4 style="margin:22px 0 0;">Bespoke projects</h4><div class="account-orders">'+projects.map(project=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;"><div><strong>${escapeHtml(project.service_title)}</strong><span>${new Date(project.updated_at||project.created_at).toLocaleDateString()} · ${escapeHtml(project.buyer_email)}</span></div><span class="creator-status">${escapeHtml((project.status||'new').replaceAll('_',' '))}</span></div><p style="white-space:pre-wrap;margin:10px 0;color:var(--ink-soft);">${escapeHtml(project.brief)}</p><div class="account-muted">Revisions: ${project.revision_count||0}/2 · ${project.project_messages?.length||0} updates · ${project.project_files?.length||0} files</div>${(project.project_messages||[]).slice(-2).map(message=>`<div class="editor-note" style="margin-top:8px;"><strong>${escapeHtml(message.sender_name||message.sender_role)}:</strong> ${escapeHtml(message.message)}</div>`).join('')}${(project.project_files||[]).length?'<div class="order-files">'+project.project_files.map(file=>`<div class="order-file"><span>▣ ${escapeHtml(file.file_name)}</span><a class="btn btn-sm btn-solid" href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener">Open file</a></div>`).join('')+'</div>':''}</div>`).join('')+'</div>';
 }
 function creatorListings(){
   return marketplace.filter(item=>item.userCreated && (!item.creatorEmail || item.creatorEmail===currentUser?.email));
@@ -1706,18 +1755,28 @@ async function loadCrmProjects(){
   const wrap=document.getElementById('crmProjects');
   if(!wrap) return;
   try{
-    const response=await fetch('/api/projects/list');
-    const payload=await response.json();
-    if(!response.ok) throw new Error(payload.error||'Could not load CRM projects');
+    const [projectsResponse,ordersResponse]=await Promise.all([fetch('/api/projects/list'),fetch('/api/orders/list')]);
+    const payload=await projectsResponse.json();
+    const ordersPayload=await ordersResponse.json();
+    if(!projectsResponse.ok) throw new Error(payload.error||'Could not load CRM projects');
     crmProjects=payload.projects||[];
+    crmOrders=ordersResponse.ok?(ordersPayload.orders||[]):[];
     renderCrmProjects();
-  }catch(error){ wrap.innerHTML='<div class="account-empty">CRM is not connected yet. Run the SQL in <code>supabase/schema.sql</code> and redeploy.</div>'; }
+  }catch(error){ wrap.innerHTML='<div class="account-empty">CRM could not load. Check that the Supabase schema has been run, then refresh.</div>'; }
 }
 function renderCrmProjects(){
   const wrap=document.getElementById('crmProjects');
   if(!wrap) return;
-  if(!crmProjects.length){ wrap.innerHTML='<div class="account-empty">No client briefs yet. New Bespoke submissions will appear here.</div>'; return; }
-  wrap.innerHTML='<div class="account-orders">'+crmProjects.map(project=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;"><div><strong>${escapeHtml(project.service_title)}</strong><span>${escapeHtml(project.buyer_name||project.buyer_email)} · ${new Date(project.created_at).toLocaleDateString()}</span></div><select class="crm-status" onchange="updateCrmProject('${project.id}',this.value)"><option value="new" ${project.status==='new'?'selected':''}>New</option><option value="in_progress" ${project.status==='in_progress'?'selected':''}>In progress</option><option value="awaiting_review" ${project.status==='awaiting_review'?'selected':''}>Awaiting review</option><option value="revision_requested" ${project.status==='revision_requested'?'selected':''}>Revision requested</option><option value="approved" ${project.status==='approved'?'selected':''}>Approved</option><option value="delivered" ${project.status==='delivered'?'selected':''}>Delivered</option><option value="closed" ${project.status==='closed'?'selected':''}>Closed</option></select></div><p style="white-space:pre-wrap;margin:12px 0;color:var(--ink-soft);">${escapeHtml(project.brief)}</p><div class="account-muted">Style: ${escapeHtml(project.style||'Not specified')} · Revisions: ${project.revision_count||0}/2 · References: ${(project.reference_names||[]).map(escapeHtml).join(', ')||'None'}</div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;"><button class="btn btn-sm btn-solid" onclick="replyToCrmProject('${project.id}')">Reply to client</button><button class="btn btn-sm btn-ghost" onclick="markCrmRevision('${project.id}')">Add revision</button><label class="btn btn-sm btn-ghost">Upload result<input type="file" hidden onchange="uploadCrmFile('${project.id}',this)"></label></div></div>`).join('')+'</div>';
+  const awaiting=crmProjects.filter(project=>['awaiting_review','revision_requested'].includes(project.status)).length;
+  const delivered=crmProjects.filter(project=>['delivered','closed'].includes(project.status)).length;
+  const clientCount=new Set([...crmProjects.map(project=>project.buyer_email),...crmOrders.map(order=>order.buyer_email)].filter(Boolean)).size;
+  const orderRows=crmOrders.slice(0,8).map(order=>`<div class="creator-row"><div><strong>${escapeHtml(order.order_number)}</strong><span>${escapeHtml(order.buyer_name||order.buyer_email)} · ${new Date(order.created_at).toLocaleDateString()}</span></div><span class="creator-status">${escapeHtml(order.status||'received')}</span><span>${(order.items||[]).length} items</span><span>${formatMoney(Number(order.total||0))}</span></div>`).join('');
+  const projectRows=crmProjects.length?'<div class="account-orders">'+crmProjects.map(project=>{
+    const files=project.project_files||[];
+    const previews=files.map(file=>{ const isImage=/\.(png|jpe?g|gif|webp|svg)$/i.test(file.file_name||''); return `<div class="crm-file">${isImage?`<a href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener"><img src="${escapeHtml(file.file_url)}" alt="${escapeHtml(file.file_name)}"></a>`:'<span class="crm-file-icon">FILE</span>'}<div><strong>${escapeHtml(file.file_name)}</strong><a href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener">Open preview</a></div></div>`; }).join('');
+    return `<div class="account-order crm-card" style="display:block;"><div class="crm-card-head"><div><span class="creator-badge">${escapeHtml(project.status||'new')}</span><h4>${escapeHtml(project.service_title)}</h4><span>${escapeHtml(project.buyer_name||'Unnamed client')} · <a href="mailto:${escapeHtml(project.buyer_email)}">${escapeHtml(project.buyer_email)}</a>${project.phone?' · '+escapeHtml(project.phone):''}</span></div><select class="crm-status" onchange="updateCrmProject('${project.id}',this.value)"><option value="new" ${project.status==='new'?'selected':''}>New</option><option value="in_progress" ${project.status==='in_progress'?'selected':''}>In progress</option><option value="awaiting_review" ${project.status==='awaiting_review'?'selected':''}>Awaiting review</option><option value="revision_requested" ${project.status==='revision_requested'?'selected':''}>Revision requested</option><option value="approved" ${project.status==='approved'?'selected':''}>Approved</option><option value="delivered" ${project.status==='delivered'?'selected':''}>Delivered</option><option value="closed" ${project.status==='closed'?'selected':''}>Closed</option></select></div><div class="crm-grid"><div><h5>Brief</h5><p style="white-space:pre-wrap;">${escapeHtml(project.brief)}</p><p class="account-muted"><strong>Style:</strong> ${escapeHtml(project.style||'Not specified')}<br><strong>References:</strong> ${(project.reference_names||[]).map(escapeHtml).join(', ')||'None'}<br><strong>Revisions:</strong> ${project.revision_count||0}/2</p></div><div><h5>Conversation</h5>${(project.project_messages||[]).slice(-3).map(message=>`<div class="editor-note"><strong>${escapeHtml(message.sender_name||message.sender_role)}:</strong> ${escapeHtml(message.message)}</div>`).join('')||'<p class="account-muted">No messages yet.</p>'}</div></div>${previews?`<h5>Uploaded results</h5><div class="crm-files">${previews}</div>`:''}<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;"><button class="btn btn-sm btn-solid" onclick="replyToCrmProject('${project.id}')">Reply to client</button><button class="btn btn-sm btn-ghost" onclick="markCrmRevision('${project.id}')">Add revision</button><label class="btn btn-sm btn-ghost">Upload result<input type="file" hidden onchange="uploadCrmFile('${project.id}',this)"></label></div></div>`;
+  }).join('')+'</div>':'<div class="account-empty">No client briefs yet. New Bespoke submissions will appear here.</div>';
+  wrap.innerHTML=`<div class="account-stats"><div class="account-stat"><strong>${clientCount}</strong><span>Tracked clients</span></div><div class="account-stat"><strong>${crmOrders.length}</strong><span>Orders</span></div><div class="account-stat"><strong>${awaiting}</strong><span>Needs attention</span></div><div class="account-stat"><strong>${delivered}</strong><span>Delivered</span></div></div><h4 style="margin:22px 0 10px;">Recent orders</h4><div class="creator-table"><div class="creator-row head"><span>Order / client</span><span>Status</span><span>Items</span><span>Total</span></div>${orderRows||'<div class="account-empty">No orders tracked yet.</div>'}</div><h4 style="margin:22px 0 10px;">Client projects</h4>${projectRows}`;
 }
 async function uploadCrmFile(id,input){
   const file=input?.files?.[0]; if(!file) return;
@@ -1740,7 +1799,8 @@ function renderCreatorListings(listings){
   return '<div class="creator-table"><div class="creator-row head"><span>Listing</span><span>Status</span><span>Sales</span><span>Earnings</span></div>'+listings.map(item=>`<div class="creator-row"><div><strong>${item.title}</strong><span>${item.category} · ${formatMoney(item.price)} · ${(item.assetFiles||[]).length} file${(item.assetFiles||[]).length===1?'':'s'}</span></div><span class="creator-status">${item.listingStatus||'Live'}</span><span>${item.sales||0}</span><span>${formatMoney((item.sales||0)*item.price*.8)}</span></div>`).join('')+'</div>';
 }
 function renderOrderHistory(limit){
-  const orders=typeof limit==='number'?orderHistory.slice(0,limit):orderHistory;
+  const allOrders=[...remoteOrders.map(normalizeRemoteOrder),...orderHistory.filter(local=>!remoteOrders.some(remote=>remote.order_number===local.id))];
+  const orders=typeof limit==='number'?allOrders.slice(0,limit):allOrders;
   if(!orders.length) return '<div class="account-empty">Your orders will appear here after checkout. Start with Bespoke or browse the Marketplace.</div>';
   return '<div class="account-orders">'+orders.map(order=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:12px;"><div><strong>${order.id}</strong><span>${order.date} · ${order.items} item${order.items===1?'':'s'} · ${order.email||currentUser.email}</span></div><span class="order-price">${formatMoney(Number(order.total))}</span></div><div class="order-files">${(order.deliverables||[]).map((file,index)=>(file.files||['Preview file']).map((fileName,fileIndex)=>`<div class="order-file"><span>▣ ${file.title} · ${fileName}</span>${file.downloadable?`<button class="btn btn-sm btn-solid" onclick="downloadOrderFile('${order.id}',${index},${fileIndex})">Download</button>`:'<span class="email-status">Delivered within the day</span>'}</div>`).join('')).join('')}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;"><span class="email-status">${order.emailStatus||'Receipt available'}</span><button class="btn btn-sm btn-ghost" onclick="emailOrder('${order.id}')">Email receipt</button></div></div>`).join('')+'</div>';
 }
@@ -2022,11 +2082,22 @@ function completeCheckout(){
     emailStatus:cart.some(line=>line.canvaDraft) ? (canvaDraftStatus(cart.find(line=>line.canvaDraft))?.message || 'Canva draft status is shown below') : 'Receipt ready in your account',
     deliverables:cart.map(line=>({title:line.title,kind:line.kind,thumb:line.thumb,files:line.assetFiles||['Preview file'],downloadable:line.kind!=='bespoke',canvaRequestId:line.canvaDraft?.id||null}))
   });
+  createRemoteOrder(orderHistory[0]);
   persistAccountState();
   toast('Checkout complete — thank you!');
   cart = [];
   persistCart();
   renderCart();
+}
+async function createRemoteOrder(order){
+  try{
+    const response=await fetch('/api/orders/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:order.id,buyer_email:order.email,buyer_name:currentUser?.name||'',total:order.total,currency:'USD',items:(order.deliverables||[]).map(file=>({title:file.title,kind:file.kind,qty:1,price:0,files:file.files||[],thumb:(file.thumb||'').startsWith('data:')?'':file.thumb||'',downloadable:Boolean(file.downloadable)}))})});
+    if(!response.ok) throw new Error('Order was only saved locally');
+    const payload=await response.json();
+    order.remoteId=payload.order?.id||null;
+    order.remoteStatus=payload.order?.status||'received';
+    persistAccountState();
+  }catch(error){ toast('Order saved locally; database sync is unavailable right now.'); }
 }
 
 function downloadAsset(id){
