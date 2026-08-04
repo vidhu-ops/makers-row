@@ -1,4 +1,4 @@
-const { cookie, randomToken, codeChallenge } = require('../_auth');
+const { cookie, randomToken, codeChallenge, sealOAuthState } = require('../_auth');
 
 module.exports = async function handler(req, res) {
   if (!process.env.CANVA_CLIENT_ID || !process.env.CANVA_CLIENT_SECRET) {
@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
     return;
   }
   const verifier = randomToken(48);
-  const state = randomToken(24);
+  const state = sealOAuthState(verifier);
   const redirectUri = process.env.CANVA_REDIRECT_URI || `${req.headers['x-forwarded-proto'] || 'http'}://${req.headers.host}/api/canva/oauth/callback`;
   const params = new URLSearchParams({
     response_type: 'code',

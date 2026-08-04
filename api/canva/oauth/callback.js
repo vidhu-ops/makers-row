@@ -1,17 +1,18 @@
-const { parseCookies, cookie, canvaBasicAuth } = require('../_auth');
+const { parseCookies, cookie, canvaBasicAuth, openOAuthState } = require('../_auth');
 
 module.exports = async function handler(req, res) {
   const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
   const cookies = parseCookies(req);
-  if (!query.get('code') || !query.get('state') || query.get('state') !== cookies.canva_oauth_state) {
-    res.status(400).send('Invalid Canva OAuth state or authorization code.');
+  const state = openOAuthState(query.get('state'));
+  if (!query.get('code') || !state) {
+    res.status(400).send('This Canva login session has expired or was opened from the wrong website. Start again from the live Makers Row site.');
     return;
   }
   const redirectUri = process.env.CANVA_REDIRECT_URI || `${req.headers['x-forwarded-proto'] || 'http'}://${req.headers.host}/api/canva/oauth/callback`;
   const tokenResponse = await fetch('https://api.canva.com/rest/v1/oauth/token', {
     method: 'POST',
     headers: { Authorization: canvaBasicAuth(), 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ grant_type: 'authorization_code', code: query.get('code'), redirect_uri: redirectUri, code_verifier: cookies.canva_code_verifier })
+    body: new URLSearchParams({ grant_type: 'authorization_code', code: query.get('code'), redirect_uri: redirectUri, code_verifier: state.verifier })
   });
   const payload = await tokenResponse.json();
   if (!tokenResponse.ok) {
