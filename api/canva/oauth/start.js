@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
     response_type: 'code',
     client_id: process.env.CANVA_CLIENT_ID,
     redirect_uri: redirectUri,
-    scope: 'design:content:write brandtemplate:content:read asset:write',
+    scope: 'design:content:write design:meta:read brandtemplate:meta:read brandtemplate:content:read asset:write',
     code_challenge_method: 'S256',
     code_challenge: codeChallenge(verifier),
     state

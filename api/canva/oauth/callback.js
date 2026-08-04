@@ -3,6 +3,11 @@ const { parseCookies, cookie, canvaBasicAuth, openOAuthState } = require('../_au
 module.exports = async function handler(req, res) {
   const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
   const cookies = parseCookies(req);
+  if (query.get('error')) {
+    const description = query.get('error_description') || query.get('error');
+    res.status(400).send(`Canva authorization failed: ${description}`);
+    return;
+  }
   const state = openOAuthState(query.get('state'));
   if (!query.get('code') || !state) {
     res.status(400).send('This Canva login session has expired or was opened from the wrong website. Start again from the live Makers Row site.');
