@@ -523,6 +523,7 @@
   .svc-badge.express{background:#E8F8EF;color:#1B7A45;}
   .svc-badge.best{background:#EEF2FF;color:var(--cobalt-deep);}
   .svc-item h4{font-family:'Syne',sans-serif;font-size:1rem;line-height:1.18;margin:0 0 5px;}
+  .svc-package{display:inline-flex;margin-top:8px;padding:4px 8px;border-radius:5px;background:#F3F5F9;color:var(--ink-soft);font-size:.68rem;font-weight:750;}
   .svc-rating{
     display:inline-flex;align-items:center;gap:4px;font-size:0.78rem;font-weight:700;
     color:#1B7A45;background:#E8F8EF;padding:2px 7px;border-radius:4px;margin-bottom:6px;
@@ -1473,6 +1474,7 @@ const CANVA_DRAFT_STATUS_KEY = 'makers-row-canva-draft-status-v1';
 const USD_TO_INR = 84; // Prototype display rate; replace with a live rate service for production.
 const MIN_USD_PRICE = 2.5;
 const MIN_INR_PRICE = 150;
+const SERVICE_UNDER_INR = 1500;
 let currency = localStorage.getItem(CURRENCY_KEY)==='USD' ? 'USD' : 'INR';
 let canvaDraftStatuses = {};
 try{ canvaDraftStatuses = JSON.parse(localStorage.getItem(CANVA_DRAFT_STATUS_KEY) || '{}') || {}; }catch(error){ canvaDraftStatuses = {}; }
@@ -1530,7 +1532,7 @@ function updateStaticPrices(){
   if(p8) p8.textContent=formatMoney(8);
   if(p12) p12.textContent=formatMoney(12);
   const under=document.getElementById('under20Label');
-  if(under) under.textContent='Under '+formatMoney(20);
+  if(under) under.textContent='Under '+formatMoney(inr(SERVICE_UNDER_INR));
 }
 function updateListingPriceField(usdValue){
   const input=document.getElementById('slPrice');
@@ -2113,30 +2115,48 @@ function downloadAsset(id){
 /* ============================================================
    BESPOKE SERVICES (Swiggy-style menu)
 ============================================================ */
-const serviceCategories = ['Branding','Social','Presentations','Websites & Content','Print','Product','AI Assist'];
+const inr = value => value / USD_TO_INR;
+const serviceCategories = ['Branding','Social','Presentations','Websites & Content','Print','Product','AI Assist','Video & Animation','Audio & Voice','Marketing & Business','Documents & Data'];
 const bespokeServices = [
-  {id:'s1',cat:'Branding',title:'Logo & brand mark',desc:'Primary logo + 2 concepts, PNG/SVG delivery, one revision round.',price:45,eta:'~60 min',rating:4.9,orders:820,seed:'svc-logo',tags:['popular','best']},
-  {id:'s2',cat:'Branding',title:'Brand color & type kit',desc:'Palette, type pairing, and usage notes for your brand.',price:28,eta:'~45 min',rating:4.7,orders:210,seed:'svc-kit',tags:['express']},
-  {id:'s3',cat:'Branding',title:'Favicon + app icon set',desc:'App icon, favicon, and social avatar from your mark.',price:18,eta:'~30 min',rating:4.6,orders:140,seed:'svc-favicon',tags:['express']},
-  {id:'s4',cat:'Social',title:'Instagram post (single)',desc:'One feed post sized for IG, editable text, brand colors.',price:12,eta:'~25 min',rating:4.8,orders:1100,seed:'svc-ig',tags:['popular','express']},
-  {id:'s5',cat:'Social',title:'Instagram story pack (5)',desc:'Five stories with templates + your copy/images.',price:32,eta:'~50 min',rating:4.8,orders:540,seed:'svc-stories',tags:['popular']},
-  {id:'s6',cat:'Social',title:'LinkedIn banner + post',desc:'Profile banner and one announcement graphic.',price:22,eta:'~40 min',rating:4.5,orders:190,seed:'svc-li',tags:['express']},
-  {id:'s7',cat:'Social',title:'YouTube thumbnail',desc:'Click-focused thumbnail with title treatment.',price:15,eta:'~30 min',rating:4.7,orders:460,seed:'svc-yt',tags:['popular','express']},
-  {id:'s8',cat:'Presentations',title:'Pitch deck (up to 10 slides)',desc:'Narrative deck from your outline — clean startup style.',price:85,eta:'~90 min',rating:4.9,orders:310,seed:'svc-deck',tags:['best','popular']},
-  {id:'s9',cat:'Presentations',title:'One-pager / one-sheet',desc:'Single-page PDF for investors or sales.',price:35,eta:'~45 min',rating:4.6,orders:175,seed:'svc-onepager',tags:['express']},
-  {id:'s10',cat:'Presentations',title:'Slide redesign (3 slides)',desc:'Polish 3 existing slides — layout, type, charts.',price:40,eta:'~50 min',rating:4.7,orders:98,seed:'svc-redesign',tags:[]},
-  {id:'s11',cat:'Print',title:'Flyer / poster (A4)',desc:'Print-ready PDF with bleed, for events or promos.',price:30,eta:'~45 min',rating:4.6,orders:240,seed:'svc-flyer',tags:['express']},
-  {id:'s12',cat:'Print',title:'Business card (front+back)',desc:'Double-sided card, print-ready CMYK.',price:20,eta:'~35 min',rating:4.5,orders:160,seed:'svc-card',tags:['express']},
-  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu layout for cafe, salon, or clinic.',price:38,eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[]},
-  {id:'s14',cat:'Product',title:'Packaging mockup',desc:'Product on packaging mock with your art.',price:42,eta:'~60 min',rating:4.7,orders:130,seed:'svc-pack',tags:['popular']},
-  {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup.',price:36,eta:'~50 min',rating:4.6,orders:88,seed:'svc-hero',tags:[]},
-  {id:'s16',cat:'AI Assist',title:'AI logo concept pack (8)',desc:'Curated AI directions + designer shortlist notes.',price:25,eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express']},
-  {id:'s17',cat:'AI Assist',title:'Background remove (5 imgs)',desc:'Clean cutouts, transparent PNG.',price:14,eta:'~20 min',rating:4.8,orders:700,seed:'svc-bg',tags:['express','popular']},
-  {id:'s18',cat:'AI Assist',title:'Product photo polish (3)',desc:'Lighting/color cleanup for store listings.',price:24,eta:'~40 min',rating:4.6,orders:210,seed:'svc-photo',tags:['express']},
-  {id:'s19',cat:'Websites & Content',title:'Landing page copy',desc:'Headline, sections, CTA, and conversion-focused copy for one webpage.',price:42,eta:'~60 min',rating:4.8,orders:180,seed:'svc-copy',tags:['popular','express']},
-  {id:'s20',cat:'Websites & Content',title:'Website homepage design',desc:'A polished homepage direction with layout, visual hierarchy, and responsive notes.',price:95,eta:'same day',rating:4.9,orders:240,seed:'svc-webhome',tags:['popular','best']},
-  {id:'s21',cat:'Websites & Content',title:'Website content pack (5 pages)',desc:'Clear, on-brand copy for Home, About, Services, FAQ, and Contact pages.',price:120,eta:'same day',rating:4.7,orders:95,seed:'svc-webcontent',tags:['best']},
-  {id:'s22',cat:'Websites & Content',title:'No-code landing page build',desc:'A responsive landing page assembled from your brief, copy, and references.',price:180,eta:'same day',rating:4.8,orders:70,seed:'svc-webbuild',tags:['popular']}
+  {id:'s1',cat:'Branding',title:'Logo & brand mark',desc:'Primary logo plus two concepts, PNG/SVG/PDF delivery, open editable file, and one revision round.',price:inr(3000),eta:'~60 min',rating:4.9,orders:820,seed:'svc-logo',tags:['popular','best'],packageLabel:'Pack · 2 concepts'},
+  {id:'s2',cat:'Branding',title:'Brand color & type kit',desc:'Palette, type pairing, usage notes, swatches, and a ready-to-share mini brand sheet.',price:inr(2300),eta:'~45 min',rating:4.7,orders:210,seed:'svc-kit',tags:['express'],packageLabel:'Pack · brand starter'},
+  {id:'s3',cat:'Branding',title:'Favicon + app icon set',desc:'Favicon, app icon, social avatar, and export sizes for web, mobile, and social profiles.',price:inr(1512),eta:'~30 min',rating:4.6,orders:140,seed:'svc-favicon',tags:['express'],packageLabel:'Pack · 6 exports'},
+  {id:'s4',cat:'Social',title:'Instagram post (single)',desc:'One feed post sized for Instagram with editable text, brand colors, and export-ready PNG.',price:inr(150),eta:'~25 min',rating:4.8,orders:1100,seed:'svc-ig',tags:['popular','express'],packageLabel:'Single · 1 creative'},
+  {id:'s5',cat:'Social',title:'Instagram story pack (5)',desc:'Five coordinated stories with templates, your copy/images, safe zones, and mobile-first exports.',price:inr(800),eta:'~50 min',rating:4.8,orders:540,seed:'svc-stories',tags:['popular'],packageLabel:'Pack · 5 stories'},
+  {id:'s6',cat:'Social',title:'LinkedIn banner + post',desc:'Profile banner and one announcement graphic with professional hierarchy and desktop/mobile crops.',price:inr(500),eta:'~40 min',rating:4.5,orders:190,seed:'svc-li',tags:['express'],packageLabel:'Pack · 2 creatives'},
+  {id:'s7',cat:'Social',title:'YouTube thumbnail',desc:'One click-focused thumbnail with title treatment, subject cutout, contrast pass, and JPG/PNG exports.',price:inr(200),eta:'~30 min',rating:4.7,orders:460,seed:'svc-yt',tags:['popular','express'],packageLabel:'Single · 1 thumbnail'},
+  {id:'s8',cat:'Presentations',title:'Pitch deck (up to 10 slides)',desc:'Narrative deck from your outline with clean startup styling, charts, icons, speaker notes, PDF, and open file.',price:inr(3000),eta:'~90 min',rating:4.9,orders:310,seed:'svc-deck',tags:['best','popular'],packageLabel:'Pack · up to 10 slides'},
+  {id:'s9',cat:'Presentations',title:'One-pager / one-sheet',desc:'Single-page PDF for investors, sales, or partnerships with hierarchy, icons, and print/web exports.',price:inr(800),eta:'~45 min',rating:4.6,orders:175,seed:'svc-onepager',tags:['express'],packageLabel:'Single · 1 page'},
+  {id:'s10',cat:'Presentations',title:'Slide redesign (3 slides)',desc:'Polish three existing slides with layout, type, charts, visual consistency, PDF, and editable file.',price:inr(500),eta:'~50 min',rating:4.7,orders:98,seed:'svc-redesign',tags:[],packageLabel:'Pack · 3 slides'},
+  {id:'s11',cat:'Print',title:'Flyer / poster (A4)',desc:'Print-ready A4 PDF with bleed, crop marks, CMYK-safe layout, and a web PNG version.',price:inr(850),eta:'~45 min',rating:4.6,orders:240,seed:'svc-flyer',tags:['express'],packageLabel:'Single · A4'},
+  {id:'s12',cat:'Print',title:'Business card (front + back)',desc:'Double-sided business card with print-ready CMYK PDF, bleed, crop marks, and open file.',price:inr(1500),eta:'~35 min',rating:4.5,orders:160,seed:'svc-card',tags:['express'],packageLabel:'Single · front + back'},
+  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu or price list layout for cafés, salons, clinics, and service businesses with PDF and open file.',price:inr(3500),eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[],packageLabel:'Pack · up to 4 pages'},
+  {id:'s14',cat:'Product',title:'Packaging mockup',desc:'Product artwork placed on a realistic packaging scene with presentation-ready JPG and source layout.',price:inr(2000),eta:'~60 min',rating:4.7,orders:130,seed:'svc-pack',tags:['popular'],packageLabel:'Pack · 2 mockup views'},
+  {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup with responsive crops, callout hierarchy, and web-ready exports.',price:inr(3000),eta:'~180 min',rating:4.6,orders:88,seed:'svc-hero',tags:[],packageLabel:'Pack · desktop + mobile'},
+  {id:'s16',cat:'AI Assist',title:'AI creative direction pack',desc:'Curated AI visual directions, prompt refinement, reference synthesis, and designer shortlist notes.',price:inr(300),eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express'],packageLabel:'Pack · 8 directions'},
+  {id:'s17',cat:'AI Assist',title:'AI automation & agent setup',desc:'Practical workflow map, prompt system, tool setup, and handoff notes for a repeatable AI assistant.',price:inr(3000),eta:'same day',rating:4.8,orders:145,seed:'svc-agent',tags:['popular','best'],packageLabel:'Pack · strategy + setup'},
+  {id:'s18',cat:'AI Assist',title:'Background remove (5 images)',desc:'Clean cutouts with transparent PNG delivery. Priced at ₹30 per image with a five-image minimum.',price:inr(150),eta:'~20 min',rating:4.8,orders:700,seed:'svc-bg',tags:['express','popular'],packageLabel:'Pack · 5 images'},
+  {id:'s19',cat:'Websites & Content',title:'Landing page copy',desc:'Headline, sections, CTA, trust points, and conversion-focused copy for one webpage.',price:inr(3000),eta:'~60 min',rating:4.8,orders:180,seed:'svc-copy',tags:['popular','express'],packageLabel:'Single · 1 page'},
+  {id:'s20',cat:'Websites & Content',title:'Website homepage design',desc:'Polished homepage direction with layout, visual hierarchy, responsive notes, PDF, and open design file.',price:inr(5000),eta:'same day',rating:4.9,orders:240,seed:'svc-webhome',tags:['popular','best'],packageLabel:'Single · homepage'},
+  {id:'s21',cat:'Websites & Content',title:'Website content pack (5 pages)',desc:'Clear, on-brand copy for Home, About, Services, FAQ, and Contact pages with page-by-page structure.',price:inr(7000),eta:'same day',rating:4.7,orders:95,seed:'svc-webcontent',tags:['best'],packageLabel:'Pack · 5 pages'},
+  {id:'s22',cat:'Websites & Content',title:'No-code landing page build',desc:'Responsive landing page assembled from your brief, copy, references, forms, and mobile layout.',price:inr(2500),eta:'same day',rating:4.8,orders:70,seed:'svc-webbuild',tags:['popular'],packageLabel:'Single · 1 landing page'},
+  {id:'s23',cat:'Video & Animation',title:'Social reel edit (30 sec)',desc:'Fast-paced vertical reel with cuts, captions, music timing, color polish, and one revision.',price:inr(1200),eta:'same day',rating:4.8,orders:320,seed:'svc-reel',tags:['popular','express'],packageLabel:'Single · 30 seconds'},
+  {id:'s24',cat:'Video & Animation',title:'Short-form video pack (3)',desc:'Three vertical videos for Reels, Shorts, or TikTok with hooks, captions, transitions, and exports.',price:inr(3000),eta:'same day',rating:4.8,orders:180,seed:'svc-shorts',tags:['popular'],packageLabel:'Pack · 3 videos'},
+  {id:'s25',cat:'Video & Animation',title:'Product promo video (30 sec)',desc:'Product-led promo with storyboard, kinetic text, music bed, CTA ending, and social exports.',price:inr(3500),eta:'same day',rating:4.7,orders:130,seed:'svc-productvideo',tags:['best'],packageLabel:'Single · 30 seconds'},
+  {id:'s26',cat:'Video & Animation',title:'Explainer animation (60 sec)',desc:'Storyboard, simple character or icon animation, voiceover timing, subtitles, and 1080p delivery.',price:inr(6000),eta:'1–2 days',rating:4.9,orders:84,seed:'svc-explainer',tags:['best'],packageLabel:'Single · 60 seconds'},
+  {id:'s27',cat:'Video & Animation',title:'Motion graphics titles (5)',desc:'Five animated title cards, lower thirds, transitions, or promo frames for your content system.',price:inr(2500),eta:'same day',rating:4.6,orders:100,seed:'svc-motion',tags:['express'],packageLabel:'Pack · 5 animations'},
+  {id:'s28',cat:'Video & Animation',title:'Animated logo sting',desc:'Short animated logo reveal for videos, websites, and social intros with transparent export.',price:inr(1800),eta:'~90 min',rating:4.7,orders:116,seed:'svc-logosting',tags:['popular'],packageLabel:'Single · 3–5 seconds'},
+  {id:'s29',cat:'Audio & Voice',title:'Podcast cleanup (30 min)',desc:'Noise reduction, silence cleanup, leveling, EQ, and mastered WAV/MP3 delivery.',price:inr(1200),eta:'same day',rating:4.7,orders:66,seed:'svc-podcast',tags:['express'],packageLabel:'Single · up to 30 min'},
+  {id:'s30',cat:'Audio & Voice',title:'Voiceover sync (60 sec)',desc:'Voiceover timing and sync for one short video with clean delivery and caption timing notes.',price:inr(2500),eta:'same day',rating:4.8,orders:54,seed:'svc-voice',tags:['popular'],packageLabel:'Single · 60 seconds'},
+  {id:'s31',cat:'Audio & Voice',title:'Podcast cover + audiogram pack',desc:'Podcast cover art plus three audiogram frames for promotion across social platforms.',price:inr(1800),eta:'same day',rating:4.6,orders:72,seed:'svc-audiogram',tags:[],packageLabel:'Pack · cover + 3 frames'},
+  {id:'s32',cat:'Marketing & Business',title:'Ad creative pack (3)',desc:'Three paid-social ad concepts with hooks, visual hierarchy, copy variations, and platform crops.',price:inr(1500),eta:'same day',rating:4.7,orders:128,seed:'svc-adcreative',tags:['popular','express'],packageLabel:'Pack · 3 ads'},
+  {id:'s33',cat:'Marketing & Business',title:'Campaign copy pack (5 ads)',desc:'Five ad copy variations with primary text, headline, CTA, audience angle, and testing notes.',price:inr(2000),eta:'same day',rating:4.7,orders:88,seed:'svc-adcopy',tags:['popular'],packageLabel:'Pack · 5 ads'},
+  {id:'s34',cat:'Marketing & Business',title:'Social content calendar (30 days)',desc:'Thirty-day content plan with themes, hooks, captions, formats, and a practical posting schedule.',price:inr(3000),eta:'same day',rating:4.8,orders:92,seed:'svc-calendar',tags:['best'],packageLabel:'Pack · 30 days'},
+  {id:'s35',cat:'Marketing & Business',title:'Resume + LinkedIn refresh',desc:'ATS-friendly resume polish, LinkedIn headline, About section, and role-specific positioning.',price:inr(1500),eta:'same day',rating:4.7,orders:145,seed:'svc-resume',tags:['express'],packageLabel:'Pack · resume + profile'},
+  {id:'s36',cat:'Documents & Data',title:'Ebook / lead magnet layout',desc:'Designed PDF layout with cover, typography, page hierarchy, callouts, and a share-ready export.',price:inr(3500),eta:'same day',rating:4.8,orders:64,seed:'svc-ebook',tags:['best'],packageLabel:'Pack · up to 12 pages'},
+  {id:'s37',cat:'Documents & Data',title:'Case study PDF',desc:'Structured case study with problem, process, proof points, charts, and a polished sales-ready PDF.',price:inr(2500),eta:'same day',rating:4.6,orders:52,seed:'svc-case-study',tags:['popular'],packageLabel:'Single · up to 6 pages'},
+  {id:'s38',cat:'Documents & Data',title:'Report / infographic page',desc:'One clear data-led page with charts, icons, callouts, and web/print exports.',price:inr(2000),eta:'~90 min',rating:4.7,orders:78,seed:'svc-infographic',tags:['express'],packageLabel:'Single · 1 page'},
+  {id:'s39',cat:'Documents & Data',title:'Spreadsheet dashboard design',desc:'Clean KPI dashboard layout for a spreadsheet or reporting workflow with chart and filter guidance.',price:inr(3000),eta:'same day',rating:4.6,orders:44,seed:'svc-dashboard',tags:[],packageLabel:'Single · 1 dashboard'}
 ];
 
 let activeSvcCat = 'All';
@@ -2167,7 +2187,7 @@ function filteredServices(){
     if(q && !(s.title.toLowerCase().includes(q) || s.desc.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q))) return false;
     if(activeSvcFilter==='express' && !s.tags.includes('express')) return false;
     if(activeSvcFilter==='popular' && !s.tags.includes('popular')) return false;
-    if(activeSvcFilter==='under20' && s.price>=20) return false;
+    if(activeSvcFilter==='under20' && s.price>=inr(SERVICE_UNDER_INR)) return false;
     return true;
   });
 }
@@ -2215,6 +2235,7 @@ function renderServices(){
             <div class="svc-rating">★ ${s.rating.toFixed(1)} · ${s.orders}+ orders</div>
             <p class="svc-desc">${s.desc}</p>
             <div><span class="svc-price">${formatMoney(s.price)}</span><span class="svc-eta">${s.eta} turnaround</span></div>
+            <div class="svc-package">${s.packageLabel||'Custom brief · 2 revisions included'}</div>
           </div>
           <div class="svc-media">
             <img src="https://picsum.photos/seed/${s.seed}/240/240" alt="" loading="lazy">
