@@ -54,6 +54,8 @@
   a{color:inherit;}
   button{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer;}
   :focus-visible{outline:3px solid var(--cobalt);outline-offset:2px;}
+  .skip-link{position:fixed;left:16px;top:-60px;z-index:300;background:var(--ink);color:var(--white);padding:10px 14px;border-radius:0 0 8px 8px;font-weight:700;transition:top .15s ease;}
+  .skip-link:focus{top:0;}
   .wrap{max-width:1180px;margin:0 auto;padding:0 28px;position:relative;z-index:1;}
 
   /* ---------- HEADER ---------- */
@@ -124,6 +126,7 @@
   nav.tabs button.bespoke-tab.active,
   nav.tabs button.bespoke-tab:hover{color:var(--coral);}
   nav.tabs button.bespoke-tab.active{background:var(--coral);color:white;border-color:#B83A2E;}
+  nav.tabs button.bespoke-tab{color:var(--coral);font-weight:750;}
 
   /* ---------- GENERIC SECTIONS ---------- */
   section.page{display:none;padding:40px 0 90px;position:relative;z-index:1;}
@@ -336,6 +339,42 @@
   .card .seller{font-size:0.78rem;color:var(--ink-soft);}
   .card .card-actions{display:flex;gap:8px;margin-top:auto;padding-top:10px;}
   .card .card-actions .btn{flex:1;justify-content:center;padding:9px 10px;font-size:0.8rem;}
+  .save-btn{border:0;background:transparent;color:var(--ink-soft);font-size:.76rem;font-weight:700;padding:5px 3px;white-space:nowrap;}
+  .save-btn:hover,.save-btn.saved{color:var(--coral);}
+
+  /* ---------- MARKETPLACE STOREFRONT ---------- */
+  #page-marketplace{background:linear-gradient(180deg,rgba(255,255,255,.34),transparent 35%);}
+  #page-marketplace > .wrap{max-width:1240px;}
+  .marketplace-hero{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;background:linear-gradient(120deg,#172033,#2A3A5A);color:var(--white);border-radius:18px;padding:28px 30px;margin-bottom:20px;box-shadow:0 18px 42px rgba(18,20,26,.16);}
+  .marketplace-hero .eyebrow{color:#AFC0FF;}
+  .marketplace-hero h1{font-size:clamp(1.8rem,3.5vw,3rem);max-width:14ch;margin:7px 0 9px;}
+  .marketplace-hero p{color:#D7DCE6;max-width:54ch;line-height:1.5;margin:0;}
+  .market-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;min-width:330px;}
+  .market-stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.15);border-radius:11px;padding:12px 10px;}
+  .market-stat strong{display:block;font-size:1.05rem;}
+  .market-stat span{display:block;color:#BFC8D8;font-size:.68rem;margin-top:3px;}
+  #page-marketplace .section-title{font-size:1.5rem;margin-bottom:5px;}
+  #page-marketplace .section-sub{font-size:.9rem;margin-bottom:18px;}
+  #page-marketplace .market-toolbar{background:var(--white);border:1px solid rgba(18,20,26,.1);border-radius:15px;padding:12px;margin-bottom:20px;box-shadow:0 8px 22px rgba(18,20,26,.05);}
+  #page-marketplace .market-toolbar .search-input{border:1px solid var(--line);border-radius:9px;box-shadow:inset 0 1px 2px rgba(18,20,26,.04);}
+  #page-marketplace .sort-select{border:1px solid var(--line);border-radius:9px;}
+  #page-marketplace .cat-pills{flex-basis:100%;border-top:1px solid rgba(18,20,26,.08);padding-top:11px;}
+  #page-marketplace .cat-pill{border:1px solid var(--line);color:var(--ink-soft);background:#F8FAFD;padding:8px 13px;}
+  #page-marketplace .cat-pill:hover{border-color:var(--cobalt);color:var(--cobalt-deep);}
+  #page-marketplace .cat-pill.active{background:var(--cobalt);border-color:var(--cobalt);color:var(--white);}
+  #page-marketplace .product-grid{grid-template-columns:repeat(auto-fill,minmax(225px,1fr));gap:16px;}
+  #page-marketplace .card{border:1px solid rgba(18,20,26,.12);border-radius:15px;box-shadow:0 7px 18px rgba(18,20,26,.055);overflow:hidden;}
+  #page-marketplace .card:hover{transform:translateY(-3px);box-shadow:0 15px 28px rgba(18,20,26,.12);border-color:rgba(31,75,255,.35);}
+  #page-marketplace .card .thumb-wrap{border-bottom:1px solid rgba(18,20,26,.1);background:#EEF2F7;}
+  #page-marketplace .card img.thumb{height:174px;border-radius:0;}
+  #page-marketplace .card .price-tag{top:12px;right:12px;transform:none;background:var(--white);color:var(--ink);border:1px solid rgba(18,20,26,.12);box-shadow:0 3px 8px rgba(18,20,26,.12);}
+  #page-marketplace .card .body{padding:14px 15px 15px;gap:7px;}
+  #page-marketplace .card .cat-label{font-size:.66rem;color:var(--cobalt-deep);}
+  #page-marketplace .card h4{font-size:.96rem;line-height:1.25;min-height:2.4em;}
+  #page-marketplace .card .meta-row{font-size:.75rem;}
+  #page-marketplace .card .seller{font-size:.76rem;}
+  .delivery-badge{display:inline-flex;align-self:flex-start;background:#E8F8EF;color:#1B7A45;border-radius:5px;padding:4px 7px;font-size:.68rem;font-weight:750;}
+  #page-marketplace .card .card-actions .btn{border-radius:8px;}
 
   /* ---------- EDITOR ---------- */
   .editor-shell{display:grid;grid-template-columns:250px 1fr 260px;gap:18px;}
@@ -349,7 +388,7 @@
   .tool-btn:hover{border-color:var(--ink);}
   .canvas-stage{
     background:var(--bg-deep);border:2px solid var(--ink);border-radius:14px;
-    display:flex;align-items:center;justify-content:center;padding:20px;min-height:560px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;min-height:560px;
   }
   .row2{display:flex;gap:8px;}
   .row2 .tool-btn{flex:1;text-align:center;justify-content:center;}
@@ -363,6 +402,15 @@
     width:100%;padding:9px 11px;border:2px solid var(--line);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;background:var(--bg);
   }
   .editor-note{font-size:0.76rem;color:var(--ink-soft);line-height:1.5;margin-top:10px;background:var(--bg);padding:10px;border-radius:8px;border:1px dashed var(--line);}
+  .brand-kit{background:linear-gradient(135deg,#F5F7FF,#FFF8F1);border:1px solid var(--line);border-radius:10px;padding:11px;margin-bottom:14px;}
+  .brand-kit h5{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;margin:0 0 8px;font-family:'JetBrains Mono',monospace;}
+  .brand-logo-preview{width:48px;height:48px;object-fit:contain;border:1px dashed var(--line);border-radius:8px;background:var(--white);display:block;margin-bottom:8px;}
+  .brand-swatches{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0;}
+  .brand-kit .row2 input[type=color]{height:28px;min-width:0;padding:1px;border:1px solid var(--line);}
+  .brand-swatch{width:25px;height:25px;border-radius:6px;border:2px solid var(--white);box-shadow:0 0 0 1px var(--line);cursor:pointer;}
+  .brand-swatch.active{box-shadow:0 0 0 2px var(--cobalt);}
+  .alignment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
+  .alignment-grid .tool-btn{margin:0;padding:8px 4px;font-size:.72rem;justify-content:center;text-align:center;}
 
 ﻿  /* ---------- BESPOKE (Swiggy-style services) ---------- */
   .file-drop{
@@ -372,6 +420,22 @@
   .file-drop.has-files{border-color:var(--cobalt);color:var(--cobalt-deep);}
 
   #page-bespoke{padding-bottom:110px;}
+  .bespoke-intro{display:grid;grid-template-columns:1.15fr .85fr;gap:20px;align-items:stretch;margin-bottom:18px;}
+  .bespoke-promise{background:linear-gradient(135deg,#FFF4EC,#FFFDF9);border:2px solid var(--coral);border-radius:18px;padding:26px;box-shadow:var(--shadow);}
+  .bespoke-promise h1{font-size:clamp(1.7rem,3vw,2.55rem);max-width:16ch;margin:8px 0 12px;}
+  .bespoke-promise p{color:var(--ink-soft);line-height:1.6;max-width:58ch;margin:0 0 18px;}
+  .promise-points{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:18px;}
+  .promise-point{background:rgba(255,255,255,.7);border:1px solid #F0C4B5;border-radius:10px;padding:10px 11px;font-size:.8rem;font-weight:700;line-height:1.35;}
+  .promise-point span{display:block;color:var(--coral);font-family:'JetBrains Mono',monospace;font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;}
+  .revision-card{background:var(--ink);color:var(--white);border-radius:18px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;}
+  .revision-card h3{font-size:1.3rem;margin-bottom:10px;}
+  .revision-card p{color:#D7DCE6;line-height:1.55;font-size:.88rem;margin:0;}
+  .revision-steps{display:grid;gap:10px;margin-top:18px;}
+  .revision-step{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;line-height:1.4;}
+  .revision-step b{display:flex;align-items:center;justify-content:center;flex:0 0 24px;height:24px;border-radius:50%;background:var(--amber);color:var(--ink);font-size:.72rem;}
+  .reference-list{font-size:.78rem;color:var(--ink-soft);line-height:1.4;margin-top:6px;}
+  .reference-list.has-files{color:var(--cobalt-deep);font-weight:650;}
+  .svc-policy{margin:0 0 16px;padding:12px 14px;border:1px solid #F0C4B5;border-radius:10px;background:#FFF8F4;color:#7A3D2C;font-size:.82rem;line-height:1.45;}
   .studio-banner{
     background:var(--white);
     border:1px solid rgba(18,20,26,0.1);
@@ -418,7 +482,7 @@
     font-size:0.8rem;font-weight:650;color:var(--ink-soft);
   }
   .svc-filter.active{border-color:var(--ink);background:var(--ink);color:var(--white);}
-  .svc-layout{display:grid;grid-template-columns:200px 1fr;gap:18px;align-items:start;}
+  .svc-layout{display:grid;grid-template-columns:188px 1fr;gap:20px;align-items:start;}
   .svc-cats{
     position:sticky;top:180px;
     background:var(--white);border-radius:14px;border:1px solid rgba(18,20,26,0.08);
@@ -431,18 +495,25 @@
   }
   .svc-cat .n{font-family:'JetBrains Mono',monospace;font-size:0.72rem;opacity:0.7;}
   .svc-cat.active{background:#EEF2FF;color:var(--cobalt-deep);}
-  .svc-menu{display:flex;flex-direction:column;gap:0;}
+  .svc-menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:stretch;}
+  .svc-menu > .empty-state{grid-column:1/-1;}
   .svc-section-title{
-    font-family:'Syne',sans-serif;font-size:1.15rem;margin:8px 0 4px;padding-top:8px;
-    border-top:1px solid rgba(18,20,26,0.06);
+    grid-column:1/-1;font-family:'Syne',sans-serif;font-size:1.15rem;margin:10px 0 -2px;padding-top:4px;
+    border-top:0;
   }
-  .svc-section-title:first-child{border-top:none;padding-top:0;margin-top:0;}
+  .head-actions{display:flex;align-items:center;gap:8px;}
+  .currency-select{border:1px solid var(--line);background:var(--white);border-radius:999px;padding:8px 10px;font-weight:750;font-size:.78rem;color:var(--ink);}
+  .account-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--white);color:var(--ink);border-radius:999px;padding:7px 12px 7px 7px;font-weight:700;font-size:.8rem;}
+  .account-avatar{width:25px;height:25px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:var(--cobalt);color:white;font-size:.68rem;font-family:'JetBrains Mono',monospace;}
+  .account-btn:hover{border-color:var(--cobalt);color:var(--cobalt-deep);}
+  .svc-section-title:first-child{padding-top:0;margin-top:0;}
   .svc-item{
-    display:grid;grid-template-columns:1fr 118px;gap:16px;
-    padding:18px 4px;border-bottom:1px solid rgba(18,20,26,0.08);
-    background:transparent;
+    display:grid;grid-template-columns:1fr 106px;gap:13px;
+    padding:15px;border:1px solid rgba(18,20,26,0.09);border-radius:15px;
+    background:var(--white);box-shadow:0 8px 22px rgba(18,20,26,0.055);min-height:190px;
+    transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;
   }
-  .svc-item:last-child{border-bottom:none;}
+  .svc-item:hover{transform:translateY(-2px);border-color:rgba(18,20,26,0.22);box-shadow:0 14px 30px rgba(18,20,26,0.10);}
   .svc-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px;}
   .svc-badge{
     font-size:0.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
@@ -451,7 +522,7 @@
   .svc-badge.popular{background:#FFF0E8;color:#C2410C;}
   .svc-badge.express{background:#E8F8EF;color:#1B7A45;}
   .svc-badge.best{background:#EEF2FF;color:var(--cobalt-deep);}
-  .svc-item h4{font-family:'Syne',sans-serif;font-size:1.02rem;margin:0 0 4px;}
+  .svc-item h4{font-family:'Syne',sans-serif;font-size:1rem;line-height:1.18;margin:0 0 5px;}
   .svc-rating{
     display:inline-flex;align-items:center;gap:4px;font-size:0.78rem;font-weight:700;
     color:#1B7A45;background:#E8F8EF;padding:2px 7px;border-radius:4px;margin-bottom:6px;
@@ -461,7 +532,7 @@
   .svc-eta{font-size:0.76rem;color:var(--ink-soft);margin-left:8px;}
   .svc-media{position:relative;}
   .svc-media img{
-    width:118px;height:118px;object-fit:cover;border-radius:14px;
+    width:106px;height:106px;object-fit:cover;border-radius:13px;
     border:1px solid rgba(18,20,26,0.08);display:block;background:var(--bg-deep);
   }
   .svc-add{
@@ -483,6 +554,34 @@
     width:32px;height:34px;display:flex;align-items:center;justify-content:center;
   }
   .svc-stepper span{flex:1;text-align:center;font-weight:800;font-size:0.85rem;font-family:'JetBrains Mono',monospace;}
+
+  /* ---------- BESPOKE STOREFRONT ---------- */
+  #page-bespoke{background:linear-gradient(180deg,rgba(255,255,255,.22),transparent 28%);}
+  #page-bespoke > .wrap{max-width:1240px;}
+  #page-bespoke .bespoke-intro{grid-template-columns:1.25fr .75fr;gap:14px;margin-bottom:14px;}
+  #page-bespoke .bespoke-promise{background:linear-gradient(135deg,#171A23 0%,#252B3A 100%);border:0;color:var(--white);padding:24px 26px;box-shadow:0 18px 44px rgba(18,20,26,.18);}
+  #page-bespoke .bespoke-promise .eyebrow{color:#FFB49F!important;}
+  #page-bespoke .bespoke-promise h1{font-size:clamp(1.6rem,3vw,2.25rem);max-width:21ch;margin:6px 0 8px;}
+  #page-bespoke .bespoke-promise p{color:#D7DCE6;max-width:64ch;font-size:.9rem;margin-bottom:14px;}
+  #page-bespoke .promise-points{grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px;}
+  #page-bespoke .promise-point{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.13);color:#F8FAFC;padding:9px;font-size:.75rem;}
+  #page-bespoke .promise-point span{color:#FFB49F;}
+  #page-bespoke .revision-card{background:var(--white);color:var(--ink);border:1px solid rgba(18,20,26,.09);box-shadow:var(--shadow);padding:22px;}
+  #page-bespoke .revision-card p{color:var(--ink-soft);}
+  #page-bespoke .revision-steps{gap:8px;}
+  #page-bespoke .revision-step{font-size:.78rem;}
+  #page-bespoke .revision-step b{background:#FFE4D9;color:#A43D27;}
+  #page-bespoke .studio-banner{margin-bottom:12px;border-radius:15px;box-shadow:0 8px 24px rgba(18,20,26,.07);}
+  #page-bespoke .studio-cover{height:82px;}
+  #page-bespoke .studio-body{padding:0 18px 15px;}
+  #page-bespoke .studio-logo{width:58px;height:58px;margin-top:-29px;font-size:1.1rem;}
+  #page-bespoke .studio-title-row{margin-top:7px;}
+  #page-bespoke .studio-title-row h2{font-size:1.35rem;}
+  #page-bespoke .studio-offers{margin-top:10px;padding:9px 11px;font-size:.78rem;}
+  #page-bespoke .svc-toolbar{top:112px;padding:9px 0;margin-bottom:8px;}
+  #page-bespoke .svc-search{background:var(--white);box-shadow:0 5px 15px rgba(18,20,26,.06);}
+  #page-bespoke .svc-cats{top:166px;border:1px solid rgba(18,20,26,.08);box-shadow:0 8px 22px rgba(18,20,26,.06);}
+  #page-bespoke .svc-policy{margin:0 0 12px;background:#FFFDF9;border-color:#F1D3C6;}
 
   .sticky-cart{
     position:fixed;left:50%;bottom:18px;transform:translateX(-50%) translateY(120%);
@@ -521,6 +620,10 @@
     .svc-cats{display:flex;overflow-x:auto;position:static;gap:6px;padding:8px;scrollbar-width:none;}
     .svc-cat{white-space:nowrap;width:auto;}
     .svc-toolbar{top:100px;}
+    .svc-menu{grid-template-columns:1fr;}
+    .svc-section-title{margin-top:6px;}
+    #page-bespoke .bespoke-intro{grid-template-columns:1fr;}
+    #page-bespoke .promise-points{grid-template-columns:repeat(4,1fr);}
   }
 
   /* ---------- SELL ---------- */
@@ -570,6 +673,69 @@
   }
   .order-confirm .deliverable:first-of-type{border-top:none;}
 
+  /* ---------- ACCOUNT ---------- */
+  .account-shell{display:grid;grid-template-columns:220px 1fr;gap:20px;align-items:start;}
+  .account-side,.account-panel{background:var(--white);border:1px solid rgba(18,20,26,.1);border-radius:16px;box-shadow:var(--shadow);}
+  .account-side{padding:18px;position:sticky;top:140px;}
+  .account-profile{display:flex;align-items:center;gap:10px;padding-bottom:16px;margin-bottom:10px;border-bottom:1px solid rgba(18,20,26,.1);}
+  .account-profile .account-avatar{width:42px;height:42px;font-size:.9rem;}
+  .account-profile strong{display:block;font-size:.88rem;}
+  .account-profile span{display:block;color:var(--ink-soft);font-size:.72rem;max-width:135px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .account-nav{display:grid;gap:5px;}
+  .account-nav button{border:0;background:transparent;border-radius:8px;padding:10px;text-align:left;font-weight:650;color:var(--ink-soft);}
+  .account-nav button:hover,.account-nav button.active{background:#EEF2FF;color:var(--cobalt-deep);}
+  .account-panel{padding:22px;min-height:420px;}
+  .account-panel h3{font-size:1.35rem;margin-bottom:5px;}
+  .account-muted{color:var(--ink-soft);font-size:.84rem;line-height:1.5;}
+  .account-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0;}
+  .account-stat{background:var(--bg);border-radius:11px;padding:13px;}
+  .account-stat strong{display:block;font-size:1.25rem;}
+  .account-stat span{color:var(--ink-soft);font-size:.72rem;}
+  .account-orders{display:grid;gap:10px;margin-top:16px;}
+  .account-order{display:flex;justify-content:space-between;gap:12px;align-items:center;border:1px solid var(--line);border-radius:11px;padding:13px;}
+  .account-order strong{display:block;font-size:.84rem;}
+  .account-order span{display:block;color:var(--ink-soft);font-size:.72rem;margin-top:3px;}
+  .account-order .order-price{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--ink);white-space:nowrap;}
+  .order-files{margin-top:8px;border-top:1px dashed var(--line);padding-top:8px;display:grid;gap:7px;}
+  .order-file{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:.76rem;}
+  .order-file span{color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .email-status{font-size:.7rem;color:#1B7A45;margin-top:10px;}
+  .account-empty{background:var(--bg);border-radius:12px;padding:28px;text-align:center;color:var(--ink-soft);font-size:.85rem;}
+  .auth-backdrop{position:fixed;inset:0;background:rgba(18,20,26,.52);z-index:220;display:none;align-items:center;justify-content:center;padding:16px;}
+  .auth-backdrop.open{display:flex;}
+  .auth-sheet{width:min(440px,100%);background:var(--white);border-radius:18px;padding:26px;box-shadow:0 22px 65px rgba(0,0,0,.3);position:relative;}
+  .auth-close{position:absolute;right:16px;top:14px;border:0;background:transparent;font-size:1.3rem;color:var(--ink-soft);}
+  .auth-sheet h3{font-size:1.55rem;margin:7px 0 5px;}
+  .auth-tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:9px;padding:4px;margin:18px 0;}
+  .auth-tabs button{border:0;background:transparent;padding:9px;border-radius:7px;font-weight:700;color:var(--ink-soft);}
+  .auth-tabs button.active{background:var(--white);color:var(--ink);box-shadow:0 2px 8px rgba(18,20,26,.09);}
+  .auth-sheet .field{margin-bottom:13px;}
+  .auth-sheet .field input{background:var(--white);}
+  .role-field select{width:100%;padding:10px 11px;border:2px solid var(--line);border-radius:8px;background:var(--white);font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;}
+  .creator-badge{display:inline-flex;background:#FFF0E8;color:#A43D27;border-radius:999px;padding:4px 8px;font-size:.68rem;font-weight:750;}
+  .creator-table{display:grid;gap:8px;margin-top:15px;}
+  .creator-row{display:grid;grid-template-columns:minmax(0,1.5fr) .7fr .7fr .8fr;align-items:center;gap:10px;border:1px solid var(--line);border-radius:10px;padding:11px;font-size:.78rem;}
+  .creator-row.head{border:0;background:var(--bg);font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em;}
+  .creator-row strong{display:block;font-size:.82rem;}
+  .creator-row span{color:var(--ink-soft);font-size:.7rem;}
+  .creator-status{display:inline-flex;justify-content:center;background:#E8F8EF;color:#1B7A45;border-radius:999px;padding:4px 7px;font-size:.68rem;font-weight:750;}
+  .auth-submit{width:100%;justify-content:center;margin-top:4px;}
+  .auth-note{font-size:.72rem;color:var(--ink-soft);line-height:1.45;margin:14px 0 0;}
+  .payment-sheet{width:min(720px,100%);max-height:calc(100vh - 32px);overflow:auto;}
+  .payment-layout{display:grid;grid-template-columns:1fr .82fr;gap:18px;margin-top:18px;}
+  .payment-form{border:1px solid var(--line);border-radius:12px;padding:16px;}
+  .payment-form h4,.payment-summary h4{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;color:var(--ink-soft);margin:0 0 12px;}
+  .payment-form .field{margin-bottom:11px;}
+  .payment-form .field input{background:var(--white);}
+  .payment-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .payment-summary{background:var(--bg);border-radius:12px;padding:16px;}
+  .payment-items{display:grid;gap:9px;margin-bottom:14px;}
+  .payment-item{display:flex;justify-content:space-between;gap:10px;font-size:.78rem;line-height:1.35;}
+  .payment-item span:first-child{color:var(--ink-soft);}
+  .payment-total{display:flex;justify-content:space-between;border-top:1px dashed var(--line);padding-top:12px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+  .payment-trust{display:flex;gap:7px;align-items:flex-start;color:#1B7A45;font-size:.72rem;line-height:1.4;margin-top:14px;}
+  .payment-disclaimer{font-size:.7rem;line-height:1.45;color:var(--ink-soft);margin:12px 0 0;}
+
   /* ---------- ABOUT ---------- */
   .about-block{max-width:760px;margin-bottom:40px;}
   .about-block p{line-height:1.7;color:var(--ink-soft);font-size:1rem;margin-bottom:14px;}
@@ -602,25 +768,91 @@
     .testi-grid{grid-template-columns:1fr;}
     .trust-bar{gap:14px;font-size:0.68rem;}
   }
+  @media(max-width:600px){
+    .wrap{padding:0 16px;}
+    .headbar{padding:12px 16px;}
+    .logo{font-size:1.12rem;}
+    .logo .mark{width:24px;height:24px;border-radius:7px;}
+    .logo .mark::after{inset:6px;}
+    .account-btn{padding:6px;border-radius:50%;}
+    .account-btn > span:last-child{display:none;}
+    .cart-btn{padding:9px 11px;font-size:0.8rem;}
+    nav.tabs{padding:8px 12px 10px;gap:3px;}
+    nav.tabs button{padding:8px 12px;font-size:0.78rem;}
+    .trust-bar{justify-content:flex-start;overflow:hidden;flex-wrap:nowrap;gap:18px;padding:8px 16px;}
+    .trust-bar span{flex-shrink:0;}
+    section.page{padding:28px 0 64px;}
+    .hero{padding:30px 18px 34px;}
+    .features{grid-template-columns:1fr;}
+    .how-steps{grid-template-columns:1fr;}
+    .market-toolbar{align-items:stretch;}
+    .search-input,.sort-select{width:100%;min-width:0;}
+    .cat-pills{overflow-x:auto;flex-wrap:nowrap;padding-bottom:3px;}
+    .cat-pill{flex-shrink:0;}
+    .canvas-stage{padding:10px;min-height:0;overflow:auto;align-items:flex-start;justify-content:flex-start;}
+    .canvas-stage .canvas-container{flex-shrink:0;}
+    .panel{padding:14px;}
+    .cart-line{align-items:flex-start;flex-wrap:wrap;gap:10px;}
+    .cart-line .info{min-width:calc(100% - 78px);}
+    .cart-line .qty-ctrl{margin-left:78px;}
+    .cart-line .mono[style]{margin-left:auto;}
+    .cart-line .btn{margin-left:auto;}
+    .svc-item{grid-template-columns:1fr 92px;gap:10px;padding:16px 0;}
+    .svc-media img{width:92px;height:92px;}
+    .svc-add,.svc-stepper{bottom:-10px;}
+    .sticky-cart{bottom:10px;}
+    .toast{width:calc(100% - 32px);text-align:center;bottom:16px;}
+    .bespoke-intro{grid-template-columns:1fr;}
+    .bespoke-promise,.revision-card{padding:20px;}
+    .promise-points{grid-template-columns:1fr;}
+    #page-bespoke .promise-points{grid-template-columns:repeat(2,1fr);}
+    #page-bespoke .studio-meta span:last-child{display:none;}
+    #page-bespoke .studio-title-row .btn{display:none;}
+    .marketplace-hero{display:block;padding:22px 20px;}
+    .marketplace-hero h1{max-width:18ch;}
+    .market-stats{min-width:0;margin-top:18px;}
+    #page-marketplace .product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}
+    #page-marketplace .card img.thumb{height:126px;}
+    #page-marketplace .card .body{padding:11px;}
+    #page-marketplace .card h4{font-size:.83rem;}
+    #page-marketplace .card .card-actions{display:grid;grid-template-columns:1fr;gap:5px;}
+    #page-marketplace .card .card-actions .btn{font-size:.72rem;padding:8px 5px;}
+    .account-shell{grid-template-columns:1fr;}
+    .account-side{position:static;}
+    .account-nav{grid-template-columns:repeat(3,1fr);}
+    .account-nav button{font-size:.72rem;text-align:center;padding:8px 4px;}
+    .account-stats{grid-template-columns:1fr 1fr 1fr;}
+    .account-panel{padding:16px;}
+    .payment-layout{grid-template-columns:1fr;}
+    .payment-sheet{padding:20px;}
+    .creator-row{grid-template-columns:1fr 1fr;gap:7px;}
+    .creator-row.head{display:none;}
+  }
 
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#mainContent">Skip to content</a>
+
 <header>
   <div class="headbar">
     <div class="logo"><span class="mark" aria-hidden="true"></span>Makers' Row</div>
-    <button class="cart-btn" onclick="showPage('cart')">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-      Cart <span class="count" id="cartCount">0</span>
-    </button>
+    <div class="head-actions">
+      <select class="currency-select" id="currencySelect" aria-label="Choose currency" onchange="setCurrency(this.value)"><option value="INR">₹ INR</option><option value="USD">$ USD</option></select>
+      <button class="account-btn" id="accountButton" aria-label="Open account" onclick="showAccount()"><span class="account-avatar" id="accountAvatar">?</span><span id="accountButtonLabel">Sign in</span></button>
+      <button class="cart-btn" aria-label="Open cart" onclick="showPage('cart')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Cart <span class="count" id="cartCount">0</span>
+      </button>
+    </div>
   </div>
-  <nav class="tabs" id="navTabs">
-    <button data-page="home" class="active" onclick="showPage('home')">Home</button>
+  <nav class="tabs" id="navTabs" aria-label="Main navigation">
+    <button data-page="bespoke" class="bespoke-tab active" onclick="showPage('bespoke')">✦ Start with Bespoke</button>
+    <button data-page="home" onclick="showPage('home')">Home</button>
     <button data-page="marketplace" onclick="showPage('marketplace')">Marketplace</button>
     <button data-page="editor" onclick="showPage('editor')">Editor</button>
-    <button data-page="bespoke" class="bespoke-tab" onclick="showPage('bespoke')">✦ Bespoke</button>
-    <button data-page="sell" onclick="showPage('sell')">Sell Your Work</button>
+    <button data-page="sell" onclick="showPage('sell')">Creator Studio</button>
     <button data-page="cart" onclick="showPage('cart')">Cart</button>
     <button data-page="about" onclick="showPage('about')">About</button>
   </nav>
@@ -633,7 +865,8 @@
 </div>
 
 <!-- ============ HOME ============ -->
-<section class="page active" id="page-home">
+<main id="mainContent">
+<section class="page" id="page-home">
   <div class="wrap">
     <div class="hero">
       <div class="hero-grid">
@@ -641,7 +874,7 @@
           <div class="brand-lockup">Makers' <span>Row</span></div>
           <div class="rating-pill"><span class="stars">★★★★★</span><span>4.9</span><span class="divider">·</span><span class="muted">2,300+ buyers</span></div>
           <h1>Buy ready-made work, <em>edit it live</em>, or hand it off entirely.</h1>
-          <p class="lead">Independent designers sell templates and assets here. Pick one, tweak it in-browser, or commission a human designer in about an hour.</p>
+          <p class="lead">Independent designers sell templates and assets here. Pick one, tweak it in-browser, or commission a human designer and receive your finished creative within the day.</p>
           <div class="hero-ctas">
             <button class="btn btn-solid" onclick="showPage('marketplace')">Browse the marketplace</button>
             <button class="btn btn-coral" onclick="showPage('bespoke')">Get bespoke work →</button>
@@ -652,17 +885,43 @@
             <img src="https://picsum.photos/seed/homecard1/300/180" alt="">
             <div class="cap">Social Post Template</div>
           </div>
-          <div class="price-tag" style="top:6px;left:52%;">$8.00</div>
+        <div class="price-tag" style="top:6px;left:52%;"><span id="homePrice8">$8.00</span></div>
           <div class="sticker" style="top:150px;left:42%;transform:rotate(4deg);">
             <img src="https://picsum.photos/seed/homecard2/300/180" alt="">
             <div class="cap">Icon Set, 120 pcs</div>
           </div>
-          <div class="price-tag" style="top:130px;left:8%;transform:rotate(-8deg);">$12.00</div>
+        <div class="price-tag" style="top:130px;left:8%;transform:rotate(-8deg);"><span id="homePrice12">$12.00</span></div>
           <div class="sticker" style="top:280px;left:6%;transform:rotate(-3deg);">
             <img src="https://picsum.photos/seed/homecard3/300/180" alt="">
             <div class="cap">Pitch Deck Kit</div>
           </div>
           <div class="price-tag" style="top:260px;left:60%;transform:rotate(6deg);background:var(--coral);color:white;">Bespoke</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="bespoke-intro">
+      <div class="bespoke-promise">
+        <span class="eyebrow" style="color:var(--coral);">The easiest way to get exactly what you want</span>
+        <h2>Start with a creative. Shape it together.</h2>
+        <p>Pick the kind of work you need, choose the visual direction you like, and upload references. We send a first draft, you say yes or request a change, and we keep improving it with you.</p>
+        <button class="btn btn-coral" onclick="showPage('bespoke')">Start a Bespoke brief →</button>
+        <div class="promise-points">
+          <div class="promise-point"><span>Included</span>2 revision rounds</div>
+          <div class="promise-point"><span>You decide</span>Approve or request changes</div>
+          <div class="promise-point"><span>Fair by design</span>3rd revision quoted first</div>
+          <div class="promise-point"><span>Bring your taste</span>Upload references</div>
+        </div>
+      </div>
+      <div class="revision-card">
+        <div>
+          <h3>A marketplace that remembers your taste.</h3>
+          <p>Every brief starts with your preferences and references, so the creative work feels like yours from the first direction.</p>
+        </div>
+        <div class="revision-steps">
+          <div class="revision-step"><b>1</b><span>Choose a service and a style.</span></div>
+          <div class="revision-step"><b>2</b><span>Review the draft and say yes or request a revision.</span></div>
+          <div class="revision-step"><b>3</b><span>Two revisions are included. Any third revision is quoted before it starts.</span></div>
         </div>
       </div>
     </div>
@@ -686,7 +945,7 @@
       <div class="feature-card">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
         <h3>Or go bespoke</h3>
-        <p>Describe what you need, attach references, leave your number — a designer starts on it right away and it lands in your inbox within the hour.</p>
+          <p>Describe what you need, attach references, leave your number — a designer starts right away and your finished creative arrives in your inbox within the day.</p>
       </div>
     </div>
 
@@ -712,7 +971,7 @@
         <div class="how-step">
           <div class="how-num">4</div>
           <h4>Receive your files</h4>
-          <p>Downloads are instant. Bespoke work arrives by email (or wherever you tell us) within the hour.</p>
+          <p>Downloads are instant. Bespoke work arrives by email (or wherever you tell us) within the day.</p>
         </div>
       </div>
     </div>
@@ -744,6 +1003,18 @@
 <!-- ============ MARKETPLACE ============ -->
 <section class="page" id="page-marketplace">
   <div class="wrap">
+    <div class="marketplace-hero">
+      <div>
+        <span class="eyebrow">The digital shelf</span>
+        <h1>Find the right starting point for your next idea.</h1>
+        <p>Shop ready-made templates, graphics, stock packs, and AI services from independent creators. Buy it, customize it, or ask a human to finish it.</p>
+      </div>
+      <div class="market-stats">
+        <div class="market-stat"><strong>16+</strong><span>ready-to-buy listings</span></div>
+        <div class="market-stat"><strong>4.8/5</strong><span>average buyer rating</span></div>
+        <div class="market-stat"><strong>Today</strong><span>same-day Bespoke work</span></div>
+      </div>
+    </div>
     <span class="eyebrow">The marketplace</span>
     <h2 class="section-title">Templates, graphics &amp; AI services, made by independent creators</h2>
     <p class="section-sub">Everything here is buyable instantly and editable in your browser before you check out. Prices are set by each seller.</p>
@@ -760,7 +1031,12 @@
         <button class="cat-pill active" data-cat="all" onclick="setCategory('all')">All <span class="n" id="cnt-all"></span></button>
         <button class="cat-pill" data-cat="Templates" onclick="setCategory('Templates')">Templates <span class="n" id="cnt-Templates"></span></button>
         <button class="cat-pill" data-cat="Graphics" onclick="setCategory('Graphics')">Graphics &amp; Stock <span class="n" id="cnt-Graphics"></span></button>
+        <button class="cat-pill" data-cat="Digital Assets" onclick="setCategory('Digital Assets')">Digital Assets <span class="n" id="cnt-DigitalAssets"></span></button>
+        <button class="cat-pill" data-cat="Fonts &amp; Type" onclick="setCategory('Fonts &amp; Type')">Fonts &amp; Type <span class="n" id="cnt-FontsType"></span></button>
+        <button class="cat-pill" data-cat="UI Kits" onclick="setCategory('UI Kits')">UI Kits <span class="n" id="cnt-UIKit"></span></button>
         <button class="cat-pill" data-cat="AI Services" onclick="setCategory('AI Services')">AI Services <span class="n" id="cnt-ai"></span></button>
+        <button class="cat-pill" data-cat="AI Assets" onclick="setCategory('AI Assets')">AI Assets <span class="n" id="cnt-AIAssets"></span></button>
+        <button class="cat-pill" data-cat="Prompt Packs" onclick="setCategory('Prompt Packs')">Prompt Packs <span class="n" id="cnt-PromptPacks"></span></button>
       </div>
     </div>
 
@@ -777,6 +1053,16 @@
 
     <div class="editor-shell">
       <div class="panel">
+        <div class="brand-kit">
+          <h5>Brand identity</h5>
+          <img class="brand-logo-preview" id="brandLogoPreview" alt="Brand logo preview" src="">
+          <button class="tool-btn" type="button" onclick="document.getElementById('brandLogoUpload').click()">Upload brand logo</button>
+          <input type="file" id="brandLogoUpload" accept="image/*,.svg" style="display:none" onchange="handleBrandLogo(event)">
+          <div class="row2"><input type="color" id="brandColor1" value="#1F4BFF" aria-label="Brand color 1"><input type="color" id="brandColor2" value="#F5B942" aria-label="Brand color 2"><input type="color" id="brandColor3" value="#E84D3D" aria-label="Brand color 3"><input type="color" id="brandColor4" value="#12141A" aria-label="Brand color 4"></div>
+          <div class="brand-swatches" id="brandSwatches"></div>
+          <div class="row2"><button class="tool-btn" type="button" onclick="saveBrandKit()">Save kit</button><button class="tool-btn" type="button" onclick="addBrandLogo()">Add logo</button></div>
+          <div class="editor-note">Your logo and colors are saved for your next design in this browser.</div>
+        </div>
         <h4>Add</h4>
         <button class="tool-btn" onclick="addHeading()">＋ Heading text</button>
         <button class="tool-btn" onclick="addBody()">＋ Body text</button>
@@ -797,6 +1083,7 @@
 
       <div class="canvas-stage">
         <canvas id="editorCanvas" width="600" height="480"></canvas>
+        <div class="editor-note" style="max-width:600px;width:100%;">Select any layer to drag, resize, and rotate it. Use Arrange for quick alignment, or use the brand kit to keep your logo and colors consistent.</div>
       </div>
 
       <div class="panel">
@@ -811,6 +1098,12 @@
           <button class="tool-btn" onclick="duplicateObj()">⧉ Duplicate</button>
           <button class="tool-btn" onclick="deleteObj()">🗑 Delete</button>
         </div>
+        <h4 style="margin-top:18px;">Arrange</h4>
+        <div class="alignment-grid">
+          <button class="tool-btn" type="button" onclick="alignObject('left')">← Left</button><button class="tool-btn" type="button" onclick="alignObject('center')">↔ Center</button><button class="tool-btn" type="button" onclick="alignObject('right')">Right →</button>
+          <button class="tool-btn" type="button" onclick="alignObject('top')">↑ Top</button><button class="tool-btn" type="button" onclick="alignObject('middle')">↕ Middle</button><button class="tool-btn" type="button" onclick="alignObject('bottom')">Bottom ↓</button>
+        </div>
+        <div class="row2"><button class="tool-btn" type="button" onclick="rotateObject(-15)">↶ Rotate</button><button class="tool-btn" type="button" onclick="rotateObject(15)">↷ Rotate</button></div>
 
         <h4 style="margin-top:18px;">Canvas</h4>
         <div class="field"><label>Background color</label><input type="color" id="bgColor" value="#ffffff" oninput="applyBg(this.value)"></div>
@@ -826,7 +1119,7 @@
         <h4 style="margin-top:18px;">Finish up</h4>
         <button class="tool-btn" onclick="downloadPNG()">⬇ Download PNG</button>
         <div class="field" style="margin-top:10px;">
-          <label>Price for this design</label>
+          <label id="editorPriceLabel">Price for this design (USD)</label>
           <input type="number" id="editorPrice" value="8" min="0" step="0.5">
         </div>
         <button class="btn btn-cobalt" style="width:100%;justify-content:center;" onclick="addEditorToCart()">Add design to cart</button>
@@ -837,8 +1130,29 @@
 </section>
 
 <!-- ============ BESPOKE ============ -->
-<section class="page" id="page-bespoke">
+<section class="page active" id="page-bespoke">
   <div class="wrap">
+    <div class="bespoke-intro">
+      <div class="bespoke-promise">
+        <span class="eyebrow" style="color:var(--coral);">Bespoke creative desk</span>
+        <h1>Choose the work. Show us the vibe. We’ll shape it with you.</h1>
+        <p>Tell us what to make, pick a direction, and attach references. You’ll review the draft and can say yes or request changes. Two revision rounds are included; a third is charged only after you approve the quote.</p>
+        <div class="promise-points">
+          <div class="promise-point"><span>01</span>Pick your service</div>
+          <div class="promise-point"><span>02</span>Choose your style</div>
+          <div class="promise-point"><span>03</span>Upload references</div>
+          <div class="promise-point"><span>04</span>Approve or revise</div>
+        </div>
+      </div>
+      <div class="revision-card">
+        <div><h3>Your review loop</h3><p>We keep the work moving without making you pay for normal collaboration.</p></div>
+        <div class="revision-steps">
+          <div class="revision-step"><b>1</b><span>First draft delivered to your email.</span></div>
+          <div class="revision-step"><b>2</b><span>Say “yes” or request revision round one.</span></div>
+          <div class="revision-step"><b>3</b><span>Revision round two is included. A third is optional and quoted first.</span></div>
+        </div>
+      </div>
+    </div>
     <div class="studio-banner">
       <div class="studio-cover"></div>
       <div class="studio-body">
@@ -848,13 +1162,13 @@
             <h2>Makers' Row Studio</h2>
             <div class="studio-meta">
               <span class="pill green">★ 4.9 · 2.3k orders</span>
-              <span class="pill">⚡ ~1 hr delivery</span>
+              <span class="pill">⚡ Finished within the day</span>
               <span>Digital services · Email delivery</span>
             </div>
           </div>
           <button class="btn btn-sm btn-ghost" onclick="document.getElementById('svcSearch').focus()">Search menu</button>
         </div>
-        <div class="studio-offers">🎉 Express deal — add 2+ services and get priority delivery on the whole order</div>
+        <div class="studio-offers">🎉 Your brief includes style preferences, reference uploads, two revision rounds, and a clear quote before any third revision.</div>
       </div>
     </div>
 
@@ -864,9 +1178,11 @@
         <button class="svc-filter active" data-filter="all" onclick="setSvcFilter('all')">All</button>
         <button class="svc-filter" data-filter="express" onclick="setSvcFilter('express')">Express</button>
         <button class="svc-filter" data-filter="popular" onclick="setSvcFilter('popular')">Popular</button>
-        <button class="svc-filter" data-filter="under20" onclick="setSvcFilter('under20')">Under $20</button>
+        <button class="svc-filter" data-filter="under20" onclick="setSvcFilter('under20')"><span id="under20Label">Under $20</span></button>
       </div>
     </div>
+
+    <div class="svc-policy"><strong>How Bespoke works:</strong> choose a service below, tell us what you like, upload references, then review the first draft. You can approve it or request changes. Two revision rounds are included; the third is charged separately only after you see the quote.</div>
 
     <div class="svc-layout">
       <aside class="svc-cats" id="svcCats"></aside>
@@ -878,7 +1194,7 @@
 <div class="sticky-cart" id="stickyCart" onclick="showPage('cart')">
   <div class="sc-left">
     <span class="sc-count" id="stickyCount">0 items</span>
-    <span class="sc-total" id="stickyTotal">$0.00</span>
+        <span class="sc-total" id="stickyTotal">$0.00</span>
   </div>
   <button class="sc-go" type="button">View cart →</button>
 </div>
@@ -887,13 +1203,62 @@
   <div class="svc-sheet" role="dialog" aria-modal="true">
     <h3 id="svcModalTitle">Add notes</h3>
     <p class="sheet-sub" id="svcModalSub">Tell the designer what you need. You can add more services after this.</p>
-    <div class="field"><label>Brief / notes (optional)</label><textarea id="svcNotes" rows="3" placeholder="Brand colors, text to include, size, references…"></textarea></div>
-    <div class="field"><label>Delivery email</label><input type="email" id="svcEmail" placeholder="you@email.com"></div>
+    <div class="field"><label for="svcStyle">What kind of creative feels right?</label><select id="svcStyle"><option value="Clean and minimal">Clean and minimal</option><option value="Bold and expressive">Bold and expressive</option><option value="Warm and organic">Warm and organic</option><option value="Editorial and premium">Editorial and premium</option><option value="Playful and colorful">Playful and colorful</option><option value="Match my references">Match my references</option></select></div>
+    <div class="field"><label for="svcNotes">Brief / notes</label><textarea id="svcNotes" rows="3" placeholder="What should we make, who is it for, words to include, size, deadline…"></textarea></div>
+    <div class="field"><label for="svcReferences">Upload references</label><input type="file" id="svcReferences" accept="image/*,.pdf,.svg" multiple onchange="handleSvcReferences(event)"><div class="reference-list" id="svcReferenceList">Add screenshots, links exported as PDFs, moodboards, or examples you like.</div></div>
+    <div class="field"><label><input type="checkbox" id="svcCanvaDraft" checked> Create a Canva draft from this brief and image references</label><div class="reference-list">Requires a connected Canva account and an autofillable Canva brand template.</div></div>
+    <div class="field"><label for="svcEmail">Delivery email</label><input type="email" id="svcEmail" placeholder="you@email.com" required></div>
     <div class="field"><label>Phone (optional)</label><input type="tel" id="svcPhone" placeholder="For clarifications"></div>
     <div class="svc-sheet-actions">
       <button class="btn btn-ghost" type="button" onclick="closeSvcModal()">Cancel</button>
-      <button class="btn btn-coral" type="button" onclick="confirmAddService()">Add to cart</button>
+      <button class="btn btn-ghost" type="button" onclick="window.location.href='/api/canva/oauth/start'">Connect Canva</button>
+      <button class="btn btn-coral" type="button" onclick="confirmAddService()">Add Bespoke brief</button>
     </div>
+  </div>
+</div>
+
+<div class="auth-backdrop" id="authModal" onclick="if(event.target===this)closeAuth()">
+  <div class="auth-sheet" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <button class="auth-close" type="button" aria-label="Close account dialog" onclick="closeAuth()">×</button>
+    <span class="eyebrow">Makers' Row account</span>
+    <h3 id="authTitle">Welcome back</h3>
+    <p class="account-muted" id="authSub">Sign in to keep your orders, saved items, and creative briefs together.</p>
+    <div class="auth-tabs"><button id="authLoginTab" class="active" type="button" onclick="switchAuth('login')">Log in</button><button id="authSignupTab" type="button" onclick="switchAuth('signup')">Sign up</button></div>
+    <form id="authForm" onsubmit="submitAuth(event)">
+      <div class="field" id="authNameField" style="display:none;"><label for="authName">Full name</label><input type="text" id="authName" placeholder="Your name"></div>
+      <div class="field role-field" id="authRoleField" style="display:none;"><label for="authRole">I’m joining as</label><select id="authRole"><option value="buyer">Buyer — find and order creative work</option><option value="creator">Creator — upload, sell, and manage projects</option></select></div>
+      <div class="field"><label for="authEmail">Email</label><input type="email" id="authEmail" placeholder="you@email.com" required></div>
+      <div class="field"><label for="authPassword">Password</label><input type="password" id="authPassword" placeholder="At least 6 characters" minlength="6" required></div>
+      <button class="btn btn-cobalt auth-submit" id="authSubmit" type="submit">Log in</button>
+    </form>
+    <p class="auth-note">This prototype keeps your demo account in this browser. A production launch should connect this form to secure authentication, payments, and order storage.</p>
+  </div>
+</div>
+
+<div class="auth-backdrop" id="paymentModal" onclick="if(event.target===this)closePayment()">
+  <div class="auth-sheet payment-sheet" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
+    <button class="auth-close" type="button" aria-label="Close payment dialog" onclick="closePayment()">×</button>
+    <span class="eyebrow">Secure checkout</span>
+    <h3 id="paymentTitle">Complete your order</h3>
+    <p class="account-muted">Your files and Bespoke delivery details will be connected to <strong id="paymentEmail"></strong>.</p>
+    <form id="paymentForm" onsubmit="submitPayment(event)">
+      <div class="payment-layout">
+        <div class="payment-form">
+          <h4>Payment details</h4>
+          <div class="field"><label for="paymentName">Name on card</label><input id="paymentName" type="text" autocomplete="cc-name" placeholder="Your name" required></div>
+          <div class="field"><label for="paymentCard">Card number</label><input id="paymentCard" inputmode="numeric" autocomplete="cc-number" placeholder="4242 4242 4242 4242" minlength="12" required></div>
+          <div class="payment-row"><div class="field"><label for="paymentExpiry">Expiry</label><input id="paymentExpiry" inputmode="numeric" autocomplete="cc-exp" placeholder="MM / YY" required></div><div class="field"><label for="paymentCvc">CVC</label><input id="paymentCvc" inputmode="numeric" autocomplete="cc-csc" placeholder="123" minlength="3" required></div></div>
+          <button class="btn btn-coral auth-submit" type="submit">Pay <span id="paymentButtonTotal">$0.00</span></button>
+          <p class="payment-disclaimer">Prototype payment screen: no real charge is made here. Production checkout should replace this form with Stripe, Razorpay, or another PCI-compliant provider.</p>
+        </div>
+        <aside class="payment-summary">
+          <h4>Order summary</h4>
+          <div class="payment-items" id="paymentItems"></div>
+          <div class="payment-total"><span>Total</span><span id="paymentTotal">$0.00</span></div>
+          <div class="payment-trust">✓ <span>Account order tracking<br>Digital delivery and Bespoke status updates</span></div>
+        </aside>
+      </div>
+    </form>
   </div>
 </div>
 
@@ -912,16 +1277,24 @@
           <select id="slCategory" required>
             <option value="Templates">Templates</option>
             <option value="Graphics">Graphics &amp; Stock</option>
+            <option value="Digital Assets">Digital Assets</option>
+            <option value="Fonts &amp; Type">Fonts &amp; Type</option>
+            <option value="UI Kits">UI Kits</option>
+            <option value="Audio &amp; Motion">Audio &amp; Motion</option>
+            <option value="3D &amp; Mockups">3D &amp; Mockups</option>
             <option value="AI Services">AI Services</option>
+            <option value="AI Assets">AI Assets</option>
+            <option value="Prompt Packs">Prompt Packs</option>
           </select>
         </div>
-        <div class="field"><label>Price (USD) *</label><input type="number" id="slPrice" min="1" step="0.5" value="10" required></div>
+        <div class="field"><label id="slPriceLabel">Price (USD) · min $2.50 *</label><input type="number" id="slPrice" min="2.5" step="0.5" value="10" required></div>
         <div class="field"><label>Short description</label><textarea id="slDesc" rows="3" placeholder="What's included, file formats, sizes…"></textarea></div>
         <div class="field">
           <label>Preview image / file</label>
           <div class="file-drop" id="sellDrop" onclick="document.getElementById('slFile').click()">Click to upload a preview image</div>
           <input type="file" id="slFile" accept="image/*" style="display:none" onchange="handleSellFile(event)">
         </div>
+        <div class="field"><label for="slAssets">Files buyers receive *</label><input type="file" id="slAssets" accept="image/*,.zip,.pdf,.fig,.svg,.mp4,.mp3,.json,.txt" multiple required onchange="handleAssetFiles(event)"><div class="reference-list" id="assetFileList">Upload the actual pack, PDF, ZIP, or source files buyers will receive.</div></div>
         <button type="submit" class="btn btn-solid" style="width:100%;justify-content:center;">Publish listing</button>
       </form>
       <div class="sell-preview">
@@ -952,7 +1325,7 @@
           <div id="receiptLines"></div>
           <hr>
           <div class="rline total"><span>TOTAL</span><span id="receiptTotal">$0.00</span></div>
-          <button class="btn btn-cobalt" style="width:100%;justify-content:center;margin-top:16px;" onclick="checkout()">Checkout</button>
+          <button class="btn btn-cobalt" style="width:100%;justify-content:center;margin-top:16px;" onclick="checkout()">Continue to payment</button>
           <ul class="trust-list">
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Encrypted, secure checkout</li>
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>7-day money-back guarantee</li>
@@ -960,6 +1333,27 @@
         </div>
         <div id="checkoutMsg"></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACCOUNT ============ -->
+<section class="page" id="page-account">
+  <div class="wrap">
+    <span class="eyebrow">Your account</span>
+    <h2 class="section-title" id="accountGreeting">Welcome to your Makers' Row</h2>
+    <p class="section-sub">Track orders, save ideas, manage your profile, and return to anything you’re still shaping.</p>
+    <div class="account-shell">
+      <aside class="account-side">
+        <div class="account-profile"><span class="account-avatar" id="dashboardAvatar">?</span><div><strong id="dashboardName">Guest</strong><span id="dashboardEmail">Sign in to sync your work</span></div></div>
+        <nav class="account-nav" id="accountNav" aria-label="Account navigation">
+          <button class="active" data-panel="overview" type="button" onclick="setAccountPanel('overview')">Overview</button>
+          <button data-panel="orders" type="button" onclick="setAccountPanel('orders')">Orders</button>
+          <button data-panel="saved" type="button" onclick="setAccountPanel('saved')">Saved items</button>
+        </nav>
+        <button class="btn btn-ghost" style="width:100%;justify-content:center;margin-top:15px;" type="button" onclick="logout()">Sign out</button>
+      </aside>
+      <div class="account-panel" id="accountPanel"></div>
     </div>
   </div>
 </section>
@@ -972,7 +1366,7 @@
 
     <div class="about-block">
       <p>Makers' Row exists because "make it yourself" and "hire someone" shouldn't be two completely different products. Most people need something in between: a good starting point they can bend to their needs, made by someone who's good at this, at a price that doesn't require a full agency retainer.</p>
-      <p>So the marketplace works three ways. You can buy a finished template, graphic or AI-service pack outright and download it immediately. You can open anything — bought or not yet bought — in the built-in editor and rework it yourself: swap text, recolor, drop in a new photo, resize, then add your version to the cart. Or, if you'd rather not touch a single layer, you can describe what you need on the Bespoke tab and have a designer build it around your brief, delivered to your email in about an hour.</p>
+      <p>So the marketplace works three ways. You can buy a finished template, graphic or AI-service pack outright and download it immediately. You can open anything — bought or not yet bought — in the built-in editor and rework it yourself: swap text, recolor, drop in a new photo, resize, then add your version to the cart. Or, if you'd rather not touch a single layer, you can describe what you need on the Bespoke tab and have a designer build it around your brief, delivered to your email within the day.</p>
     </div>
 
     <div class="about-block">
@@ -994,7 +1388,7 @@
       <h3 style="margin-bottom:16px;">Frequently asked</h3>
       <div class="faq-item">
         <h4>How fast is a bespoke request, really?</h4>
-        <p>Typical turnaround is about an hour for a single graphic, logo concept, or short deck. More involved briefs (full brand kits, multi-page decks) take a note in the confirmation email with a realistic estimate.</p>
+        <p>Your finished creative is delivered within the day for a typical graphic, logo concept, or short deck. More involved briefs (full brand kits, multi-page decks) take a note in the confirmation email with a realistic estimate.</p>
       </div>
       <div class="faq-item">
         <h4>Can I edit something before I buy it?</h4>
@@ -1006,11 +1400,13 @@
       </div>
       <div class="faq-item">
         <h4>What do I get after checkout?</h4>
-        <p>Marketplace purchases and anything you've built in the editor download right away. Bespoke requests are delivered to the email (or contact) you provide, generally within the hour.</p>
+        <p>Marketplace purchases and anything you've built in the editor download right away. Bespoke requests are delivered to the email (or contact) you provide within the day.</p>
       </div>
     </div>
   </div>
 </section>
+
+</main>
 
 <footer>
   <div class="wrap">
@@ -1019,7 +1415,7 @@
   </div>
 </footer>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 /* ============================================================
@@ -1046,6 +1442,297 @@ let marketplace = [
 let activeCategory = 'all';
 let cart = []; // {id, kind:'product'|'custom'|'bespoke', title, price, qty, thumb, meta}
 let sellFileURL = null;
+let assetFileNames = [];
+let currentUser = null;
+let orderHistory = [];
+let savedItems = [];
+let activeAccountPanel = 'overview';
+const CART_STORAGE_KEY = 'makers-row-cart-v1';
+const ACCOUNT_PROFILE_KEY = 'makers-row-account-profile-v1';
+const ACCOUNT_SESSION_KEY = 'makers-row-account-session-v1';
+const ORDER_HISTORY_KEY = 'makers-row-order-history-v1';
+const SAVED_ITEMS_KEY = 'makers-row-saved-items-v1';
+const MARKETPLACE_STORAGE_KEY = 'makers-row-creator-listings-v1';
+const CURRENCY_KEY = 'makers-row-currency-v1';
+const CANVA_DRAFT_STATUS_KEY = 'makers-row-canva-draft-status-v1';
+const USD_TO_INR = 84; // Prototype display rate; replace with a live rate service for production.
+const MIN_USD_PRICE = 2.5;
+const MIN_INR_PRICE = 150;
+let currency = localStorage.getItem(CURRENCY_KEY)==='USD' ? 'USD' : 'INR';
+let canvaDraftStatuses = {};
+try{ canvaDraftStatuses = JSON.parse(localStorage.getItem(CANVA_DRAFT_STATUS_KEY) || '{}') || {}; }catch(error){ canvaDraftStatuses = {}; }
+
+function setCanvaDraftStatus(requestId, status, message, designUrl=''){
+  if(!requestId) return;
+  canvaDraftStatuses[requestId] = {status, message, designUrl, updatedAt:new Date().toISOString()};
+  try{ localStorage.setItem(CANVA_DRAFT_STATUS_KEY, JSON.stringify(canvaDraftStatuses)); }catch(error){ /* storage is optional */ }
+  orderHistory.forEach(order=>(order.deliverables||[]).forEach(file=>{
+    if(file.canvaRequestId===requestId) order.emailStatus = message;
+  }));
+  if(orderHistory.some(order=>(order.deliverables||[]).some(file=>file.canvaRequestId===requestId))) persistAccountState();
+  if(typeof renderCart==='function') renderCart();
+  if(currentUser && typeof renderAccountPanel==='function') renderAccountPanel();
+}
+function canvaDraftStatus(line){
+  const id=line?.canvaDraft?.id;
+  return id ? (canvaDraftStatuses[id] || line.canvaDraft) : null;
+}
+
+function formatMoney(usd){
+  const value=Number(usd)||0;
+  if(currency==='INR') return '₹'+Math.round(value*USD_TO_INR).toLocaleString('en-IN');
+  return '$'+value.toFixed(2);
+}
+function toUSD(displayValue){
+  const value=Number(displayValue)||0;
+  return currency==='INR' ? value/USD_TO_INR : value;
+}
+function setCurrency(next){
+  const oldCurrency=currency;
+  const priceInput=document.getElementById('slPrice');
+  const oldDisplay=priceInput ? Number(priceInput.value) : 0;
+  const oldUSD=oldCurrency==='INR' ? oldDisplay/USD_TO_INR : oldDisplay;
+  const editorInput=document.getElementById('editorPrice');
+  const editorDisplay=editorInput ? Number(editorInput.value) : 0;
+  const editorUSD=oldCurrency==='INR' ? editorDisplay/USD_TO_INR : editorDisplay;
+  currency=next==='INR'?'INR':'USD';
+  localStorage.setItem(CURRENCY_KEY,currency);
+  const select=document.getElementById('currencySelect');
+  if(select) select.value=currency;
+  if(priceInput) updateListingPriceField(oldUSD);
+  if(editorInput){ editorInput.value=currency==='INR'?Math.round(editorUSD*USD_TO_INR):editorUSD.toFixed(2); const editorLabel=document.getElementById('editorPriceLabel'); if(editorLabel) editorLabel.textContent='Price for this design ('+currency+')'; }
+  updateStaticPrices();
+  renderMarket();
+  renderServices();
+  renderCart();
+  updateSellPreview();
+  updatePaymentSummary();
+  if(document.getElementById('page-account')?.classList.contains('active')) renderAccount();
+}
+function updateStaticPrices(){
+  const p8=document.getElementById('homePrice8');
+  const p12=document.getElementById('homePrice12');
+  if(p8) p8.textContent=formatMoney(8);
+  if(p12) p12.textContent=formatMoney(12);
+  const under=document.getElementById('under20Label');
+  if(under) under.textContent='Under '+formatMoney(20);
+}
+function updateListingPriceField(usdValue){
+  const input=document.getElementById('slPrice');
+  const label=document.getElementById('slPriceLabel');
+  if(!input || !label) return;
+  const min=currency==='INR'?MIN_INR_PRICE:MIN_USD_PRICE;
+  input.min=min;
+  input.step=currency==='INR'?'1':'0.5';
+  const display=Math.max(min,currency==='INR'?usdValue*USD_TO_INR:usdValue);
+  input.value=currency==='INR'?Math.round(display):display.toFixed(2);
+  label.textContent=currency==='INR'?'Price (INR) · min ₹150 *':'Price (USD) · min $2.50 *';
+}
+
+function persistMarketplace(){
+  try{
+    const creatorListings=marketplace.filter(item=>item.userCreated).map(item=>({...item,customThumb:null}));
+    localStorage.setItem(MARKETPLACE_STORAGE_KEY,JSON.stringify(creatorListings));
+  }catch(error){ /* storage is optional */ }
+}
+function restoreMarketplace(){
+  try{
+    const creatorListings=JSON.parse(localStorage.getItem(MARKETPLACE_STORAGE_KEY) || '[]');
+    if(Array.isArray(creatorListings)) marketplace=[...creatorListings,...marketplace];
+  }catch(error){ /* storage is optional */ }
+}
+
+function restoreCart(){
+  try{
+    const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || '[]');
+    if(Array.isArray(saved)) cart = saved.filter(item => item && item.id && item.title && Number.isFinite(item.price) && item.qty > 0);
+  }catch(error){
+    cart = [];
+  }
+}
+function persistCart(){
+  try{ localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart)); }catch(error){ /* storage is optional */ }
+}
+function persistAccountState(){
+  try{
+    if(currentUser) localStorage.setItem(ACCOUNT_SESSION_KEY, JSON.stringify(currentUser));
+    else localStorage.removeItem(ACCOUNT_SESSION_KEY);
+    localStorage.setItem(ORDER_HISTORY_KEY, JSON.stringify(orderHistory));
+    localStorage.setItem(SAVED_ITEMS_KEY, JSON.stringify(savedItems));
+  }catch(error){ /* storage is optional */ }
+}
+function restoreAccountState(){
+  try{
+    currentUser = JSON.parse(localStorage.getItem(ACCOUNT_SESSION_KEY) || 'null');
+    orderHistory = JSON.parse(localStorage.getItem(ORDER_HISTORY_KEY) || '[]');
+    savedItems = JSON.parse(localStorage.getItem(SAVED_ITEMS_KEY) || '[]');
+    if(!Array.isArray(orderHistory)) orderHistory=[];
+    if(!Array.isArray(savedItems)) savedItems=[];
+  }catch(error){ currentUser=null; orderHistory=[]; savedItems=[]; }
+  updateAccountButton();
+}
+function initials(name){
+  return (name||'?').split(/\s+/).filter(Boolean).slice(0,2).map(part=>part[0]).join('').toUpperCase() || '?';
+}
+function updateAccountButton(){
+  const avatar=document.getElementById('accountAvatar');
+  const label=document.getElementById('accountButtonLabel');
+  if(!avatar || !label) return;
+  avatar.textContent=currentUser ? initials(currentUser.name || currentUser.email) : '?';
+  label.textContent=currentUser ? 'Account' : 'Sign in';
+}
+function showAccount(){
+  if(!currentUser){ openAuth('login'); return; }
+  showPage('account');
+  renderAccount();
+}
+function openAuth(mode='login'){
+  switchAuth(mode);
+  document.getElementById('authModal').classList.add('open');
+  setTimeout(()=>document.getElementById(mode==='signup'?'authName':'authEmail')?.focus(),30);
+}
+function closeAuth(){ document.getElementById('authModal').classList.remove('open'); }
+function switchAuth(mode){
+  window.authMode=mode;
+  const signup=mode==='signup';
+  document.getElementById('authNameField').style.display=signup?'block':'none';
+  document.getElementById('authRoleField').style.display=signup?'block':'none';
+  document.getElementById('authName').required=signup;
+  document.getElementById('authTitle').textContent=signup?'Create your account':'Welcome back';
+  document.getElementById('authSub').textContent=signup?'Save your orders, briefs, and favorite creative directions in one place.':'Sign in to keep your orders, saved items, and creative briefs together.';
+  document.getElementById('authSubmit').textContent=signup?'Create account':'Log in';
+  document.getElementById('authLoginTab').classList.toggle('active',!signup);
+  document.getElementById('authSignupTab').classList.toggle('active',signup);
+}
+function submitAuth(event){
+  event.preventDefault();
+  const email=document.getElementById('authEmail').value.trim().toLowerCase();
+  const password=document.getElementById('authPassword').value;
+  if(password.length<6){ toast('Use at least 6 characters for your password'); return; }
+  if(window.authMode==='signup'){
+    const name=document.getElementById('authName').value.trim();
+    const role=document.getElementById('authRole').value;
+    if(!name){ toast('Add your name to create the account'); return; }
+    currentUser={name,email,role,joined:new Date().toISOString()};
+    localStorage.setItem(ACCOUNT_PROFILE_KEY,JSON.stringify(currentUser));
+    toast('Account created — welcome to Makers\' Row');
+  }else{
+    const profile=JSON.parse(localStorage.getItem(ACCOUNT_PROFILE_KEY) || 'null');
+    if(!profile || profile.email!==email){ toast('No account found for this email — try Sign up'); return; }
+    currentUser={...profile,role:profile.role||'buyer'};
+    toast('Welcome back, '+(currentUser.name||'there'));
+  }
+  persistAccountState();
+  updateAccountButton();
+  closeAuth();
+  showPage('account');
+  renderAccount();
+}
+function logout(){
+  currentUser=null;
+  persistAccountState();
+  updateAccountButton();
+  showPage('bespoke');
+  toast('You have been signed out');
+}
+function setAccountPanel(panel){
+  activeAccountPanel=panel;
+  document.querySelectorAll('.account-nav button').forEach(button=>button.classList.toggle('active',button.dataset.panel===panel));
+  renderAccountPanel();
+}
+function renderAccount(){
+  if(!currentUser) return;
+  const name=currentUser.name||'Makers\' Row member';
+  const creator=currentUser.role==='creator';
+  document.getElementById('accountGreeting').textContent=creator?'Creator studio · '+name.split(' ')[0]:'Welcome back, '+name.split(' ')[0];
+  document.getElementById('dashboardName').textContent=name;
+  document.getElementById('dashboardEmail').textContent=currentUser.email;
+  document.getElementById('dashboardAvatar').textContent=initials(name);
+  document.getElementById('accountNav').innerHTML=creator
+    ? '<button class="active" data-panel="overview" type="button" onclick="setAccountPanel(\'overview\')">Studio overview</button><button data-panel="creator-listings" type="button" onclick="setAccountPanel(\'creator-listings\')">My listings</button><button data-panel="creator-projects" type="button" onclick="setAccountPanel(\'creator-projects\')">Projects</button>'
+    : '<button class="active" data-panel="overview" type="button" onclick="setAccountPanel(\'overview\')">Overview</button><button data-panel="orders" type="button" onclick="setAccountPanel(\'orders\')">Orders</button><button data-panel="saved" type="button" onclick="setAccountPanel(\'saved\')">Saved items</button>';
+  activeAccountPanel='overview';
+  renderAccountPanel();
+}
+function renderAccountPanel(){
+  const panel=document.getElementById('accountPanel');
+  if(!panel || !currentUser) return;
+  if(currentUser.role==='creator'){
+    renderCreatorPanel();
+    return;
+  }
+  const totalOrders=orderHistory.length;
+  const totalSpent=orderHistory.reduce((sum,order)=>sum+Number(order.total||0),0);
+  if(activeAccountPanel==='orders'){
+    panel.innerHTML='<h3>Your orders</h3><p class="account-muted">Every template, Bespoke brief, and edited design in one place.</p>'+renderOrderHistory();
+    return;
+  }
+  if(activeAccountPanel==='saved'){
+    const saved=marketplace.filter(item=>savedItems.includes(item.id));
+    panel.innerHTML='<h3>Saved items</h3><p class="account-muted">Keep promising creative ideas here until you are ready to buy or customize.</p>'+(saved.length?'<div class="account-orders">'+saved.map(item=>`<div class="account-order"><div><strong>${item.title}</strong><span>${item.seller} · ${formatMoney(item.price)}</span></div><button class="btn btn-sm btn-solid" onclick="customize('${item.id}')">Customize</button></div>`).join('')+'</div>':'<div class="account-empty">You have not saved anything yet. Browse the Marketplace and tap Save on an item you like.</div>');
+    return;
+  }
+  panel.innerHTML=`<h3>Your creative shelf</h3><p class="account-muted">Keep your shopping, downloads, and Bespoke work organized in one account.</p><div class="account-stats"><div class="account-stat"><strong>${totalOrders}</strong><span>Orders</span></div><div class="account-stat"><strong>${savedItems.length}</strong><span>Saved items</span></div><div class="account-stat"><strong>${formatMoney(totalSpent)}</strong><span>Total demo spend</span></div></div><h4 style="margin:18px 0 0;">Recent orders</h4>${renderOrderHistory(3)}`;
+}
+function creatorListings(){
+  return marketplace.filter(item=>item.userCreated && (!item.creatorEmail || item.creatorEmail===currentUser?.email));
+}
+function renderCreatorPanel(){
+  const panel=document.getElementById('accountPanel');
+  const listings=creatorListings();
+  const sales=listings.reduce((sum,item)=>sum+(item.sales||0),0);
+  const earnings=listings.reduce((sum,item)=>sum+(item.sales||0)*item.price*.8,0);
+  const projects=listings.filter(item=>item.listingStatus!=='Live').length;
+  if(activeAccountPanel==='creator-listings'){
+    panel.innerHTML='<h3>My listings</h3><p class="account-muted">Upload work, watch its status, and see how buyers are finding it.</p><button class="btn btn-coral" type="button" onclick="showPage(\'sell\')">＋ Upload new work</button>'+renderCreatorListings(listings);
+    return;
+  }
+  if(activeAccountPanel==='creator-projects'){
+    panel.innerHTML='<h3>Projects &amp; activity</h3><p class="account-muted">A simple view of what is happening with your work after you publish it.</p><div class="revision-steps" style="margin:18px 0;"><div class="revision-step"><b>1</b><span><strong>Uploaded</strong><br>We check the preview, title, and category.</span></div><div class="revision-step"><b>2</b><span><strong>Live in marketplace</strong><br>Buyers can discover, save, buy, or customize your work.</span></div><div class="revision-step"><b>3</b><span><strong>Order received</strong><br>Track sales here and deliver Bespoke work within the day.</span></div></div>'+renderCreatorListings(listings);
+    return;
+  }
+  panel.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;"><div><span class="creator-badge">Creator account</span><h3 style="margin-top:8px;">Your studio overview</h3><p class="account-muted">Publish your work, understand buyer activity, and grow your digital shelf.</p></div><button class="btn btn-coral" type="button" onclick="showPage('sell')">＋ Upload new work</button></div><div class="account-stats"><div class="account-stat"><strong>${listings.length}</strong><span>Live listings</span></div><div class="account-stat"><strong>${sales}</strong><span>Total sales</span></div><div class="account-stat"><strong>${formatMoney(earnings)}</strong><span>Creator earnings*</span></div></div><p class="account-muted" style="font-size:.7rem;">*Demo estimate after a 20% marketplace fee. Real payouts connect after payment and seller onboarding.</p><h4 style="margin:18px 0 0;">Latest activity</h4>${renderCreatorListings(listings.slice(0,3))}`;
+}
+function renderCreatorListings(listings){
+  if(!listings.length) return '<div class="account-empty" style="margin-top:15px;">No uploads yet. Start by publishing your first template, graphic, or AI service.</div>';
+  return '<div class="creator-table"><div class="creator-row head"><span>Listing</span><span>Status</span><span>Sales</span><span>Earnings</span></div>'+listings.map(item=>`<div class="creator-row"><div><strong>${item.title}</strong><span>${item.category} · ${formatMoney(item.price)} · ${(item.assetFiles||[]).length} file${(item.assetFiles||[]).length===1?'':'s'}</span></div><span class="creator-status">${item.listingStatus||'Live'}</span><span>${item.sales||0}</span><span>${formatMoney((item.sales||0)*item.price*.8)}</span></div>`).join('')+'</div>';
+}
+function renderOrderHistory(limit){
+  const orders=typeof limit==='number'?orderHistory.slice(0,limit):orderHistory;
+  if(!orders.length) return '<div class="account-empty">Your orders will appear here after checkout. Start with Bespoke or browse the Marketplace.</div>';
+  return '<div class="account-orders">'+orders.map(order=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:12px;"><div><strong>${order.id}</strong><span>${order.date} · ${order.items} item${order.items===1?'':'s'} · ${order.email||currentUser.email}</span></div><span class="order-price">${formatMoney(Number(order.total))}</span></div><div class="order-files">${(order.deliverables||[]).map((file,index)=>(file.files||['Preview file']).map((fileName,fileIndex)=>`<div class="order-file"><span>▣ ${file.title} · ${fileName}</span>${file.downloadable?`<button class="btn btn-sm btn-solid" onclick="downloadOrderFile('${order.id}',${index},${fileIndex})">Download</button>`:'<span class="email-status">Delivered within the day</span>'}</div>`).join('')).join('')}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;"><span class="email-status">${order.emailStatus||'Receipt available'}</span><button class="btn btn-sm btn-ghost" onclick="emailOrder('${order.id}')">Email receipt</button></div></div>`).join('')+'</div>';
+}
+function downloadOrderFile(orderId,index,fileIndex=0){
+  const order=orderHistory.find(item=>item.id===orderId);
+  const file=order?.deliverables?.[index];
+  if(!file || !file.downloadable || !file.thumb){ toast('This file is delivered by email within the day'); return; }
+  const a=document.createElement('a');
+  a.href=file.thumb;
+  const fileName=(file.files||['makers-row-file'])[fileIndex] || 'makers-row-file';
+  a.download=fileName.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'.jpg';
+  a.target='_blank';
+  a.rel='noopener';
+  a.click();
+  toast('Opening '+file.title);
+}
+function emailOrder(orderId){
+  const order=orderHistory.find(item=>item.id===orderId);
+  if(!order) return;
+  order.emailStatus='Receipt prepared for '+(order.email||currentUser.email);
+  persistAccountState();
+  renderAccount();
+  const subject=encodeURIComponent('Makers\' Row order '+order.id);
+  const body=encodeURIComponent('Your Makers\' Row order '+order.id+' totalled $'+Number(order.total).toFixed(2)+'. Your purchased files are available in your account.');
+  window.location.href='mailto:'+(order.email||currentUser.email)+'?subject='+subject+'&body='+body;
+  toast('Receipt prepared for your email');
+}
+function toggleSaved(id){
+  savedItems=savedItems.includes(id)?savedItems.filter(itemId=>itemId!==id):[...savedItems,id];
+  persistAccountState();
+  renderMarket();
+  if(document.getElementById('page-account')?.classList.contains('active')) renderAccount();
+  toast(savedItems.includes(id)?'Saved to your account':'Removed from saved items');
+}
 
 function thumbURL(item){ return item.customThumb || ('https://picsum.photos/seed/'+item.seed+'/400/260'); }
 
@@ -1053,6 +1740,11 @@ function thumbURL(item){ return item.customThumb || ('https://picsum.photos/seed
    NAVIGATION
 ============================================================ */
 function showPage(id){
+  if(id==='sell' && (!currentUser || currentUser.role!=='creator')){
+    toast('Creator Studio is for creator accounts');
+    openAuth('signup');
+    return;
+  }
   document.querySelectorAll('section.page').forEach(s=>s.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   document.querySelectorAll('nav.tabs button').forEach(b=>b.classList.remove('active'));
@@ -1094,10 +1786,11 @@ function renderMarket(){
 
   // category counts (always reflect current search, not current category filter)
   const bySearch = marketplace.filter(it=> it.title.toLowerCase().includes(q) || it.seller.toLowerCase().includes(q));
-  document.getElementById('cnt-all').textContent = bySearch.length;
-  document.getElementById('cnt-Templates').textContent = bySearch.filter(i=>i.category==='Templates').length;
-  document.getElementById('cnt-Graphics').textContent = bySearch.filter(i=>i.category==='Graphics').length;
-  document.getElementById('cnt-ai').textContent = bySearch.filter(i=>i.category==='AI Services').length;
+  const categoryCountIds={'all':'cnt-all','Templates':'cnt-Templates','Graphics':'cnt-Graphics','Digital Assets':'cnt-DigitalAssets','Fonts & Type':'cnt-FontsType','UI Kits':'cnt-UIKit','AI Services':'cnt-ai','AI Assets':'cnt-AIAssets','Prompt Packs':'cnt-PromptPacks'};
+  Object.entries(categoryCountIds).forEach(([category,id])=>{
+    const el=document.getElementById(id);
+    if(el) el.textContent=category==='all'?bySearch.length:bySearch.filter(i=>i.category===category).length;
+  });
 
   let items = bySearch.filter(it=> activeCategory==='all' || it.category===activeCategory);
 
@@ -1117,16 +1810,18 @@ function renderMarket(){
       <div class="thumb-wrap">
         ${it.trending ? '<div class="ribbon">🔥 Bestseller</div>' : ''}
         <img class="thumb" src="${thumbURL(it)}" alt="${it.title}" loading="lazy">
-        <div class="price-tag">$${it.price.toFixed(2)}</div>
+        <div class="price-tag">${formatMoney(it.price)}</div>
       </div>
       <div class="body">
         <span class="cat-label">${it.category}</span>
         <h4>${it.title}</h4>
         <div class="meta-row"><span class="stars">${starString(it.rating||4.5)}</span><span>${(it.rating||4.5).toFixed(1)}</span><span>· ${it.sales||0} sold</span></div>
         <div class="seller">by ${it.seller}</div>
+        <span class="delivery-badge">${it.category.includes('AI') ? 'Same-day service' : 'Instant download'}</span>
         <div class="card-actions">
           <button class="btn btn-solid" onclick="quickAdd('${it.id}')">Add to cart</button>
           <button class="btn btn-ghost" onclick="customize('${it.id}')">Customize</button>
+          <button class="save-btn ${savedItems.includes(it.id)?'saved':''}" onclick="toggleSaved('${it.id}')">${savedItems.includes(it.id)?'♥ Saved':'♡ Save'}</button>
         </div>
       </div>`;
     grid.appendChild(card);
@@ -1135,7 +1830,7 @@ function renderMarket(){
 
 function quickAdd(id){
   const it = marketplace.find(m=>m.id===id);
-  addToCart({id:'cart_'+Date.now(), kind:'product', title:it.title, price:it.price, qty:1, thumb:thumbURL(it), meta:it.seller});
+  addToCart({id:'cart_'+Date.now(), kind:'product', title:it.title, price:it.price, qty:1, thumb:thumbURL(it), meta:it.seller, assetFiles:it.assetFiles||['Preview file']});
   toast('Added "'+it.title+'" to your cart');
 }
 
@@ -1160,6 +1855,8 @@ function addToCart(entry){
   } else {
     cart.push(entry);
   }
+  persistCart();
+  document.getElementById('checkoutMsg').innerHTML='';
   renderCart();
 }
 
@@ -1168,11 +1865,13 @@ function changeQty(id,delta){
   if(!line) return;
   line.qty += delta;
   if(line.qty<=0){ cart = cart.filter(c=>c.id!==id); }
+  persistCart();
   renderCart();
 }
 
 function removeLine(id){
   cart = cart.filter(c=>c.id!==id);
+  persistCart();
   renderCart();
 }
 
@@ -1200,49 +1899,110 @@ function renderCart(){
       <div class="qty-ctrl">
         <button onclick="changeQty('${line.id}',-1)">−</button><span class="mono">${line.qty}</span><button onclick="changeQty('${line.id}',1)">+</button>
       </div>
-      <div class="mono" style="width:70px;text-align:right;">$${(line.price*line.qty).toFixed(2)}</div>
+      <div class="mono" style="width:70px;text-align:right;">${formatMoney(line.price*line.qty)}</div>
       <button class="btn btn-sm btn-ghost" onclick="removeLine('${line.id}')">✕</button>
     `;
     linesWrap.appendChild(div);
 
     const rl = document.createElement('div');
     rl.className='rline';
-    rl.innerHTML = `<span>${line.title.slice(0,26)}${line.qty>1?' x'+line.qty:''}</span><span>$${(line.price*line.qty).toFixed(2)}</span>`;
+    rl.innerHTML = `<span>${line.title.slice(0,26)}${line.qty>1?' x'+line.qty:''}</span><span>${formatMoney(line.price*line.qty)}</span>`;
     receiptLines.appendChild(rl);
   });
 
-  document.getElementById('receiptTotal').textContent = '$'+total.toFixed(2);
+  document.getElementById('receiptTotal').textContent = formatMoney(total);
   updateStickyCart();
   if(document.getElementById('page-bespoke').classList.contains('active')) renderServices();
 }
 
 function checkout(){
   if(cart.length===0){ toast('Your cart is empty'); return; }
+  if(!currentUser){
+    toast('Sign in to save your order and complete checkout');
+    openAuth('login');
+    return;
+  }
+  openPayment();
+}
+function openPayment(){
+  if(!currentUser || !cart.length) return;
+  document.getElementById('paymentEmail').textContent=currentUser.email;
+  updatePaymentSummary();
+  document.getElementById('paymentName').value=currentUser.name||'';
+  document.getElementById('paymentModal').classList.add('open');
+  setTimeout(()=>document.getElementById('paymentName').focus(),30);
+}
+function updatePaymentSummary(){
+  const items=document.getElementById('paymentItems');
+  const totalEl=document.getElementById('paymentTotal');
+  const buttonTotal=document.getElementById('paymentButtonTotal');
+  if(!items || !totalEl || !buttonTotal) return;
+  const total=cart.reduce((sum,line)=>sum+line.price*line.qty,0);
+  totalEl.textContent=formatMoney(total);
+  buttonTotal.textContent=formatMoney(total);
+  items.innerHTML=cart.map(line=>`<div class="payment-item"><span>${line.title}${line.qty>1?' ×'+line.qty:''}</span><strong>${formatMoney(line.price*line.qty)}</strong></div>`).join('');
+}
+function closePayment(){ document.getElementById('paymentModal').classList.remove('open'); }
+function submitPayment(event){
+  event.preventDefault();
+  if(!document.getElementById('paymentForm').checkValidity()){ document.getElementById('paymentForm').reportValidity(); return; }
+  closePayment();
+  completeCheckout();
+}
+function completeCheckout(){
+  window.lastOrderLines = cart.map(line=>({...line}));
   const orderNo = 'MR-'+Math.floor(100000+Math.random()*900000);
+  const orderTotal = cart.reduce((sum,line)=>sum + line.price*line.qty,0);
   const lines = cart.map(line=>{
     const ready = line.kind!=='bespoke';
+    const draft=canvaDraftStatus(line);
+    const draftLine=line.kind==='bespoke' && line.canvaDraft ? `<div class="deliverable"><span>Canva draft</span>${draft?.status==='ready'&&draft.designUrl?`<button class="btn btn-sm btn-solid" onclick="window.open('${draft.designUrl}','_blank','noopener')">Open draft</button>`:`<span class="mono" style="font-size:0.76rem;color:${draft?.status==='failed'?'#B83A2E':'var(--ink-soft)'};">${draft?.message||'Creating your draft now'}</span>`}</div>` : '';
     return `<div class="deliverable">
       <span>${line.title}</span>
-      ${ready ? `<button class="btn btn-sm btn-solid" onclick="toast('Downloading ${line.title.replace(/'/g,"")}…')">Download</button>`
-              : `<span class="mono" style="font-size:0.76rem;color:var(--ink-soft);">Emailed within 1hr</span>`}
-    </div>`;
+      ${ready ? `<button class="btn btn-sm btn-solid" onclick="downloadAsset('${line.id}')">Download preview</button>`
+              : `<span class="mono" style="font-size:0.76rem;color:var(--ink-soft);">Finished within the day</span>`}
+    </div>${draftLine}`;
   }).join('');
   document.getElementById('checkoutMsg').innerHTML = `
     <div class="order-confirm">
       <div class="ok-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
-      <h4>Order confirmed</h4>
-      <div class="ordno">Order ${orderNo} · receipt sent to your email</div>
+      <h4>Order received</h4>
+      <div class="ordno">Order ${orderNo} · total ${formatMoney(orderTotal)} · no payment was taken</div>
+      <p style="color:var(--ink-soft);font-size:0.84rem;line-height:1.5;margin:0 0 8px;">Ready-made items include a preview download in this demo. Bespoke requests are finished and sent to your email within the day.</p>
       ${lines}
     </div>`;
+  orderHistory.unshift({
+    id:orderNo,
+    date:new Date().toLocaleDateString(),
+    items:cart.reduce((sum,line)=>sum+line.qty,0),
+    total:orderTotal,
+    email:currentUser.email,
+    emailStatus:cart.some(line=>line.canvaDraft) ? (canvaDraftStatus(cart.find(line=>line.canvaDraft))?.message || 'Canva draft status is shown below') : 'Receipt ready in your account',
+    deliverables:cart.map(line=>({title:line.title,kind:line.kind,thumb:line.thumb,files:line.assetFiles||['Preview file'],downloadable:line.kind!=='bespoke',canvaRequestId:line.canvaDraft?.id||null}))
+  });
+  persistAccountState();
   toast('Checkout complete — thank you!');
   cart = [];
+  persistCart();
   renderCart();
+}
+
+function downloadAsset(id){
+  const line = cart.find(c=>c.id===id) || (window.lastOrderLines||[]).find(c=>c.id===id);
+  if(!line || !line.thumb){ toast('Preview unavailable for this item'); return; }
+  const a = document.createElement('a');
+  a.href = line.thumb;
+  a.download = (line.title || 'makers-row-asset').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')+'.jpg';
+  a.target = '_blank';
+  a.rel = 'noopener';
+  a.click();
+  toast('Opening your preview download');
 }
 
 /* ============================================================
    BESPOKE SERVICES (Swiggy-style menu)
 ============================================================ */
-const serviceCategories = ['Branding','Social','Presentations','Print','Product','AI Assist'];
+const serviceCategories = ['Branding','Social','Presentations','Websites & Content','Print','Product','AI Assist'];
 const bespokeServices = [
   {id:'s1',cat:'Branding',title:'Logo & brand mark',desc:'Primary logo + 2 concepts, PNG/SVG delivery, one revision round.',price:45,eta:'~60 min',rating:4.9,orders:820,seed:'svc-logo',tags:['popular','best']},
   {id:'s2',cat:'Branding',title:'Brand color & type kit',desc:'Palette, type pairing, and usage notes for your brand.',price:28,eta:'~45 min',rating:4.7,orders:210,seed:'svc-kit',tags:['express']},
@@ -1261,12 +2021,17 @@ const bespokeServices = [
   {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup.',price:36,eta:'~50 min',rating:4.6,orders:88,seed:'svc-hero',tags:[]},
   {id:'s16',cat:'AI Assist',title:'AI logo concept pack (8)',desc:'Curated AI directions + designer shortlist notes.',price:25,eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express']},
   {id:'s17',cat:'AI Assist',title:'Background remove (5 imgs)',desc:'Clean cutouts, transparent PNG.',price:14,eta:'~20 min',rating:4.8,orders:700,seed:'svc-bg',tags:['express','popular']},
-  {id:'s18',cat:'AI Assist',title:'Product photo polish (3)',desc:'Lighting/color cleanup for store listings.',price:24,eta:'~40 min',rating:4.6,orders:210,seed:'svc-photo',tags:['express']}
+  {id:'s18',cat:'AI Assist',title:'Product photo polish (3)',desc:'Lighting/color cleanup for store listings.',price:24,eta:'~40 min',rating:4.6,orders:210,seed:'svc-photo',tags:['express']},
+  {id:'s19',cat:'Websites & Content',title:'Landing page copy',desc:'Headline, sections, CTA, and conversion-focused copy for one webpage.',price:42,eta:'~60 min',rating:4.8,orders:180,seed:'svc-copy',tags:['popular','express']},
+  {id:'s20',cat:'Websites & Content',title:'Website homepage design',desc:'A polished homepage direction with layout, visual hierarchy, and responsive notes.',price:95,eta:'same day',rating:4.9,orders:240,seed:'svc-webhome',tags:['popular','best']},
+  {id:'s21',cat:'Websites & Content',title:'Website content pack (5 pages)',desc:'Clear, on-brand copy for Home, About, Services, FAQ, and Contact pages.',price:120,eta:'same day',rating:4.7,orders:95,seed:'svc-webcontent',tags:['best']},
+  {id:'s22',cat:'Websites & Content',title:'No-code landing page build',desc:'A responsive landing page assembled from your brief, copy, and references.',price:180,eta:'same day',rating:4.8,orders:70,seed:'svc-webbuild',tags:['popular']}
 ];
 
 let activeSvcCat = 'All';
 let activeSvcFilter = 'all';
 let pendingService = null;
+let pendingReferenceNames = [];
 
 function svcQty(serviceId){
   const line = cart.find(c=>c.kind==='bespoke' && c.serviceId===serviceId);
@@ -1338,7 +2103,7 @@ function renderServices(){
             <h4>${s.title}</h4>
             <div class="svc-rating">★ ${s.rating.toFixed(1)} · ${s.orders}+ orders</div>
             <p class="svc-desc">${s.desc}</p>
-            <div><span class="svc-price">$${s.price.toFixed(2)}</span><span class="svc-eta">${s.eta} turnaround</span></div>
+            <div><span class="svc-price">${formatMoney(s.price)}</span><span class="svc-eta">${s.eta} turnaround</span></div>
           </div>
           <div class="svc-media">
             <img src="https://picsum.photos/seed/${s.seed}/240/240" alt="" loading="lazy">
@@ -1354,9 +2119,32 @@ function openSvcModal(id){
   pendingService = bespokeServices.find(s=>s.id===id);
   if(!pendingService) return;
   document.getElementById('svcModalTitle').textContent = pendingService.title;
-  document.getElementById('svcModalSub').textContent = `$${pendingService.price.toFixed(2)} · ${pendingService.eta} · Add notes, then keep browsing for more services.`;
+  document.getElementById('svcModalSub').textContent = `${formatMoney(pendingService.price)} · ${pendingService.eta} · Two revision rounds included; third revision quoted separately.`;
+  document.getElementById('svcStyle').value = 'Clean and minimal';
   document.getElementById('svcNotes').value = '';
+  document.getElementById('svcEmail').value = '';
+  document.getElementById('svcPhone').value = '';
+  document.getElementById('svcReferences').value = '';
+  pendingReferenceNames = [];
+  updateSvcReferenceList();
   document.getElementById('svcModal').classList.add('open');
+}
+
+function updateSvcReferenceList(){
+  const el = document.getElementById('svcReferenceList');
+  if(!el) return;
+  if(!pendingReferenceNames.length){
+    el.textContent = 'Add screenshots, links exported as PDFs, moodboards, or examples you like.';
+    el.classList.remove('has-files');
+  }else{
+    el.textContent = pendingReferenceNames.length+' reference'+(pendingReferenceNames.length===1?'':'s')+': '+pendingReferenceNames.join(', ');
+    el.classList.add('has-files');
+  }
+}
+
+function handleSvcReferences(event){
+  pendingReferenceNames = Array.from(event.target.files || []).map(file=>file.name).slice(0,8);
+  updateSvcReferenceList();
 }
 
 function closeSvcModal(){
@@ -1366,13 +2154,20 @@ function closeSvcModal(){
 
 function confirmAddService(){
   if(!pendingService) return;
+  const serviceForCanva = {...pendingService};
+  const style = document.getElementById('svcStyle').value;
   const notes = document.getElementById('svcNotes').value.trim();
   const email = document.getElementById('svcEmail').value.trim();
   const phone = document.getElementById('svcPhone').value.trim();
-  const metaParts = [pendingService.eta];
+  const createCanvaDraft = document.getElementById('svcCanvaDraft').checked;
+  const referenceFiles = Array.from(document.getElementById('svcReferences').files || []);
+  const canvaRequestId = createCanvaDraft ? 'draft_'+Date.now()+'_'+Math.random().toString(36).slice(2,8) : null;
+  if(!email){ toast('Add an email so the designer knows where to send the draft'); document.getElementById('svcEmail').focus(); return; }
+  const metaParts = [pendingService.eta, 'Style: '+style, '2 revisions included'];
   if(email) metaParts.push(email);
   if(phone) metaParts.push(phone);
   if(notes) metaParts.push(notes.slice(0,60));
+  if(pendingReferenceNames.length) metaParts.push('Refs: '+pendingReferenceNames.join(', '));
   addToCart({
     id:'bespoke_'+pendingService.id,
     serviceId: pendingService.id,
@@ -1381,10 +2176,75 @@ function confirmAddService(){
     price: pendingService.price,
     qty: 1,
     thumb: 'https://picsum.photos/seed/'+pendingService.seed+'/200/200',
-    meta: metaParts.join(' · ')
+    meta: metaParts.join(' · '),
+    references: pendingReferenceNames.slice(),
+    assetFiles:['Bespoke creative delivery'],
+    canvaDraft: canvaRequestId ? {id:canvaRequestId,status:'queued',message:'Waiting to send your brief to Canva'} : null
   });
-  toast('Added "'+pendingService.title+'" — add more or view cart');
+  toast('Bespoke brief added — we’ll use your style and references');
   closeSvcModal();
+  if(createCanvaDraft){
+    setCanvaDraftStatus(canvaRequestId,'queued','Waiting to send your brief to Canva');
+    requestCanvaDraft({title:serviceForCanva.title, style, notes, referenceFiles, requestId:canvaRequestId});
+  }
+}
+
+async function readCanvaResponse(response){
+  const text=await response.text();
+  try{ return text ? JSON.parse(text) : {}; }
+  catch(error){ return {error:'Canva backend is not running for this local preview. Run the app with Vercel/serverless functions and try again.'}; }
+}
+
+async function requestCanvaDraft({title, style, notes, referenceFiles, requestId}){
+  const imageFiles=referenceFiles.filter(file=>file.type.startsWith('image/'));
+  const unsupported=referenceFiles.length-imageFiles.length;
+  setCanvaDraftStatus(requestId,'creating','Sending your brief and references to Canva');
+  toast('Sending your brief to Canva…');
+  try{
+    const assetIds=[];
+    for(const file of imageFiles){
+      const response=await fetch('/api/canva/upload-asset',{method:'POST',headers:{'Content-Type':file.type,'X-Asset-Name':file.name},body:file});
+      const payload=await readCanvaResponse(response);
+      if(!response.ok) throw new Error(payload.error||'Canva asset upload failed');
+      const uploadJobId=payload.job?.id;
+      if(!uploadJobId) continue;
+      let assetId=null;
+      for(let attempt=0;attempt<12 && !assetId;attempt++){
+        await new Promise(resolve=>setTimeout(resolve,1200));
+        const statusResponse=await fetch('/api/canva/upload-status?id='+encodeURIComponent(uploadJobId));
+        const status=await readCanvaResponse(statusResponse);
+        if(status.error) throw new Error(status.error);
+        if(status.job?.status==='success') assetId=status.job.asset?.id;
+        if(status.job?.status==='failed') throw new Error('Canva could not process '+file.name);
+      }
+      if(assetId) assetIds.push(assetId);
+    }
+    const referenceNote=referenceFiles.length?'\nReference files: '+referenceFiles.map(file=>file.name).join(', '):'';
+    setCanvaDraftStatus(requestId,'creating','Building your Canva draft');
+    const draftResponse=await fetch('/api/canva/autofill',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({title,style,brief:(notes||'Create a polished visual for this brief.')+referenceNote,assetIds})});
+    const draft=await readCanvaResponse(draftResponse);
+    if(!draftResponse.ok) throw new Error(draft.error||'Canva draft request failed');
+    const jobId=draft.job?.id;
+    if(!jobId) throw new Error('Canva did not return a draft job.');
+    for(let attempt=0;attempt<20;attempt++){
+      await new Promise(resolve=>setTimeout(resolve,1500));
+      const statusResponse=await fetch('/api/canva/autofill-status?id='+encodeURIComponent(jobId));
+      const status=await readCanvaResponse(statusResponse);
+      if(status.error) throw new Error(status.error);
+      if(status.job?.status==='success'){
+        const designUrl=status.job.result?.design?.url;
+        if(designUrl) window.open(designUrl,'_blank','noopener');
+        setCanvaDraftStatus(requestId,'ready','Your Canva draft is ready',designUrl||'');
+        toast('Your Canva draft is ready'+(unsupported?' — some non-image references stay in your brief.':''));
+        return;
+      }
+      if(status.job?.status==='failed') throw new Error('Canva could not create the draft.');
+    }
+    toast('Canva is still creating your draft — check your brief again shortly.');
+  }catch(error){
+    setCanvaDraftStatus(requestId,'failed','Draft not created: '+error.message);
+    toast(error.message+' Connect Canva and try again.');
+  }
 }
 
 function changeSvcQty(serviceId, delta){
@@ -1402,7 +2262,7 @@ function updateStickyCart(){
   const total = cart.reduce((s,c)=>s+c.price*c.qty,0);
   const allCount = cart.reduce((s,c)=>s+c.qty,0);
   document.getElementById('stickyCount').textContent = allCount===1 ? '1 item' : allCount+' items';
-  document.getElementById('stickyTotal').textContent = '$'+total.toFixed(2);
+  document.getElementById('stickyTotal').textContent = formatMoney(total);
   const onBespoke = document.getElementById('page-bespoke')?.classList.contains('active');
   bar.classList.toggle('show', onBespoke && allCount>0);
 }
@@ -1418,6 +2278,12 @@ function handleSellFile(e){
   document.getElementById('sellDrop').textContent = file.name;
   document.getElementById('sellDrop').classList.add('has-files');
 }
+function handleAssetFiles(e){
+  assetFileNames=Array.from(e.target.files||[]).map(file=>file.name).slice(0,12);
+  const list=document.getElementById('assetFileList');
+  if(list) list.textContent=assetFileNames.length ? assetFileNames.length+' file'+(assetFileNames.length===1?'':'s')+': '+assetFileNames.join(', ') : 'Upload the actual pack, PDF, ZIP, or source files buyers will receive.';
+  if(list) list.classList.toggle('has-files',assetFileNames.length>0);
+}
 
 ['slTitle','slCategory','slPrice'].forEach(id=>{
   document.addEventListener('DOMContentLoaded', ()=>{
@@ -1429,26 +2295,43 @@ function handleSellFile(e){
 function updateSellPreview(){
   document.getElementById('sellPreviewTitle').textContent = document.getElementById('slTitle').value || 'Your listing title';
   document.getElementById('sellPreviewCat').textContent = document.getElementById('slCategory').value;
-  const p = parseFloat(document.getElementById('slPrice').value)||0;
-  document.getElementById('sellPreviewPrice').textContent = '$'+p.toFixed(2);
+  const p = toUSD(document.getElementById('slPrice').value);
+  document.getElementById('sellPreviewPrice').textContent = formatMoney(p);
 }
 
 function submitListing(e){
   e.preventDefault();
+  if(!currentUser || currentUser.role!=='creator'){
+    toast('Sign up as a Creator to publish work');
+    openAuth('signup');
+    return;
+  }
   const title = document.getElementById('slTitle').value;
   const category = document.getElementById('slCategory').value;
-  const price = parseFloat(document.getElementById('slPrice').value)||1;
+  const enteredPrice = parseFloat(document.getElementById('slPrice').value)||0;
+  const minimum = currency==='INR'?MIN_INR_PRICE:MIN_USD_PRICE;
+  if(enteredPrice<minimum){ toast('Creator prices start at '+(currency==='INR'?'₹150':'$2.50')); return; }
+  const price = toUSD(enteredPrice);
   const newItem = {
     id:'p_new_'+Date.now(),
     title, category, price,
-    seller:'You',
+    seller:currentUser?.name || 'You',
     seed:'new'+Date.now(),
-    customThumb: sellFileURL || null
+    customThumb: sellFileURL || null,
+    assetFiles:assetFileNames.slice(),
+    userCreated:true,
+    creatorEmail:currentUser?.email || null,
+    listingStatus:'Live'
   };
   marketplace.unshift(newItem);
-  toast('"'+title+'" is live in the marketplace');
+  persistMarketplace();
+  toast(currentUser ? 'Your listing is live — creator dashboard updated' : '"'+title+'" is live in the marketplace');
   e.target.reset();
   sellFileURL=null;
+  assetFileNames=[];
+  document.getElementById('slAssets').value='';
+  document.getElementById('assetFileList').textContent='Upload the actual pack, PDF, ZIP, or source files buyers will receive.';
+  document.getElementById('assetFileList').classList.remove('has-files');
   document.getElementById('sellDrop').textContent='Click to upload a preview image';
   document.getElementById('sellDrop').classList.remove('has-files');
   document.getElementById('sellPreviewImg').src='https://picsum.photos/seed/sellplaceholder2/400/260';
@@ -1464,6 +2347,42 @@ let fabricCanvas;
 let historyStack = [];
 let historyIndex = -1;
 let suppressHistory = false;
+let brandLogoData = '';
+let brandColors = ['#1F4BFF','#F5B942','#E84D3D','#12141A'];
+const BRAND_KIT_KEY = 'makers-row-brand-kit-v1';
+
+function loadBrandKit(){
+  try{
+    const saved=JSON.parse(localStorage.getItem(BRAND_KIT_KEY)||'null');
+    if(saved){ brandLogoData=saved.logo||''; brandColors=Array.isArray(saved.colors)&&saved.colors.length?saved.colors.slice(0,4):brandColors; }
+  }catch(error){ /* storage is optional */ }
+  const preview=document.getElementById('brandLogoPreview');
+  if(preview && brandLogoData) preview.src=brandLogoData;
+  brandColors.forEach((color,index)=>{ const input=document.getElementById('brandColor'+(index+1)); if(input) input.value=color; });
+  renderBrandSwatches();
+}
+function handleBrandLogo(event){
+  const file=event.target.files?.[0];
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=()=>{ brandLogoData=reader.result; const preview=document.getElementById('brandLogoPreview'); if(preview) preview.src=brandLogoData; saveBrandKit(); };
+  reader.readAsDataURL(file);
+}
+function saveBrandKit(){
+  brandColors=[1,2,3,4].map(index=>document.getElementById('brandColor'+index)?.value||brandColors[index-1]);
+  try{ localStorage.setItem(BRAND_KIT_KEY,JSON.stringify({logo:brandLogoData,colors:brandColors})); }catch(error){ /* storage is optional */ }
+  renderBrandSwatches();
+  toast('Brand kit saved');
+}
+function renderBrandSwatches(){
+  const swatches=document.getElementById('brandSwatches');
+  if(!swatches) return;
+  swatches.innerHTML=brandColors.map(color=>`<button class="brand-swatch" type="button" title="Apply ${color}" aria-label="Apply ${color}" style="background:${color}" onclick="applyFill('${color}')"></button>`).join('');
+}
+function addBrandLogo(){
+  if(!brandLogoData){ toast('Upload a brand logo first'); return; }
+  fabric.Image.fromURL(brandLogoData,img=>{ img.scaleToWidth(180); img.set({left:380,top:40}); fabricCanvas.add(img).setActiveObject(img); });
+}
 
 function initEditor(){
   fabricCanvas = new fabric.Canvas('editorCanvas', {backgroundColor:'#ffffff'});
@@ -1576,6 +2495,23 @@ function deleteObj(){
   if(!o) { toast('Select an object first'); return; }
   fabricCanvas.remove(o);
 }
+function alignObject(position){
+  const o=fabricCanvas.getActiveObject();
+  if(!o){ toast('Select an object first'); return; }
+  const width=o.getScaledWidth(), height=o.getScaledHeight();
+  if(position==='left') o.set({left:0});
+  if(position==='center') o.set({left:(fabricCanvas.getWidth()-width)/2});
+  if(position==='right') o.set({left:fabricCanvas.getWidth()-width});
+  if(position==='top') o.set({top:0});
+  if(position==='middle') o.set({top:(fabricCanvas.getHeight()-height)/2});
+  if(position==='bottom') o.set({top:fabricCanvas.getHeight()-height});
+  o.setCoords(); fabricCanvas.renderAll(); pushHistory();
+}
+function rotateObject(degrees){
+  const o=fabricCanvas.getActiveObject();
+  if(!o){ toast('Select an object first'); return; }
+  o.rotate((o.angle||0)+degrees); o.setCoords(); fabricCanvas.renderAll(); pushHistory();
+}
 function applyBg(color){
   fabricCanvas.setBackgroundColor(color, ()=>fabricCanvas.renderAll());
   pushHistory();
@@ -1594,7 +2530,7 @@ function downloadPNG(){
 }
 function loadIntoEditor(item){
   document.getElementById('editorTitle').textContent = 'Editing: '+item.title;
-  document.getElementById('editorSub').textContent = 'Customize this listing (originally $'+item.price.toFixed(2)+' from '+item.seller+'), then add your version to the cart.';
+  document.getElementById('editorSub').textContent = 'Customize this listing (originally '+formatMoney(item.price)+' from '+item.seller+'), then add your version to the cart.';
   fabricCanvas.clear();
   fabricCanvas.setBackgroundColor('#ffffff', ()=>fabricCanvas.renderAll());
   fabric.Image.fromURL(thumbURL(item), img=>{
@@ -1605,12 +2541,13 @@ function loadIntoEditor(item){
     fabricCanvas.add(t).setActiveObject(t);
     pushHistory();
   }, {crossOrigin:'anonymous'});
-  document.getElementById('editorPrice').value = item.price;
+  document.getElementById('editorPrice').value = currency==='INR'?Math.round(item.price*USD_TO_INR):item.price;
+  document.getElementById('editorPriceLabel').textContent = 'Price for this design ('+currency+')';
 }
 function addEditorToCart(){
-  const price = parseFloat(document.getElementById('editorPrice').value)||1;
+  const price = Math.max(MIN_USD_PRICE,toUSD(document.getElementById('editorPrice').value));
   const thumb = fabricCanvas.toDataURL({format:'png', quality:0.8, multiplier:0.3});
-  addToCart({id:'custom_'+Date.now(), kind:'custom', title:'Custom design', price, qty:1, thumb, meta:'Edited by you'});
+  addToCart({id:'custom_'+Date.now(), kind:'custom', title:'Custom design', price, qty:1, thumb, meta:'Edited by you', assetFiles:['Custom design PNG']});
   toast('Your custom design was added to the cart');
 }
 
@@ -1618,12 +2555,19 @@ function addEditorToCart(){
    INIT
 ============================================================ */
 document.addEventListener('DOMContentLoaded', ()=>{
+  document.getElementById('currencySelect').value=currency;
+  updateListingPriceField(10);
+  updateStaticPrices();
+  restoreMarketplace();
+  restoreCart();
+  restoreAccountState();
   renderMarket();
   renderCart();
   initEditor();
   updateSellPreview();
   renderServices();
   updateStickyCart();
+  loadBrandKit();
 });
 </script>
 </body>
