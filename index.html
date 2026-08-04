@@ -1219,12 +1219,10 @@
     <div class="field"><label for="svcStyle">What kind of creative feels right?</label><select id="svcStyle"><option value="Clean and minimal">Clean and minimal</option><option value="Bold and expressive">Bold and expressive</option><option value="Warm and organic">Warm and organic</option><option value="Editorial and premium">Editorial and premium</option><option value="Playful and colorful">Playful and colorful</option><option value="Match my references">Match my references</option></select></div>
     <div class="field"><label for="svcNotes">Brief / notes</label><textarea id="svcNotes" rows="3" placeholder="What should we make, who is it for, words to include, size, deadline…"></textarea></div>
     <div class="field"><label for="svcReferences">Upload references</label><input type="file" id="svcReferences" accept="image/*,.pdf,.svg" multiple onchange="handleSvcReferences(event)"><div class="reference-list" id="svcReferenceList">Add screenshots, links exported as PDFs, moodboards, or examples you like.</div></div>
-    <div class="field"><label><input type="checkbox" id="svcCanvaDraft" checked> Create a Canva draft from this brief and image references</label><div class="reference-list">Requires a connected Canva account and an autofillable Canva brand template.</div></div>
     <div class="field"><label for="svcEmail">Delivery email</label><input type="email" id="svcEmail" placeholder="you@email.com" required></div>
     <div class="field"><label>Phone (optional)</label><input type="tel" id="svcPhone" placeholder="For clarifications"></div>
     <div class="svc-sheet-actions">
       <button class="btn btn-ghost" type="button" onclick="closeSvcModal()">Cancel</button>
-      <button class="btn btn-ghost" type="button" onclick="window.location.href='/api/canva/oauth/start'">Connect Canva</button>
       <button class="btn btn-coral" type="button" onclick="confirmAddService()">Add Bespoke brief</button>
     </div>
   </div>
@@ -2272,7 +2270,7 @@ function confirmAddService(){
   const notes = document.getElementById('svcNotes').value.trim();
   const email = document.getElementById('svcEmail').value.trim();
   const phone = document.getElementById('svcPhone').value.trim();
-  const createCanvaDraft = document.getElementById('svcCanvaDraft').checked;
+  const createCanvaDraft = false;
   const referenceFiles = Array.from(document.getElementById('svcReferences').files || []);
   const canvaRequestId = createCanvaDraft ? 'draft_'+Date.now()+'_'+Math.random().toString(36).slice(2,8) : null;
   if(!email){ toast('Add an email so the designer knows where to send the draft'); document.getElementById('svcEmail').focus(); return; }
@@ -2368,7 +2366,7 @@ async function requestCanvaDraft({title, style, notes, referenceFiles, requestId
     toast('Canva is still creating your draft — check your brief again shortly.');
   }catch(error){
     setCanvaDraftStatus(requestId,'failed','Draft not created: '+error.message);
-    toast(error.message+' Connect Canva and try again.');
+    toast(error.message+' Your brief is still saved in the client CRM.');
   }
 }
 
@@ -2695,7 +2693,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   loadBrandKit();
   const params = new URLSearchParams(window.location.search);
   if(params.get('page') === 'bespoke') showPage('bespoke');
-  if(params.get('canva') === 'connected') toast('Canva connected. Add your bespoke brief to create a draft.');
 });
 </script>
 </body>
