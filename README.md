@@ -21,6 +21,7 @@ The marketplace UI can run as a static site. The Canva connection uses the inclu
 
 1. Copy `.env.example` to a local environment file or add the variables in Vercel.
 2. Set `CANVA_CLIENT_ID`, `CANVA_CLIENT_SECRET`, `CANVA_REDIRECT_URI`, and `CANVA_BRAND_TEMPLATE_ID`.
+3. For the designer CRM, run `supabase/schema.sql` in the Supabase SQL Editor and set the Supabase variables from `.env.example`.
 3. Configure the same redirect URI in the Canva integration settings.
 4. Use an Autofill-enabled Canva Brand Template whose field names match `CANVA_AUTOFILL_FIELDS_JSON`.
 
