@@ -28,6 +28,6 @@ module.exports = async function handler(req, res) {
   const headers = [cookie('canva_access_token', payload.access_token, payload.expires_in || 14400, secure)];
   if (payload.refresh_token) headers.push(cookie('canva_refresh_token', payload.refresh_token, 2592000, secure));
   res.setHeader('Set-Cookie', headers);
-  res.writeHead(302, { Location: '/?canva=connected' });
+  res.writeHead(302, { Location: '/?page=bespoke&canva=connected' });
   res.end();
 };

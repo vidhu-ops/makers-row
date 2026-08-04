@@ -2568,6 +2568,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderServices();
   updateStickyCart();
   loadBrandKit();
+  const params = new URLSearchParams(window.location.search);
+  if(params.get('page') === 'bespoke') showPage('bespoke');
+  if(params.get('canva') === 'connected') toast('Canva connected. Add your bespoke brief to create a draft.');
 });
 </script>
 </body>
