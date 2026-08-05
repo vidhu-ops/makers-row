@@ -12,9 +12,9 @@ function config() {
 function appUrl() { return (process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/$/, ''); }
 function manualPaymentConfig() {
   return {
-    enabled: Boolean(process.env.UPI_ID || process.env.UPI_QR_IMAGE_URL || process.env.BANK_ACCOUNT_NUMBER),
-    upi_id: process.env.UPI_ID || '',
-    qr_image_url: process.env.UPI_QR_IMAGE_URL || '',
+    enabled: true,
+    upi_id: process.env.UPI_ID || 'vidhugupta1996@oksbi',
+    qr_image_url: process.env.UPI_QR_IMAGE_URL || 'https://makers-row-final-iebk.vercel.app/assets/upi-qr.jpeg',
     account_name: process.env.BANK_ACCOUNT_NAME || '',
     account_number: process.env.BANK_ACCOUNT_NUMBER || '',
     ifsc: process.env.BANK_IFSC || '',
@@ -66,7 +66,8 @@ async function submitManualProof(req,res) {
 async function approveManualPayment(req,res) {
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
   const adminEmail=String(data.admin_email||'').trim().toLowerCase();
-  if(!process.env.ADMIN_EMAIL || adminEmail!==String(process.env.ADMIN_EMAIL).trim().toLowerCase()){res.status(403).json({error:'Admin approval is required.'});return;}
+  const configuredAdmin=String(process.env.ADMIN_EMAIL||'vidhugupta1996@gmail.com').trim().toLowerCase();
+  if(adminEmail!==configuredAdmin){res.status(403).json({error:'Admin approval is required.'});return;}
   if(!data.order_number){res.status(400).json({error:'Order number is required.'});return;}
   const order=await updateOrder(String(data.order_number),{status:'in_progress',payment_status:'paid',payment_verified_at:new Date().toISOString(),admin_note:data.admin_note||null});
   if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}
