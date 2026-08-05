@@ -29,6 +29,8 @@ The Cashfree dashboard should use the same webhook URL and `2025-01-01` webhook 
 
 Manual UPI / bank transfer checkout is also available. Configure `ADMIN_EMAIL`, `UPI_ID` and/or `UPI_QR_IMAGE_URL`, and the bank fields from `.env.example`. Customers submit their UTR after paying; the signed-in admin confirms the matching payment from Creator Studio → Client CRM. Run the updated `supabase/schema.sql` before using this flow. Manual UPI payments cannot be automatically verified by the browser, so orders remain pending until admin approval.
 
+Account signup and login use Supabase Auth through `api/auth.js`. The public `accounts` table stores profile data (email, name, and role); passwords are handled by Supabase Auth and are not stored in the app or browser local storage.
+
 ## Dev workflow
 
 Bespoke page fragments live in `_parts/`. Merge them into `index.html` with:

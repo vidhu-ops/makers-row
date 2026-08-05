@@ -1278,7 +1278,7 @@
       <div class="field"><label for="authPassword">Password</label><input type="password" id="authPassword" placeholder="At least 6 characters" minlength="6" required></div>
       <button class="btn btn-cobalt auth-submit" id="authSubmit" type="submit">Log in</button>
     </form>
-    <p class="auth-note">This prototype keeps your demo account in this browser. A production launch should connect this form to secure authentication, payments, and order storage.</p>
+    <p class="auth-note">Your account profile, orders, and project activity are saved to Makers' Row. Your password is handled by secure Supabase Auth and is never stored in this browser.</p>
   </div>
 </div>
 
@@ -1643,6 +1643,7 @@ async function loadBuyerData(){
 function restoreAccountState(){
   try{
     currentUser = JSON.parse(localStorage.getItem(ACCOUNT_SESSION_KEY) || 'null');
+    if(currentUser && !currentUser.session?.access_token) currentUser=null;
     orderHistory = JSON.parse(localStorage.getItem(ORDER_HISTORY_KEY) || '[]');
     savedItems = JSON.parse(localStorage.getItem(SAVED_ITEMS_KEY) || '[]');
     if(!Array.isArray(orderHistory)) orderHistory=[];
@@ -1683,22 +1684,29 @@ function switchAuth(mode){
   document.getElementById('authLoginTab').classList.toggle('active',!signup);
   document.getElementById('authSignupTab').classList.toggle('active',signup);
 }
-function submitAuth(event){
+async function submitAuth(event){
   event.preventDefault();
   const email=document.getElementById('authEmail').value.trim().toLowerCase();
   const password=document.getElementById('authPassword').value;
   if(password.length<6){ toast('Use at least 6 characters for your password'); return; }
+  const button=document.getElementById('authSubmit'); if(button){button.disabled=true;button.textContent='Please wait...';}
+  try{
   if(window.authMode==='signup'){
     const name=document.getElementById('authName').value.trim();
     const role=document.getElementById('authRole').value;
     if(!name){ toast('Add your name to create the account'); return; }
-    currentUser={name,email,role,joined:new Date().toISOString()};
+    const response=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'signup',name,email,role,password})});
+    const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Could not create account.');
+    currentUser={...(payload.account||{}),name,email,role,session:payload.session||null,joined:new Date().toISOString()};
     localStorage.setItem(ACCOUNT_PROFILE_KEY,JSON.stringify(currentUser));
     toast('Account created — welcome to Makers\' Row');
   }else{
-    const profile=JSON.parse(localStorage.getItem(ACCOUNT_PROFILE_KEY) || 'null');
+    const response=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email,password})});
+    const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Email or password is incorrect.');
+    const profile=payload.account||{email};
     if(!profile || profile.email!==email){ toast('No account found for this email — try Sign up'); return; }
-    currentUser={...profile,role:profile.role||'buyer'};
+    currentUser={...(payload.account||{}),name:payload.account?.name||payload.user?.user_metadata?.name||'Makers\' Row member',email,role:payload.account?.role||payload.user?.user_metadata?.role||'buyer',session:payload.session||null};
+    localStorage.setItem(ACCOUNT_PROFILE_KEY,JSON.stringify(currentUser));
     toast('Welcome back, '+(currentUser.name||'there'));
   }
   persistAccountState();
@@ -1707,6 +1715,7 @@ function submitAuth(event){
   closeAuth();
   showPage('account');
   renderAccount();
+  }catch(error){toast(error.message);}finally{if(button){button.disabled=false;button.textContent=window.authMode==='signup'?'Create account':'Log in';}}
 }
 function logout(){
   currentUser=null;
@@ -1758,7 +1767,8 @@ function renderAccountPanel(){
   loadBuyerData();
 }
 function normalizeRemoteOrder(order){
-  return {id:order.order_number,date:new Date(order.created_at).toLocaleDateString(),items:(order.items||[]).reduce((sum,item)=>sum+Number(item.qty||1),0),total:Number(order.total||0),email:order.buyer_email,status:order.status,paymentStatus:order.payment_status,paymentReference:order.payment_reference,deliverables:(order.items||[]).map(item=>({...item,downloadable:item.kind!=='bespoke'}))};
+  const paymentStatus=order.payment_status||'pending';
+  return {id:order.order_number,date:new Date(order.created_at).toLocaleDateString(),items:(order.items||[]).reduce((sum,item)=>sum+Number(item.qty||1),0),total:Number(order.total||0),email:order.buyer_email,status:order.status,paymentStatus,paymentReference:order.payment_reference,emailStatus:paymentStatus==='submitted'?'Payment proof submitted — awaiting admin confirmation':paymentStatus==='paid'?'Payment confirmed':order.status==='in_progress'?'Order in progress':'Payment pending',deliverables:(order.items||[]).map(item=>({...item,downloadable:item.kind!=='bespoke'}))};
 }
 function renderBuyerProjects(limit){
   const projects=typeof limit==='number'?buyerProjects.slice(0,limit):buyerProjects;
@@ -2144,7 +2154,7 @@ async function startManualPayment(){
     const created=await create.json(); if(!create.ok) throw new Error(created.error||'Could not save payment order.');
     const proof=await fetch('/api/commerce?action=submit-manual-proof',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:orderNo,payment_reference:reference})});
     const submitted=await proof.json(); if(!proof.ok) throw new Error(submitted.error||'Could not submit payment proof.');
-    orderHistory.unshift({id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_submitted',paymentStatus:'submitted',deliverables});
+    orderHistory.unshift({id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_submitted',paymentStatus:'submitted',emailStatus:'Payment proof submitted — awaiting admin confirmation',deliverables});
     persistAccountState(); cart=[];persistCart();closePayment();renderCart();toast('Payment proof submitted. Your order will be released after confirmation.');showPage('account');renderAccount();
   }catch(error){toast(error.message);if(button){button.disabled=false;button.innerHTML='I have paid <span id="manualButtonTotal">₹0</span>';}}
 }
@@ -2905,6 +2915,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
   updateStickyCart();
   loadBrandKit();
   handlePaymentReturn();
+  setInterval(()=>{
+    if(!currentUser) return;
+    const accountPage=document.getElementById('page-account');
+    if(accountPage?.classList.contains('active')) loadBuyerData();
+    if(activeAccountPanel==='crm-projects' && document.getElementById('crmProjects')) loadCrmProjects();
+  },15000);
   const params = new URLSearchParams(window.location.search);
   if(params.get('page') === 'bespoke') showPage('bespoke');
 });
