@@ -756,7 +756,7 @@
   .manual-payment-panel{border:1px solid #BFD0FF;background:#F5F7FF;border-radius:11px;padding:13px;margin-bottom:16px;}
   .manual-payment-panel h4{color:var(--ink);margin-bottom:8px;}
   .manual-payment-details{background:var(--white);border-radius:9px;padding:11px;margin:10px 0;font-size:.78rem;line-height:1.6;word-break:break-word;}
-  .manual-payment-details img{max-width:180px;max-height:180px;display:block;border-radius:8px;margin-top:8px;}
+  .manual-payment-details img{width:min(260px,100%);height:auto;max-height:260px;object-fit:contain;display:block;border-radius:8px;margin:10px auto 0;image-rendering:auto;}
   .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:28px;}
   .portfolio-card{background:var(--white);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:var(--shadow);}
   .portfolio-art{height:190px;padding:20px;display:flex;align-items:flex-end;background:linear-gradient(135deg,#1f4bff,#dbe3ff 55%,#f5b942);}
@@ -2107,6 +2107,8 @@ async function loadManualPaymentDetails(){
     const response=await fetch('/api/commerce?action=payment-config'); const data=await response.json();
     if(!response.ok||!data.enabled) throw new Error('Manual payment details are not configured yet.');
     const amount=Math.max(150,Math.round(cart.reduce((sum,line)=>sum+line.price*line.qty,0)*USD_TO_INR));
+    const manualButtonTotal=document.getElementById('manualButtonTotal');
+    if(manualButtonTotal) manualButtonTotal.textContent='₹'+amount.toLocaleString('en-IN');
     const qr=data.qr_image_url?`<img src="${escapeHtml(data.qr_image_url)}" alt="UPI payment QR code">`:'';
     wrap.innerHTML=`<strong>Pay ₹${amount.toLocaleString('en-IN')}</strong><br>${data.upi_id?`UPI ID: <strong>${escapeHtml(data.upi_id)}</strong><br>`:''}${data.account_name?`Account name: ${escapeHtml(data.account_name)}<br>`:''}${data.account_number?`Account number: ${escapeHtml(data.account_number)}<br>`:''}${data.ifsc?`IFSC: ${escapeHtml(data.ifsc)}<br>`:''}${data.bank_name?`Bank: ${escapeHtml(data.bank_name)}`:''}${qr}`;
   }catch(error){wrap.innerHTML='<span style="color:#B83A2E">Manual payment details are not available yet. Please try again later.</span>';}

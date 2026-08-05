@@ -14,7 +14,7 @@ function manualPaymentConfig() {
   return {
     enabled: true,
     upi_id: process.env.UPI_ID || 'vidhugupta1996@oksbi',
-    qr_image_url: process.env.UPI_QR_IMAGE_URL || 'https://makers-row-final-iebk.vercel.app/assets/upi-qr.jpeg',
+    qr_image_url: process.env.UPI_QR_IMAGE_URL || 'https://makers-row-final-iebk.vercel.app/assets/upi-qr-cropped.png',
     account_name: process.env.BANK_ACCOUNT_NAME || '',
     account_number: process.env.BANK_ACCOUNT_NUMBER || '',
     ifsc: process.env.BANK_IFSC || '',
