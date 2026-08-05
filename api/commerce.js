@@ -10,6 +10,17 @@ function config() {
   return { environment, base, id: process.env.CASHFREE_CLIENT_ID, secret: process.env.CASHFREE_CLIENT_SECRET };
 }
 function appUrl() { return (process.env.APP_URL || process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000').replace(/\/$/, ''); }
+function manualPaymentConfig() {
+  return {
+    enabled: Boolean(process.env.UPI_ID || process.env.UPI_QR_IMAGE_URL || process.env.BANK_ACCOUNT_NUMBER),
+    upi_id: process.env.UPI_ID || '',
+    qr_image_url: process.env.UPI_QR_IMAGE_URL || '',
+    account_name: process.env.BANK_ACCOUNT_NAME || '',
+    account_number: process.env.BANK_ACCOUNT_NUMBER || '',
+    ifsc: process.env.BANK_IFSC || '',
+    bank_name: process.env.BANK_NAME || ''
+  };
+}
 async function bodyText(req) {
   if (typeof req.body === 'string') return req.body;
   if (req.body && typeof req.body === 'object') return JSON.stringify(req.body);
@@ -38,6 +49,29 @@ function receipt(order, label='Payment confirmed') {
   return { subject:`Makers' Row receipt · ${order.order_number}`, html:`<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>${escapeHtml(label)}</h2><p>Hi ${escapeHtml(order.buyer_name||'there')},</p><p>Your payment for <strong>${escapeHtml(order.order_number)}</strong> was confirmed.</p><ul>${items}</ul><p><strong>Total paid: ₹${Number(order.total||0).toLocaleString('en-IN')}</strong></p><p>Ready files will appear in your account. Bespoke work will be delivered within the day.</p><p>Makers' Row</p></div>`, text:`${label}\n\nHi ${order.buyer_name||'there'}, your payment for ${order.order_number} was confirmed. Total paid: ₹${Number(order.total||0).toLocaleString('en-IN')}. Ready files will appear in your account. Bespoke work will be delivered within the day.` };
 }
 async function sendReceipt(order) { return sendEmail({...receipt(order),to:order.buyer_email,idempotencyKey:`receipt-${order.order_number}`}); }
+async function createManualPayment(req,res) {
+  const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
+  if(!data.order_number||!data.buyer_email||!Array.isArray(data.items)||!Number(data.total)){res.status(400).json({error:'Order number, buyer email, items, and total are required.'});return;}
+  if(!manualPaymentConfig().enabled){res.status(503).json({error:'Manual payment details have not been configured yet.'});return;}
+  const orderNumber=String(data.order_number).replace(/[^A-Za-z0-9_-]/g,'').slice(0,45);
+  const record=await saveOrder({order_number:orderNumber,buyer_email:String(data.buyer_email).trim().toLowerCase(),buyer_name:data.buyer_name||null,total:Number(data.total),currency:'INR',status:'received',payment_method:'upi_or_bank_transfer',payment_status:'pending',items:data.items});
+  res.status(201).json({order:record,order_id:orderNumber,payment:manualPaymentConfig()});
+}
+async function submitManualProof(req,res) {
+  const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
+  if(!data.order_number||!data.payment_reference){res.status(400).json({error:'Order number and UTR/payment reference are required.'});return;}
+  const order=await updateOrder(String(data.order_number),{payment_status:'submitted',payment_reference:String(data.payment_reference).trim().slice(0,120),payment_proof_url:data.payment_proof_url||null,payment_submitted_at:new Date().toISOString()});
+  res.status(200).json({order,message:'Payment proof submitted. Your order will be released after admin confirmation.'});
+}
+async function approveManualPayment(req,res) {
+  const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
+  const adminEmail=String(data.admin_email||'').trim().toLowerCase();
+  if(!process.env.ADMIN_EMAIL || adminEmail!==String(process.env.ADMIN_EMAIL).trim().toLowerCase()){res.status(403).json({error:'Admin approval is required.'});return;}
+  if(!data.order_number){res.status(400).json({error:'Order number is required.'});return;}
+  const order=await updateOrder(String(data.order_number),{status:'in_progress',payment_status:'paid',payment_verified_at:new Date().toISOString(),admin_note:data.admin_note||null});
+  if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}
+  res.status(200).json({order});
+}
 async function createPayment(req,res) {
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
   if(!data.order_number||!data.buyer_email||!Array.isArray(data.items)||!Number(data.total)){res.status(400).json({error:'Order number, buyer email, items, and total are required.'});return;}
@@ -64,5 +98,5 @@ async function verifyPayment(req,res) {
   if(paid){order=await updateOrder(orderId,{status:'in_progress'});if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}}
   res.status(200).json({paid,order_status:payment.order_status,order});
 }
-module.exports=async function handler(req,res){try{const action=new URL(req.url,`http://${req.headers.host}`).searchParams.get('action')||'create-payment';if(action==='create-payment'&&req.method==='POST')return createPayment(req,res);if(action==='webhook'&&req.method==='POST')return webhook(req,res);if(action==='verify-payment'&&req.method==='GET')return verifyPayment(req,res);res.status(405).json({error:'Unsupported commerce action.'});}catch(error){console.error(error);res.status(500).json({error:error.message});}};
+module.exports=async function handler(req,res){try{const action=new URL(req.url,`http://${req.headers.host}`).searchParams.get('action')||'create-payment';if(action==='payment-config'&&req.method==='GET'){res.status(200).json(manualPaymentConfig());return;}if(action==='create-payment'&&req.method==='POST')return createPayment(req,res);if(action==='create-manual-payment'&&req.method==='POST')return createManualPayment(req,res);if(action==='submit-manual-proof'&&req.method==='POST')return submitManualProof(req,res);if(action==='approve-manual-payment'&&req.method==='POST')return approveManualPayment(req,res);if(action==='webhook'&&req.method==='POST')return webhook(req,res);if(action==='verify-payment'&&req.method==='GET')return verifyPayment(req,res);res.status(405).json({error:'Unsupported commerce action.'});}catch(error){console.error(error);res.status(500).json({error:error.message});}};
 module.exports.config={api:{bodyParser:false}};

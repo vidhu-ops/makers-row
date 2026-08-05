@@ -44,6 +44,13 @@ create table if not exists public.orders (
   total numeric(12,2) not null default 0,
   currency text not null default 'USD' check (currency in ('USD','INR')),
   status text not null default 'received' check (status in ('received','in_progress','ready','delivered','closed')),
+  payment_method text not null default 'cashfree',
+  payment_status text not null default 'pending' check (payment_status in ('pending','submitted','paid','failed')),
+  payment_reference text,
+  payment_proof_url text,
+  payment_submitted_at timestamptz,
+  payment_verified_at timestamptz,
+  admin_note text,
   items jsonb not null default '[]'::jsonb,
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
@@ -72,3 +79,12 @@ alter table public.accounts enable row level security;
 insert into storage.buckets (id, name, public)
 values ('project-files', 'project-files', true)
 on conflict (id) do update set public = true;
+
+-- Safe migration for an existing database.
+alter table public.orders add column if not exists payment_method text not null default 'cashfree';
+alter table public.orders add column if not exists payment_status text not null default 'pending';
+alter table public.orders add column if not exists payment_reference text;
+alter table public.orders add column if not exists payment_proof_url text;
+alter table public.orders add column if not exists payment_submitted_at timestamptz;
+alter table public.orders add column if not exists payment_verified_at timestamptz;
+alter table public.orders add column if not exists admin_note text;
