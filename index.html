@@ -3040,7 +3040,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function score(text){return Array.from(text).filter(char=>[0xC2,0xC3,0xE2,0xEF,0xF0,0xFFFD].includes(char.charCodeAt(0))).length;}
   function repair(text){let current=text;for(let round=0;round<3;round++){try{const next=decodeURIComponent(escape(current));if(next===current||score(next)>=score(current))break;current=next;}catch(error){break;}}return current;}
   function scan(root){const nodes=root.querySelectorAll?root.querySelectorAll('*'):[];nodes.forEach(node=>{node.childNodes.forEach(child=>{if(child.nodeType===3){const next=repair(child.nodeValue);if(next!==child.nodeValue)child.nodeValue=next;}});['placeholder','title','aria-label'].forEach(attribute=>{if(node.hasAttribute(attribute)){const next=repair(node.getAttribute(attribute));if(next!==node.getAttribute(attribute))node.setAttribute(attribute,next);}});});}
-  const run=()=>scan(document);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+  function fixQuantityControls(){document.querySelectorAll('button[onclick*="changeQty"],button[onclick*="changeSvcQty"]').forEach(button=>{const action=button.getAttribute('onclick')||'';button.textContent=action.includes(',-1)')?'-':'+';});document.querySelectorAll('button[onclick*="removeLine"]').forEach(button=>{button.textContent='x';});}
+  const run=()=>{scan(document);fixQuantityControls();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
 })();
 </script>
 </body>
