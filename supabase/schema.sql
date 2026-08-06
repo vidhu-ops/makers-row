@@ -49,6 +49,7 @@ create table if not exists public.orders (
   payment_status text not null default 'pending' check (payment_status in ('pending','submitted','paid','failed')),
   payment_reference text,
   payment_proof_url text,
+  payment_proof_path text,
   payment_submitted_at timestamptz,
   payment_verified_at timestamptz,
   admin_note text,
@@ -86,6 +87,7 @@ alter table public.orders add column if not exists payment_method text not null 
 alter table public.orders add column if not exists payment_status text not null default 'pending';
 alter table public.orders add column if not exists payment_reference text;
 alter table public.orders add column if not exists payment_proof_url text;
+alter table public.orders add column if not exists payment_proof_path text;
 alter table public.orders add column if not exists payment_submitted_at timestamptz;
 alter table public.orders add column if not exists payment_verified_at timestamptz;
 alter table public.orders add column if not exists admin_note text;

@@ -22,6 +22,26 @@ function manualPaymentConfig() {
     bank_name: process.env.BANK_NAME || ''
   };
 }
+async function getOrder(orderNumber){
+  const result=await supabaseRequest(`orders?order_number=eq.${encodeURIComponent(orderNumber)}&limit=1`);
+  return result.response.ok&&Array.isArray(result.payload)?result.payload[0]||null:null;
+}
+async function uploadPaymentProof(req,res){
+  const auth=await authenticate(req);
+  const orderNumber=String(new URL(req.url,`http://${req.headers.host}`).searchParams.get('order_id')||'').trim();
+  if(!orderNumber){res.status(400).json({error:'Order id is required.'});return;}
+  const order=await getOrder(orderNumber);
+  if(!order||order.buyer_email!==auth.email){res.status(403).json({error:'You can only upload proof for your own order.'});return;}
+  const chunks=[];for await(const chunk of req) chunks.push(chunk);const body=Buffer.concat(chunks);
+  if(!body.length){res.status(400).json({error:'Payment screenshot is empty.'});return;}
+  const rawName=String(req.headers['x-file-name']||'payment-proof').replace(/[^a-zA-Z0-9._-]/g,'-').slice(0,100);
+  const path=`payment-proofs/${orderNumber}/${Date.now()}-${rawName}`;
+  const {url:base,key}=require('./_supabase').supabaseConfig();
+  const upload=await fetch(`${base}/storage/v1/object/project-files/${path}`,{method:'POST',headers:{apikey:key,Authorization:`Bearer ${key}`,'Content-Type':req.headers['content-type']||'image/jpeg','x-upsert':'true'},body});
+  if(!upload.ok){res.status(upload.status).json({error:'Could not save payment screenshot.'});return;}
+  const updated=await updateOrder(orderNumber,{payment_proof_path:path,payment_proof_url:`${base}/storage/v1/object/public/project-files/${path}`});
+  res.status(200).json({order:updated});
+}
 async function bodyText(req) {
   if (typeof req.body === 'string') return req.body;
   if (req.body && typeof req.body === 'object') return JSON.stringify(req.body);
@@ -75,8 +95,17 @@ async function approveManualPayment(req,res) {
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
   if(!data.order_number){res.status(400).json({error:'Order number is required.'});return;}
   const order=await updateOrder(String(data.order_number),{status:'in_progress',payment_status:'paid',payment_verified_at:new Date().toISOString(),admin_note:data.admin_note||null});
-  if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}
+  if(order?.buyer_email){try{await sendReceipt(order);await sendEmail({to:order.buyer_email,subject:`Your Makers' Row work has started · ${order.order_number}`,html:`<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>Your work has started</h2><p>Hi ${escapeHtml(order.buyer_name||'there')},</p><p>We have confirmed your payment for <strong>${escapeHtml(order.order_number)}</strong> and your Makers' Row project is now in progress.</p><p>We’ll keep your account updated as the work moves forward. Bespoke work is delivered within the day where applicable.</p><p>Makers' Row</p></div>`,text:`Your Makers' Row work has started. Payment for ${order.order_number} is confirmed and your project is now in progress.`,idempotencyKey:`started-${order.order_number}`});}catch(error){console.error('Payment/start email failed:',error.message);}}
   res.status(200).json({order});
+}
+async function sendPaymentNote(req,res){
+  const auth=await authenticate(req);if(!isAdmin(auth)){res.status(403).json({error:'Admin access required.'});return;}
+  const raw=await bodyText(req);const data=raw?JSON.parse(raw):{};
+  if(!data.order_number||!String(data.message||'').trim()){res.status(400).json({error:'Order and message are required.'});return;}
+  const order=await getOrder(String(data.order_number));if(!order){res.status(404).json({error:'Order not found.'});return;}
+  const message=String(data.message).trim().slice(0,1000);const updated=await updateOrder(order.order_number,{admin_note:message});
+  if(order.buyer_email&&process.env.RESEND_API_KEY){await sendEmail({to:order.buyer_email,subject:`Action needed for payment · ${order.order_number}`,html:`<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>We need one more payment detail</h2><p>Hi ${escapeHtml(order.buyer_name||'there')},</p><p>${escapeHtml(message)}</p><p>Please reply to this email or submit updated payment information through Makers' Row.</p></div>`,text:`We need one more payment detail for ${order.order_number}: ${message}`,idempotencyKey:`payment-note-${order.order_number}-${Date.now()}`});}
+  res.status(200).json({order:updated});
 }
 async function createPayment(req,res) {
   const auth=await authenticate(req);
@@ -109,5 +138,5 @@ async function verifyPayment(req,res) {
   if(paid){order=await updateOrder(orderId,{status:'in_progress'});if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}}
   res.status(200).json({paid,order_status:payment.order_status,order});
 }
-module.exports=async function handler(req,res){try{const action=new URL(req.url,`http://${req.headers.host}`).searchParams.get('action')||'create-payment';if(action==='payment-config'&&req.method==='GET'){res.status(200).json(manualPaymentConfig());return;}if(action==='create-payment'&&req.method==='POST')return createPayment(req,res);if(action==='create-manual-payment'&&req.method==='POST')return createManualPayment(req,res);if(action==='submit-manual-proof'&&req.method==='POST')return submitManualProof(req,res);if(action==='approve-manual-payment'&&req.method==='POST')return approveManualPayment(req,res);if(action==='webhook'&&req.method==='POST')return webhook(req,res);if(action==='verify-payment'&&req.method==='GET')return verifyPayment(req,res);res.status(405).json({error:'Unsupported commerce action.'});}catch(error){console.error(error);sendAuthError(res,error);}};
+module.exports=async function handler(req,res){try{const action=new URL(req.url,`http://${req.headers.host}`).searchParams.get('action')||'create-payment';if(action==='payment-config'&&req.method==='GET'){res.status(200).json(manualPaymentConfig());return;}if(action==='create-payment'&&req.method==='POST')return createPayment(req,res);if(action==='create-manual-payment'&&req.method==='POST')return createManualPayment(req,res);if(action==='submit-manual-proof'&&req.method==='POST')return submitManualProof(req,res);if(action==='upload-payment-proof'&&req.method==='POST')return uploadPaymentProof(req,res);if(action==='approve-manual-payment'&&req.method==='POST')return approveManualPayment(req,res);if(action==='send-payment-note'&&req.method==='POST')return sendPaymentNote(req,res);if(action==='webhook'&&req.method==='POST')return webhook(req,res);if(action==='verify-payment'&&req.method==='GET')return verifyPayment(req,res);res.status(405).json({error:'Unsupported commerce action.'});}catch(error){console.error(error);sendAuthError(res,error);}};
 module.exports.config={api:{bodyParser:false}};

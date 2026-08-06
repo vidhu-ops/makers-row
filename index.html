@@ -733,6 +733,21 @@
   .crm-file strong{display:block;font-size:.72rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .crm-file a{font-size:.7rem;color:var(--cobalt-deep);}
   .crm-file-icon{display:flex;height:110px;align-items:center;justify-content:center;background:var(--white);border-radius:7px;font:700 .7rem 'JetBrains Mono',monospace;color:var(--ink-soft);margin-bottom:7px;}
+  .crm-section-heading{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin:24px 0 10px;padding-top:18px;border-top:1px solid var(--line);}
+  .crm-section-heading h4{margin:0 0 5px;font-size:1.05rem;}
+  .payment-review-card{border:1px solid #F0C4B7;border-radius:14px;padding:16px;margin-top:12px;background:#FFFAF8;box-shadow:0 8px 22px rgba(18,20,26,.05);}
+  .payment-review-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;}
+  .payment-review-head h4{margin:5px 0 2px;font-size:1.05rem;}
+  .payment-review-head p{margin:0;color:var(--ink-soft);font-size:.78rem;}
+  .payment-review-amount{font:800 1.1rem 'JetBrains Mono',monospace;white-space:nowrap;}
+  .payment-review-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;padding-top:14px;border-top:1px solid #F2DED7;}
+  .payment-review-grid h5{margin:0 0 9px;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--ink-soft);}
+  .payment-review-grid dl{display:grid;grid-template-columns:120px 1fr;gap:8px;margin:0;font-size:.78rem;}
+  .payment-review-grid dt{color:var(--ink-soft);}.payment-review-grid dd{margin:0;font-weight:650;word-break:break-word;}
+  .payment-proof-image{display:block;width:min(260px,100%);max-height:240px;object-fit:contain;object-position:left top;border:1px solid var(--line);border-radius:9px;background:var(--white);}
+  .payment-proof-empty{padding:18px;border:1px dashed var(--line);border-radius:9px;color:var(--ink-soft);font-size:.76rem;}
+  .payment-review-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px;padding-top:13px;border-top:1px solid #F2DED7;}
+  @media(max-width:700px){.payment-review-grid{grid-template-columns:1fr;}.payment-review-head{flex-direction:column;}.crm-section-heading{flex-direction:column;}}
   @media(max-width:700px){.crm-grid{grid-template-columns:1fr;}}
   .auth-submit{width:100%;justify-content:center;margin-top:4px;}
   .auth-note{font-size:.72rem;color:var(--ink-soft);line-height:1.45;margin:14px 0 0;}
@@ -1296,6 +1311,7 @@
             <p class="account-muted">Pay the exact total below, then enter your UTR or transaction reference. Your order is released after our admin confirms the payment.</p>
             <div id="manualPaymentDetails" class="manual-payment-details">Loading payment details...</div>
             <div class="field"><label for="paymentReference">UPI transaction ID / UTR *</label><input id="paymentReference" maxlength="120" placeholder="e.g. 412345678901"></div>
+            <div class="field"><label for="paymentScreenshot">Payment screenshot (optional)</label><input id="paymentScreenshot" type="file" accept="image/png,image/jpeg,image/webp"></div>
             <button class="btn btn-coral auth-submit" id="manualPayButton" type="submit">I have paid <span id="manualButtonTotal">₹0</span></button>
             <p class="payment-disclaimer">Payment is confirmed manually after we match your UTR. Keep your UPI receipt until confirmation.</p>
           </div>
@@ -1840,8 +1856,13 @@ function renderManualPaymentApprovals(){
   const pending=crmOrders.filter(order=>order.payment_status==='submitted');
   if(!wrap||!pending.length) return;
   const section=document.createElement('section'); section.className='manual-approval-list';
-  section.innerHTML='<h4 style="margin:22px 0 10px;">Manual payment approvals</h4><p class="account-muted">Match each UTR in your bank or UPI app before approving. Approval releases the order and sends the receipt email.</p>'+pending.map(order=>`<div class="account-order"><div><strong>${escapeHtml(order.order_number)} · ${formatMoney(Number(order.total||0))}</strong><span>${escapeHtml(order.buyer_name||order.buyer_email)} · UTR ${escapeHtml(order.payment_reference||'Not supplied')}</span></div><button class="btn btn-sm btn-solid" onclick="approveManualPayment('${escapeHtml(order.order_number)}')">Approve payment</button></div>`).join('');
+  section.innerHTML='<div class="crm-section-heading"><div><h4>Payment review queue</h4><p class="account-muted">Check the UTR against your UPI app or bank statement. Review the screenshot, then approve only when the amount and reference match.</p></div><span class="creator-badge">'+pending.length+' awaiting review</span></div>'+pending.map(order=>`<article class="payment-review-card"><div class="payment-review-head"><div><span class="eyebrow">Manual UPI payment</span><h4>${escapeHtml(order.order_number)}</h4><p>${escapeHtml(order.buyer_name||'Buyer')} · <a href="mailto:${escapeHtml(order.buyer_email)}">${escapeHtml(order.buyer_email)}</a></p></div><strong class="payment-review-amount">${formatMoney(Number(order.total||0))}</strong></div><div class="payment-review-grid"><div><h5>Payment details</h5><dl><dt>UTR / reference</dt><dd class="mono">${escapeHtml(order.payment_reference||'Not supplied')}</dd><dt>Submitted</dt><dd>${order.payment_submitted_at?new Date(order.payment_submitted_at).toLocaleString():'Not recorded'}</dd><dt>Method</dt><dd>${escapeHtml(order.payment_method||'UPI / bank transfer')}</dd></dl></div><div><h5>Customer screenshot</h5>${order.payment_proof_url?`<a href="${escapeHtml(order.payment_proof_url)}" target="_blank" rel="noopener"><img class="payment-proof-image" src="${escapeHtml(order.payment_proof_url)}" alt="Payment screenshot for ${escapeHtml(order.order_number)}"></a>`:'<div class="payment-proof-empty">No screenshot uploaded. Verify the UTR manually.</div>'}</div></div><div class="payment-review-actions"><button class="btn btn-coral" onclick="approveManualPayment('${escapeHtml(order.order_number)}')">Approve &amp; start work</button><button class="btn btn-ghost" onclick="requestPaymentCorrection('${escapeHtml(order.order_number)}')">Request correction</button></div></article>`).join('');
   wrap.appendChild(section);
+}
+async function requestPaymentCorrection(orderNumber){
+  const message=window.prompt('Tell the customer what needs correcting (for example, the UTR or screenshot):');
+  if(!message?.trim()) return;
+  try{const response=await fetch('/api/commerce?action=send-payment-note',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNumber,message:message.trim()})});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not contact the customer');toast('Correction request emailed to the customer.');await loadCrmProjects();}catch(error){toast(error.message);}
 }
 async function approveManualPayment(orderNumber){
   if(!currentUser?.email){toast('Sign in as the admin to approve payments.');return;}
@@ -2156,6 +2177,8 @@ async function startManualPayment(){
   try{
     const create=await fetch('/api/commerce?action=create-manual-payment',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNo,buyer_email:currentUser.email,buyer_name:currentUser.name||'',total:inrTotal,items:deliverables})});
     const created=await create.json(); if(!create.ok) throw new Error(created.error||'Could not save payment order.');
+    const screenshot=document.getElementById('paymentScreenshot')?.files?.[0];
+    if(screenshot){const upload=await fetch('/api/commerce?action=upload-payment-proof&order_id='+encodeURIComponent(orderNo),{method:'POST',headers:authHeaders({'Content-Type':screenshot.type||'image/jpeg','X-File-Name':screenshot.name}),body:screenshot});const uploaded=await upload.json();if(!upload.ok)throw new Error(uploaded.error||'Could not upload payment screenshot.');}
     const proof=await fetch('/api/commerce?action=submit-manual-proof',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNo,payment_reference:reference})});
     const submitted=await proof.json(); if(!proof.ok) throw new Error(submitted.error||'Could not submit payment proof.');
     orderHistory.unshift({id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_submitted',paymentStatus:'submitted',emailStatus:'Payment proof submitted — awaiting admin confirmation',deliverables});
