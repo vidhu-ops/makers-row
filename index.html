@@ -378,7 +378,7 @@
   #page-marketplace .card .card-actions .btn{border-radius:8px;}
 
   /* ---------- EDITOR ---------- */
-  .editor-shell{display:grid;grid-template-columns:250px 1fr 260px;gap:18px;}
+  .editor-shell{display:grid;grid-template-columns:minmax(210px,230px) minmax(0,1fr) minmax(210px,230px);gap:14px;align-items:start;}
   .panel{background:var(--white);border:2px solid var(--ink);border-radius:14px;padding:16px;}
   .panel h4{font-size:0.8rem;text-transform:uppercase;letter-spacing:.08em;font-family:'JetBrains Mono',monospace;margin-bottom:12px;color:var(--ink-soft);}
   .tool-btn{
@@ -389,8 +389,9 @@
   .tool-btn:hover{border-color:var(--ink);}
   .canvas-stage{
     background:var(--bg-deep);border:2px solid var(--ink);border-radius:14px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;min-height:560px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;min-height:560px;min-width:0;overflow:hidden;
   }
+  .canvas-stage canvas{display:block;max-width:100%;height:auto;box-shadow:0 10px 26px rgba(18,20,26,.22);}
   .row2{display:flex;gap:8px;}
   .row2 .tool-btn{flex:1;text-align:center;justify-content:center;}
   input[type=color]{width:100%;height:38px;border:2px solid var(--line);border-radius:6px;padding:2px;background:var(--white);}
@@ -2961,7 +2962,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const replacements={
     '\u00e2\u20ac\u201d':' - ','\u00e2\u20ac\u201c':' - ','\u00e2\u0080\u0093':'-','\u00e2\u2020\u2019':'->','\u00e2\u2020\u2014':'->','\u00e2\u20ac\u00a6':'...','\u00e2\u009c\u00a6':'*','\u00e2\u02dc\u2026':'*','\u00e2\u009c\u0093':'✓','\u00c3\u2014':'x','\u00c3\u00a9':'e','\u00c2\u00b7':' - '
   };
-  function clean(value){return Object.entries(replacements).reduce((text,[from,to])=>text.split(from).join(to),value);}
+  function mojibakeScore(value){return (value.match(/[ÃÂâðï�]/g)||[]).length;}
+  function clean(value){
+    let best=Object.entries(replacements).reduce((text,[from,to])=>text.split(from).join(to),value);
+    for(let i=0;i<2;i++){
+      try{
+        const repaired=decodeURIComponent(escape(best));
+        if(mojibakeScore(repaired)<mojibakeScore(best)) best=repaired; else break;
+      }catch(error){break;}
+    }
+    return best;
+  }
   function walk(root){
     const nodes=root.querySelectorAll ? root.querySelectorAll('*') : [];
     nodes.forEach(node=>{
