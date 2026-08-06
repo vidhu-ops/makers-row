@@ -3038,7 +3038,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
 /* Final copy safeguard: repair legacy mojibake before customers see it. */
 (function(){
   function score(text){return Array.from(text).filter(char=>[0xC2,0xC3,0xE2,0xEF,0xF0,0xFFFD].includes(char.charCodeAt(0))).length;}
-  function repair(text){const legacyBytes={0x0153:0x9c,0x0161:0x9a,0x0178:0x9f,0x017e:0x9e,0x2013:0x96,0x2014:0x94,0x2018:0x91,0x2019:0x99,0x201c:0x93,0x201d:0x94,0x2020:0x86,0x2021:0x87,0x2022:0x95,0x2026:0xa6,0x2030:0x89,0x02dc:0x98,0x20ac:0x80};let current=text;for(let round=0;round<3;round++){try{const bytes=Array.from(current).map(char=>{const code=char.charCodeAt(0);return String.fromCharCode(legacyBytes[code]||code);}).join('');const next=decodeURIComponent(escape(bytes));if(next===current||score(next)>=score(current))break;current=next;}catch(error){break;}}return current;}
+  const legacyFixes=[
+    [String.fromCodePoint(0xe2,0x0153,0x00a6),'✦'],[String.fromCodePoint(0xe2,0x02dc,0x2026),'★'],[String.fromCodePoint(0xe2,0x02dc,0x2020),'☆'],[String.fromCodePoint(0xe2,0x0161,0x00a1),'⚡'],
+    [String.fromCodePoint(0xe2,0x20ac,0x201d),'—'],[String.fromCodePoint(0xe2,0x20ac,0x2013),'–'],[String.fromCodePoint(0xe2,0x20ac,0x2026),'…'],[String.fromCodePoint(0xe2,0x2020,0x2019),'→'],[String.fromCodePoint(0xe2,0x2020,0x2122),'←'],
+    [String.fromCodePoint(0xf0,0x0178,0x201d,0x008d),'🔍'],[String.fromCodePoint(0xf0,0x0178,0x201d,0x00a5),'🔥'],[String.fromCodePoint(0xf0,0x0178,0x2122,0x00a5),'🗑'],[String.fromCodePoint(0xc3,0x0097),'×'],[String.fromCodePoint(0xc3,0x00a9),'é']
+  ];
+  function repair(text){return legacyFixes.reduce((value,[from,to])=>value.split(from).join(to),text);}
   function scan(root){const nodes=root.querySelectorAll?root.querySelectorAll('*'):[];nodes.forEach(node=>{node.childNodes.forEach(child=>{if(child.nodeType===3){const next=repair(child.nodeValue);if(next!==child.nodeValue)child.nodeValue=next;}});['placeholder','title','aria-label'].forEach(attribute=>{if(node.hasAttribute(attribute)){const next=repair(node.getAttribute(attribute));if(next!==node.getAttribute(attribute))node.setAttribute(attribute,next);}});});}
   function fixQuantityControls(){document.querySelectorAll('button[onclick*="changeQty"],button[onclick*="changeSvcQty"]').forEach(button=>{const action=button.getAttribute('onclick')||'';button.textContent=action.includes(',-1)')?'-':'+';});document.querySelectorAll('button[onclick*="removeLine"]').forEach(button=>{button.textContent='x';});}
   const run=()=>{scan(document);fixQuantityControls();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
