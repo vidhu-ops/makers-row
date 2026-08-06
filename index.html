@@ -1291,7 +1291,8 @@
     <div class="auth-tabs"><button id="authLoginTab" class="active" type="button" onclick="switchAuth('login')">Log in</button><button id="authSignupTab" type="button" onclick="switchAuth('signup')">Sign up</button></div>
     <form id="authForm" onsubmit="submitAuth(event)">
       <div class="field" id="authNameField" style="display:none;"><label for="authName">Full name</label><input type="text" id="authName" placeholder="Your name"></div>
-      <div class="field role-field" id="authRoleField" style="display:none;"><label for="authRole">I'm joining as</label><select id="authRole"><option value="buyer">Buyer â€” find and order creative work</option><option value="creator">Creator â€” upload, sell, and manage projects</option></select></div>
+      <div class="field role-field" id="authRoleField" style="display:none;"><label for="authRole">I'm joining as</label><select id="authRole" onchange="toggleCreatorSignupFields()"><option value="buyer">Buyer â€” find and order creative work</option><option value="creator">Creator â€” upload, sell, and manage projects</option></select></div>
+      <div id="creatorSignupFields" style="display:none;border:1px solid var(--line);border-radius:12px;padding:12px;margin:4px 0 12px;background:#F7F9FC;"><strong style="font-size:.82rem;">Creator payout setup</strong><p class="account-muted" style="margin:5px 0 10px;">Creators receive 70% of the price shown to buyers. Get It Done receives payment and sends your share according to the payout details below.</p><div class="field"><label for="creatorAccountName">Account holder name *</label><input id="creatorAccountName" placeholder="Name on bank/UPI account"></div><div class="field"><label for="creatorUpi">UPI ID</label><input id="creatorUpi" placeholder="name@bank"></div><div class="field"><label for="creatorBank">Bank name</label><input id="creatorBank" placeholder="Bank name"></div><div class="field"><label for="creatorAccountNumber">Account number</label><input id="creatorAccountNumber" inputmode="numeric" placeholder="Bank account number"></div><div class="field"><label for="creatorIfsc">IFSC code</label><input id="creatorIfsc" placeholder="ABCD0123456"></div><label style="display:flex;gap:8px;align-items:flex-start;font-size:.75rem;line-height:1.4;margin-top:8px;"><input type="checkbox" id="creatorTerms" style="margin-top:3px;"><span>I have read and agree to the <a href="#about" onclick="showPage('about')">Creator terms</a>. I understand that I receive 70% of the buyer price shown on screen, paid by Get It Done after the order is completed.</span></label></div>
       <div class="field"><label for="authEmail">Email</label><input type="email" id="authEmail" placeholder="you@email.com" required></div>
       <div class="field"><label for="authPassword">Password</label><input type="password" id="authPassword" placeholder="At least 6 characters" minlength="6" required></div>
       <button class="btn btn-cobalt auth-submit" id="authSubmit" type="submit">Log in</button>
@@ -1361,7 +1362,7 @@
           </select>
         </div>
         <div class="field"><label id="slPriceLabel">Price (USD)  -  min $2.50 *</label><input type="number" id="slPrice" min="2.5" step="0.5" value="10" required></div>
-        <div class="field"><label>Short description</label><textarea id="slDesc" rows="3" placeholder="What's included, file formats, sizesâ€¦"></textarea></div>
+        <div class="field"><label>Short description *</label><textarea id="slDesc" rows="3" placeholder="What's included, file formats, sizesâ€¦" required></textarea></div>
         <div class="field">
           <label>Preview image / file</label>
           <div class="file-drop" id="sellDrop" onclick="document.getElementById('slFile').click()">Click to upload a preview image</div>
@@ -1707,6 +1708,12 @@ function switchAuth(mode){
   document.getElementById('authSubmit').textContent=signup?'Create account':'Log in';
   document.getElementById('authLoginTab').classList.toggle('active',!signup);
   document.getElementById('authSignupTab').classList.toggle('active',signup);
+  toggleCreatorSignupFields();
+}
+function toggleCreatorSignupFields(){
+  const show=window.authMode==='signup'&&document.getElementById('authRole')?.value==='creator';
+  const box=document.getElementById('creatorSignupFields'); if(box) box.style.display=show?'block':'none';
+  ['creatorAccountName','creatorUpi','creatorBank','creatorAccountNumber','creatorIfsc','creatorTerms'].forEach(id=>{const el=document.getElementById(id);if(el)el.required=show&&id==='creatorAccountName';});
 }
 async function submitAuth(event){
   event.preventDefault();
@@ -1719,7 +1726,9 @@ async function submitAuth(event){
     const name=document.getElementById('authName').value.trim();
     const role=document.getElementById('authRole').value;
     if(!name){ toast('Add your name to create the account'); return; }
-    const response=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'signup',name,email,role,password})});
+    const creatorData=role==='creator'?{terms_accepted:document.getElementById('creatorTerms').checked,account_name:document.getElementById('creatorAccountName').value.trim(),upi_id:document.getElementById('creatorUpi').value.trim(),bank_name:document.getElementById('creatorBank').value.trim(),account_number:document.getElementById('creatorAccountNumber').value.trim(),ifsc_code:document.getElementById('creatorIfsc').value.trim()}:{};
+    if(role==='creator'&&!creatorData.terms_accepted){toast('Read and accept the creator terms to continue');return;}
+    const response=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'signup',name,email,role,password,...creatorData})});
     const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Could not create account.');
     currentUser={...(payload.account||{}),name,email,role,session:payload.session||null,joined:new Date().toISOString()};
     localStorage.setItem(ACCOUNT_PROFILE_KEY,JSON.stringify(currentUser));
@@ -1762,8 +1771,9 @@ function renderAccount(){
   document.getElementById('dashboardEmail').textContent=currentUser.email;
   document.getElementById('dashboardAvatar').textContent=initials(name);
   document.getElementById('accountNav').innerHTML=creator
-    ? '<button class="active" data-panel="overview" type="button" onclick="setAccountPanel(\'overview\')">Studio overview</button><button data-panel="creator-listings" type="button" onclick="setAccountPanel(\'creator-listings\')">My listings</button><button data-panel="creator-projects" type="button" onclick="setAccountPanel(\'creator-projects\')">Projects</button><button data-panel="crm-projects" type="button" onclick="setAccountPanel(\'crm-projects\')">Client CRM</button>'
+    ? '<button class="active" data-panel="overview" type="button" onclick="setAccountPanel(\'overview\')">Studio overview</button><button data-panel="creator-listings" type="button" onclick="setAccountPanel(\'creator-listings\')">My listings</button><button data-panel="creator-projects" type="button" onclick="setAccountPanel(\'creator-projects\')">Projects</button><button data-panel="crm-projects" type="button" onclick="setAccountPanel(\'crm-projects\')">Client CRM</button><button data-panel="admin-chat" type="button" onclick="setAccountPanel(\'admin-chat\')">Chat with admin</button>'
     : '<button class="active" data-panel="overview" type="button" onclick="setAccountPanel(\'overview\')">Overview</button><button data-panel="orders" type="button" onclick="setAccountPanel(\'orders\')">Orders</button><button data-panel="saved" type="button" onclick="setAccountPanel(\'saved\')">Saved items</button>';
+  if(currentUser.email.toLowerCase()==='vidhugupta1996@gmail.com') document.getElementById('accountNav').insertAdjacentHTML('beforeend','<button data-panel="admin-notifications" type="button" onclick="setAccountPanel(\'admin-notifications\')">Notifications</button>');
   activeAccountPanel='overview';
   renderAccountPanel();
 }
@@ -1802,16 +1812,32 @@ function renderBuyerProjects(limit){
 function creatorListings(){
   return marketplace.filter(item=>item.userCreated && (!item.creatorEmail || item.creatorEmail===currentUser?.email));
 }
+let creatorListingsLoading=false;
+async function loadCreatorListings(){
+  if(!currentUser?.email||creatorListingsLoading)return;
+  creatorListingsLoading=true;
+  try{const response=await fetch('/api/creator?action=listings',{headers:authHeaders()});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not load creator listings');const remote=(payload.listings||[]).map(item=>({id:item.id,title:item.title,category:item.category,description:item.description,price:Number(item.price),seller:currentUser.name||'You',customThumb:item.preview_url||null,assetFiles:(item.asset_manifest||[]).map(file=>file.name),userCreated:true,creatorEmail:item.creator_email,listingStatus:item.status,sales:item.sales||0,serverListing:true}));const local=marketplace.filter(item=>!item.serverListing&&item.creatorEmail!==currentUser.email);marketplace=[...remote,...local];persistMarketplace();renderCreatorPanel();}catch(error){console.error(error);}finally{creatorListingsLoading=false;}
+}
 function renderCreatorPanel(){
   const panel=document.getElementById('accountPanel');
   const listings=creatorListings();
   const sales=listings.reduce((sum,item)=>sum+(item.sales||0),0);
-  const earnings=listings.reduce((sum,item)=>sum+(item.sales||0)*item.price*.8,0);
+  const earnings=listings.reduce((sum,item)=>sum+(item.sales||0)*item.price*.7,0);
+  if(!creatorListingsLoading&&!listings.some(item=>item.serverListing)) loadCreatorListings();
   const projects=listings.filter(item=>item.listingStatus!=='Live').length;
   if(activeAccountPanel==='crm-projects'){
     panel.innerHTML='<h3>Client CRM</h3><p class="account-muted">Manage briefs, replies, revisions, and deliverables from one place.</p><div id="crmProjects"><div class="account-empty">Loading client projectsâ€¦</div></div>';
     loadCrmProjects();
     return;
+  }
+  if(activeAccountPanel==='admin-chat'){
+    const adminView=currentUser.email.toLowerCase()==='vidhugupta1996@gmail.com';
+    panel.innerHTML=adminView?'<h3>Creator inbox</h3><p class="account-muted">Every creator message is retained here. Reply using the creator email shown on each thread.</p><div id="creatorChatMessages" class="account-orders"><div class="account-empty">Loading inbox...</div></div>':'<h3>Chat with admin</h3><p class="account-muted">Ask about a project, payout, upload, or anything you need help with.</p><div id="creatorChatMessages" class="account-orders"><div class="account-empty">Loading chat...</div></div><form onsubmit="sendCreatorChat(event)" style="display:flex;gap:8px;margin-top:12px;"><input id="creatorChatInput" required placeholder="Write a message" style="flex:1"><button class="btn btn-coral" type="submit">Send</button></form>';
+    loadCreatorChat(); return;
+  }
+  if(activeAccountPanel==='admin-notifications'){
+    panel.innerHTML='<h3>Admin notifications</h3><p class="account-muted">New creator signups, listings, projects, and chats appear here. Email alerts are sent to vidhugupta1996@gmail.com when Resend is configured.</p><button class="btn btn-ghost" type="button" onclick="enableAdminNotifications()">Enable device notifications</button><div id="adminNotifications" class="account-orders" style="margin-top:14px;"><div class="account-empty">Loading notifications...</div></div>';
+    loadAdminNotifications(); return;
   }
   if(activeAccountPanel==='creator-listings'){
     panel.innerHTML='<h3>My listings</h3><p class="account-muted">Upload work, watch its status, and see how buyers are finding it.</p><button class="btn btn-coral" type="button" onclick="showPage(\'sell\')">ï¼‹ Upload new work</button>'+renderCreatorListings(listings);
@@ -1821,7 +1847,21 @@ function renderCreatorPanel(){
     panel.innerHTML='<h3>Projects &amp; activity</h3><p class="account-muted">A simple view of what is happening with your work after you publish it.</p><div class="revision-steps" style="margin:18px 0;"><div class="revision-step"><b>1</b><span><strong>Uploaded</strong><br>We check the preview, title, and category.</span></div><div class="revision-step"><b>2</b><span><strong>Live in marketplace</strong><br>Buyers can discover, save, buy, or customize your work.</span></div><div class="revision-step"><b>3</b><span><strong>Order received</strong><br>Track sales here and deliver Bespoke work within the day.</span></div></div>'+renderCreatorListings(listings);
     return;
   }
-  panel.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;"><div><span class="creator-badge">Creator account</span><h3 style="margin-top:8px;">Your studio overview</h3><p class="account-muted">Publish your work, understand buyer activity, and grow your digital shelf.</p></div><button class="btn btn-coral" type="button" onclick="showPage('sell')">ï¼‹ Upload new work</button></div><div class="account-stats"><div class="account-stat"><strong>${listings.length}</strong><span>Live listings</span></div><div class="account-stat"><strong>${sales}</strong><span>Total sales</span></div><div class="account-stat"><strong>${formatMoney(earnings)}</strong><span>Creator earnings*</span></div></div><p class="account-muted" style="font-size:.7rem;">*Demo estimate after a 20% marketplace fee. Real payouts connect after payment and seller onboarding.</p><h4 style="margin:18px 0 0;">Latest activity</h4>${renderCreatorListings(listings.slice(0,3))}`;
+  panel.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;"><div><span class="creator-badge">Creator account</span><h3 style="margin-top:8px;">Your studio overview</h3><p class="account-muted">Publish your work, understand buyer activity, and grow your digital shelf.</p></div><button class="btn btn-coral" type="button" onclick="showPage('sell')">ï¼‹ Upload new work</button></div><div class="account-stats"><div class="account-stat"><strong>${listings.length}</strong><span>Live listings</span></div><div class="account-stat"><strong>${sales}</strong><span>Total sales</span></div><div class="account-stat"><strong>${formatMoney(earnings)}</strong><span>Creator earnings*</span></div></div><p class="account-muted" style="font-size:.7rem;">*Creator share is 70% of the buyer price shown on screen. Get It Done receives payment and pays the creator share after completion.</p><h4 style="margin:18px 0 0;">Latest activity</h4>${renderCreatorListings(listings.slice(0,3))}`;
+}
+async function enableAdminNotifications(){if(!('Notification' in window)){toast('This browser does not support device notifications');return;}const permission=await Notification.requestPermission();toast(permission==='granted'?'Device notifications enabled':'Notification permission was not granted');}
+let lastAdminNotificationId=null;
+async function loadAdminNotifications(){const wrap=document.getElementById('adminNotifications');if(!wrap)return;try{const response=await fetch('/api/creator?action=notifications',{headers:authHeaders()});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not load notifications');const notifications=payload.notifications||[];const newest=notifications[0];if(newest&&lastAdminNotificationId&&newest.id!==lastAdminNotificationId&&newest.is_read===false&&'Notification' in window&&Notification.permission==='granted')new Notification(newest.title,{body:newest.message,tag:newest.id});if(newest)lastAdminNotificationId=newest.id;wrap.innerHTML=notifications.map(item=>`<div class="account-order" style="display:block;${item.is_read?'opacity:.65':''}"><strong>${escapeHtml(item.title)}</strong><span>${new Date(item.created_at).toLocaleString()}</span><p>${escapeHtml(item.message)}</p>${!item.is_read?`<button class="btn btn-sm btn-ghost" onclick="markAdminNotification('${escapeHtml(item.id)}')">Mark read</button>`:''}</div>`).join('')||'<div class="account-empty">No notifications yet.</div>';}catch(error){wrap.innerHTML='<div class="account-empty">Notifications could not load. Run the updated Supabase schema first.</div>';}}
+async function markAdminNotification(id){try{await fetch('/api/creator?action=notification-read',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({id})});await loadAdminNotifications();}catch(error){toast('Could not mark notification read');}}
+setInterval(()=>{if(currentUser?.email?.toLowerCase()==='vidhugupta1996@gmail.com'&&activeAccountPanel==='admin-notifications')loadAdminNotifications();},30000);
+async function loadCreatorChat(){
+  const wrap=document.getElementById('creatorChatMessages');if(!wrap)return;
+  try{const adminView=currentUser.email.toLowerCase()==='vidhugupta1996@gmail.com';const response=await fetch('/api/creator?action=chat',{headers:authHeaders()});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not load chat');const messages=payload.messages||[];wrap.innerHTML=messages.map(item=>`<div class="account-order" style="display:block;"><strong>${escapeHtml(item.sender_role==='admin'?'Get It Done admin':item.creator_email)}</strong><span>${new Date(item.created_at).toLocaleString()}</span><p style="white-space:pre-wrap;margin:8px 0 0;">${escapeHtml(item.message)}</p>${adminView&&item.sender_role==='creator'?`<button class="btn btn-sm btn-ghost" onclick="replyToCreator('${escapeHtml(item.creator_email)}')">Reply</button>`:''}</div>`).join('')||'<div class="account-empty">No messages yet.</div>';}catch(error){wrap.innerHTML='<div class="account-empty">Chat could not load. Run the updated Supabase schema first.</div>';}
+}
+async function replyToCreator(creatorEmail){const message=window.prompt('Reply to '+creatorEmail+':');if(!message?.trim())return;try{const response=await fetch('/api/creator?action=chat',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({creator_email:creatorEmail,message:message.trim()})});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Reply could not be sent');toast('Reply sent');await loadCreatorChat();}catch(error){toast(error.message);}}
+async function sendCreatorChat(event){
+  event.preventDefault();const input=document.getElementById('creatorChatInput');const message=input?.value.trim();if(!message)return;
+  try{const response=await fetch('/api/creator?action=chat',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({message})});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Message could not be sent');input.value='';toast('Message sent to admin');await loadCreatorChat();}catch(error){toast(error.message);}
 }
 
 let crmProjects=[];
@@ -1891,7 +1931,7 @@ async function replyToCrmProject(id){
 }
 function renderCreatorListings(listings){
   if(!listings.length) return '<div class="account-empty" style="margin-top:15px;">No uploads yet. Start by publishing your first template, graphic, or AI service.</div>';
-  return '<div class="creator-table"><div class="creator-row head"><span>Listing</span><span>Status</span><span>Sales</span><span>Earnings</span></div>'+listings.map(item=>`<div class="creator-row"><div><strong>${item.title}</strong><span>${item.category}  -  ${formatMoney(item.price)}  -  ${(item.assetFiles||[]).length} file${(item.assetFiles||[]).length===1?'':'s'}</span></div><span class="creator-status">${item.listingStatus||'Live'}</span><span>${item.sales||0}</span><span>${formatMoney((item.sales||0)*item.price*.8)}</span></div>`).join('')+'</div>';
+  return '<div class="creator-table"><div class="creator-row head"><span>Listing</span><span>Status</span><span>Sales</span><span>Earnings</span></div>'+listings.map(item=>`<div class="creator-row"><div><strong>${item.title}</strong><span>${item.category}  -  ${formatMoney(item.price)}  -  ${(item.assetFiles||[]).length} file${(item.assetFiles||[]).length===1?'':'s'}</span></div><span class="creator-status">${item.listingStatus||'Live'}</span><span>${item.sales||0}</span><span>${formatMoney((item.sales||0)*item.price*.7)}</span></div>`).join('')+'</div>';
 }
 function renderOrderHistory(limit){
   const allOrders=[...remoteOrders.map(normalizeRemoteOrder),...orderHistory.filter(local=>!remoteOrders.some(remote=>remote.order_number===local.id))];
@@ -2663,7 +2703,8 @@ function updateSellPreview(){
   document.getElementById('sellPreviewPrice').textContent = formatMoney(p);
 }
 
-function submitListing(e){
+function fileAsDataUrl(file){return new Promise((resolve,reject)=>{if(!file){resolve(null);return;}if(file.size>6*1024*1024){reject(new Error(file.name+' is larger than 6 MB.'));return;}const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Could not read '+file.name));reader.readAsDataURL(file);});}
+async function submitListing(e){
   e.preventDefault();
   if(!currentUser || currentUser.role!=='creator'){
     toast('Sign up as a Creator to publish work');
@@ -2676,13 +2717,19 @@ function submitListing(e){
   const minimum = currency==='INR'?MIN_INR_PRICE:MIN_USD_PRICE;
   if(enteredPrice<minimum){ toast('Creator prices start at '+(currency==='INR'?'INR 150':'$2.50')); return; }
   const price = toUSD(enteredPrice);
+  const previewFile=document.getElementById('slFile').files?.[0]||null;
+  const assetFiles=Array.from(document.getElementById('slAssets').files||[]).slice(0,12);
+  try{
+  const response=await fetch('/api/creator?action=listing',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({title,category,price:currency==='INR'?enteredPrice:Math.max(150,price),description:document.getElementById('slDesc').value.trim(),preview:previewFile?{name:previewFile.name,type:previewFile.type,data:await fileAsDataUrl(previewFile)}:null,assets:await Promise.all(assetFiles.map(async file=>({name:file.name,type:file.type,data:await fileAsDataUrl(file)})))})});
+  const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not publish listing');
+  const saved=payload.listing||{};
   const newItem = {
-    id:'p_new_'+Date.now(),
+    id:saved.id||'p_new_'+Date.now(),
     title, category, price,
     seller:currentUser?.name || 'You',
     seed:'new'+Date.now(),
-    customThumb: sellFileURL || null,
-    assetFiles:assetFileNames.slice(),
+    customThumb:saved.preview_url||sellFileURL||null,
+    assetFiles:(saved.asset_manifest||[]).map(file=>file.name),
     userCreated:true,
     creatorEmail:currentUser?.email || null,
     listingStatus:'Live'
@@ -2702,6 +2749,7 @@ function submitListing(e){
   updateSellPreview();
   setCategory('all');
   showPage('marketplace');
+  }catch(error){toast(error.message);}
 }
 
 /* ============================================================

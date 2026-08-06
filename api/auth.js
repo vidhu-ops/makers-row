@@ -1,4 +1,6 @@
 const { supabaseConfig, supabaseRequest } = require('./_supabase');
+const { savePayoutProfile } = require('./_creator');
+const { notifyAdmin } = require('./_notify');
 
 function authKey() {
   return process.env.SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_ANON_JWT;
@@ -27,12 +29,19 @@ module.exports=async function handler(req,res){
     const email=String(body.email||'').trim().toLowerCase(); const password=String(body.password||'');
     if(!email||password.length<6){res.status(400).json({error:'Valid email and a password of at least 6 characters are required.'});return;}
     if(body.action==='signup'){
+      const requestedRole=body.role==='creator'?'creator':'buyer';
+      if(requestedRole==='creator'){
+        if(body.terms_accepted!==true) { res.status(400).json({error:'Creator terms must be read and accepted before signing up.'});return; }
+        if(!body.account_name || (!body.upi_id && (!body.account_number || !body.ifsc_code))) { res.status(400).json({error:'Creator signup requires payout details: account name and either UPI ID or bank account plus IFSC.'});return; }
+      }
       const {url}=supabaseConfig(); const serviceKey=process.env.SUPABASE_SERVICE_ROLE_KEY||process.env.SUPABASE_SERVICE_ROLE_JWT;
       if(!serviceKey) throw new Error('Supabase server key is not configured.');
       const create=await fetch(`${url}/auth/v1/admin/users`,{method:'POST',headers:{'Content-Type':'application/json',apikey:serviceKey,Authorization:`Bearer ${serviceKey}`},body:JSON.stringify({email,password,email_confirm:true,user_metadata:{name:body.name||'',role:body.role==='creator'?'creator':'buyer'}})});
       const createText=await create.text(); let createPayload={}; try{createPayload=createText?JSON.parse(createText):{};}catch(error){createPayload={};}
       if(!create.ok){res.status(create.status).json({error:createPayload.msg||createPayload.message||'Could not create account.'});return;}
-      const account=await upsertProfile(email,body.name,body.role);
+      const account=await upsertProfile(email,body.name,requestedRole);
+      if(requestedRole==='creator') await savePayoutProfile(email,body);
+      if(requestedRole==='creator') await notifyAdmin({type:'creator_signup',title:'New creator signup',message:`${email} joined as a creator and accepted the 70% payout terms.`,entityType:'account',entityId:email});
       const login=await authRequest('token?grant_type=password',{email,password});
       const session=login.response.ok?{access_token:login.payload.access_token,refresh_token:login.payload.refresh_token,expires_at:login.payload.expires_at}:null;
       res.status(201).json({account,session,user:login.response.ok?login.payload.user:(createPayload.user||createPayload)}); return;

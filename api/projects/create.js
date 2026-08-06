@@ -1,5 +1,6 @@
 const { supabaseRequest } = require('../_supabase');
 const { authenticate, sendAuthError } = require('../_auth');
+const { notifyAdmin } = require('../_notify');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST required' }); return; }
@@ -26,6 +27,8 @@ module.exports = async function handler(req, res) {
       })
     });
     if (!response.ok) { res.status(response.status).json({ error: 'Could not create project.', details: payload }); return; }
-    res.status(201).json({ project: Array.isArray(payload) ? payload[0] : payload });
+    const project=Array.isArray(payload) ? payload[0] : payload;
+    await notifyAdmin({type:'new_project',title:'New client project request',message:`${project.buyer_email} submitted ${project.service_title}.`,entityType:'project',entityId:project.id});
+    res.status(201).json({ project });
   } catch (error) { sendAuthError(res,error); }
 };

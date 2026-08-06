@@ -2,6 +2,7 @@ const crypto = require('crypto');
 const { supabaseRequest } = require('./_supabase');
 const { sendEmail, escapeHtml } = require('./_email');
 const { authenticate, isAdmin, sendAuthError } = require('./_auth');
+const { notifyAdmin } = require('./_notify');
 
 const CASHFREE_VERSION = process.env.CASHFREE_API_VERSION || '2025-01-01';
 function config() {
@@ -88,6 +89,7 @@ async function submitManualProof(req,res) {
   const existingOrder=Array.isArray(existing.payload)?existing.payload[0]:null;
   if(!existingOrder||existingOrder.buyer_email!==auth.email){res.status(403).json({error:'You can only submit proof for your own order.'});return;}
   const order=await updateOrder(String(data.order_number),{payment_status:'submitted',payment_reference:String(data.payment_reference).trim().slice(0,120),payment_proof_url:data.payment_proof_url||null,payment_submitted_at:new Date().toISOString()});
+  await notifyAdmin({type:'payment_proof',title:'Payment proof submitted',message:`${order.buyer_email} submitted payment proof for ${order.order_number}.`,entityType:'order',entityId:order.order_number});
   res.status(200).json({order,message:'Payment proof submitted. Your order will be released after admin confirmation.'});
 }
 async function approveManualPayment(req,res) {
