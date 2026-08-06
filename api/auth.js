@@ -50,7 +50,7 @@ module.exports=async function handler(req,res){
       const result=await authRequest('token?grant_type=password',{email,password});
       if(!result.response.ok){res.status(401).json({error:result.payload.error_description||result.payload.msg||'Email or password is incorrect.'});return;}
       const account=await profile(email);
-      if(!account){res.status(403).json({error:'This login has no Makers\' Row profile yet. Please sign up once.'});return;}
+      if(!account){res.status(403).json({error:'This login has no Get It Done profile yet. Please sign up once.'});return;}
       res.status(200).json({account,session:{access_token:result.payload.access_token,refresh_token:result.payload.refresh_token,expires_at:result.payload.expires_at},user:result.payload.user}); return;
     }
     res.status(400).json({error:'Unsupported auth action.'});

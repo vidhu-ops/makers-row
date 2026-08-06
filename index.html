@@ -908,10 +908,10 @@
   </nav>
 </header>
 <div class="trust-bar">
-  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>4.9/5 from 2,300+ buyers</span>
+  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 2l2.4 7.2H22l-6 4.6 2.3 7.2L12 16.4 5.7 21l2.3-7.2-6-4.6h7.6z"/></svg>Curated digital services</span>
   <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Secure checkout</span>
   <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M20 6L9 17l-5-5"/></svg>Instant downloads</span>
-  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>7-day money-back guarantee</span>
+  <span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Fast, clear delivery timelines</span>
 </div>
 
 <!-- ============ HOME ============ -->
@@ -923,7 +923,7 @@
         <div>
           <div class="brand-lockup">Get It <span>Done</span></div>
           <div class="brand-tagline">Creative marketplace · Fast personalized digital work</div>
-          <div class="rating-pill"><span class="stars">â˜…â˜…â˜…â˜…â˜…</span><span>4.9</span><span class="divider"> - </span><span class="muted">2,300+ buyers</span></div>
+          <div class="rating-pill"><span class="stars">â˜…â˜…â˜…â˜…â˜…</span><span>Clear briefs</span><span class="divider"> - </span><span class="muted">Fast, personalized delivery</span></div>
           <h1>Fast, personalized digital work for <em>everything you need.</em></h1>
           <p class="lead">Shop ready-made assets, edit them yourself, or brief a creative professional. Get personalized digital work delivered quickly, with typical bespoke requests completed within the day.</p>
           <div class="hero-ctas">
@@ -1215,7 +1215,7 @@
         <div><h3>Your review loop</h3><p>We keep the work moving without making you pay for normal collaboration.</p></div>
         <div class="revision-steps">
           <div class="revision-step"><b>1</b><span>First draft delivered to your email.</span></div>
-          <div class="revision-step"><b>2</b><span>Say â€œyesâ€ or request revision round one.</span></div>
+          <div class="revision-step"><b>2</b><span>Approve the draft or request revision round one.</span></div>
           <div class="revision-step"><b>3</b><span>Revision round two is included. A third is optional and quoted first.</span></div>
         </div>
       </div>
@@ -1223,12 +1223,12 @@
     <div class="studio-banner">
       <div class="studio-cover"></div>
       <div class="studio-body">
-        <div class="studio-logo">MR</div>
+        <div class="studio-logo" aria-label="Get It Done">GI</div>
         <div class="studio-title-row">
           <div>
             <h2>Get It Done Studio</h2>
             <div class="studio-meta">
-              <span class="pill green">â˜… 4.9  -  2.3k orders</span>
+              <span class="pill green">Curated creative service</span>
               <span class="pill">âš¡ Finished within the day</span>
               <span>Digital services  -  Email delivery</span>
             </div>
@@ -1402,7 +1402,7 @@
           <button class="btn btn-cobalt" style="width:100%;justify-content:center;margin-top:16px;" onclick="checkout()">Continue to payment</button>
           <ul class="trust-list">
             <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Encrypted, secure checkout</li>
-            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>7-day money-back guarantee</li>
+            <li><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>Clear delivery timelines</li>
           </ul>
         </div>
         <div id="checkoutMsg"></div>
@@ -2270,7 +2270,7 @@ function completeCheckout(){
       <div class="ok-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
       <h4>Order received</h4>
       <div class="ordno">Order ${orderNo}  -  total ${formatMoney(orderTotal)}  -  no payment was taken</div>
-      <p style="color:var(--ink-soft);font-size:0.84rem;line-height:1.5;margin:0 0 8px;">Ready-made items include a preview download in this demo. Bespoke requests are finished and sent to your email within the day.</p>
+      <p style="color:var(--ink-soft);font-size:0.84rem;line-height:1.5;margin:0 0 8px;">Ready-made items include the files listed on the product page. Bespoke requests are finished and sent to your email within the day where the service timeline allows.</p>
       ${lines}
     </div>`;
   orderHistory.unshift({
@@ -2330,7 +2330,7 @@ const bespokeServices = [
   {id:'s10',cat:'Presentations',title:'Slide redesign (3 slides)',desc:'Polish three existing slides with layout, type, charts, visual consistency, PDF, and editable file.',price:inr(500),eta:'~50 min',rating:4.7,orders:98,seed:'svc-redesign',tags:[],packageLabel:'Pack  -  3 slides'},
   {id:'s11',cat:'Print',title:'Flyer / poster (A4)',desc:'Print-ready A4 PDF with bleed, crop marks, CMYK-safe layout, and a web PNG version.',price:inr(850),eta:'~45 min',rating:4.6,orders:240,seed:'svc-flyer',tags:['express'],packageLabel:'Single  -  A4'},
   {id:'s12',cat:'Print',title:'Business card (front + back)',desc:'Double-sided business card with print-ready CMYK PDF, bleed, crop marks, and open file.',price:inr(1500),eta:'~35 min',rating:4.5,orders:160,seed:'svc-card',tags:['express'],packageLabel:'Single  -  front + back'},
-  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu or price list layout for cafÃ©s, salons, clinics, and service businesses with PDF and open file.',price:inr(3500),eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[],packageLabel:'Pack  -  up to 4 pages'},
+  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu or price list layout for cafes, salons, clinics, and service businesses with PDF and open file.',price:inr(3500),eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[],packageLabel:'Pack  -  up to 4 pages'},
   {id:'s14',cat:'Product',title:'Packaging mockup',desc:'Product artwork placed on a realistic packaging scene with presentation-ready JPG and source layout.',price:inr(2000),eta:'~60 min',rating:4.7,orders:130,seed:'svc-pack',tags:['popular'],packageLabel:'Pack  -  2 mockup views'},
   {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup with responsive crops, callout hierarchy, and web-ready exports.',price:inr(3000),eta:'~180 min',rating:4.6,orders:88,seed:'svc-hero',tags:[],packageLabel:'Pack  -  desktop + mobile'},
   {id:'s16',cat:'AI Assist',title:'AI creative direction pack',desc:'Curated AI visual directions, prompt refinement, reference synthesis, and designer shortlist notes.',price:inr(300),eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express'],packageLabel:'Pack  -  8 directions'},
@@ -3008,6 +3008,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
 /* Keep customer-facing copy readable when older UTF-8 exports contain mojibake. */
 (function(){
   const replacements={
+    '\u00e2\u20ac\u0153':'"','\u00e2\u20ac\x9d':'"','\u00e2\u20ac\u009c':'"','\u00e2\u20ac\x9c':'"','\u00e2\u20ac\x9d':'"','\u00e2\u0080\u0093':' - ','\u00e2\x80\x94':' - ','\u00e2\x80\x93':' - ','\u00e2\x80\xa6':'...','\u00f0\u0178\u0094\u008d':'','\u00f0\u0178\u0094\u00a5':'','\u00f0\u0178\u0178\u0089':'','\u00f0\u0178\u0091\u0089':'','\u00f0\u0178\u0097\u0091':'','\u00f0\u0178\u008e\u0089':'','\u00f0\u0178\u0099\u008f':'',
     '\u00e2\u20ac\u201d':' - ','\u00e2\u20ac\u201c':' - ','\u00e2\u0080\u0093':'-','\u00e2\u2020\u2019':'->','\u00e2\u2020\u2014':'->','\u00e2\u20ac\u00a6':'...','\u00e2\u009c\u00a6':'*','\u00e2\u02dc\u2026':'*','\u00e2\u009c\u0093':'✓','\u00c3\u2014':'x','\u00c3\u00a9':'e','\u00c2\u00b7':' - '
   };
   function mojibakeScore(value){return (value.match(/[ÃÂâðï�]/g)||[]).length;}
@@ -3016,7 +3017,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     for(let i=0;i<2;i++){
       try{
         const repaired=decodeURIComponent(escape(best));
-        if(mojibakeScore(repaired)<mojibakeScore(best)) best=repaired; else break;
+        if(repaired!==best && !repaired.includes('\uFFFD')) best=repaired; else break;
       }catch(error){break;}
     }
     return best;
@@ -3031,6 +3032,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
   const run=()=>walk(document);
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
   new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+})();
+</script>
+<script>
+/* Final copy safeguard: repair legacy mojibake before customers see it. */
+(function(){
+  function score(text){return Array.from(text).filter(char=>[0xC2,0xC3,0xE2,0xEF,0xF0,0xFFFD].includes(char.charCodeAt(0))).length;}
+  function repair(text){let current=text;for(let round=0;round<3;round++){try{const next=decodeURIComponent(escape(current));if(next===current||score(next)>=score(current))break;current=next;}catch(error){break;}}return current;}
+  function scan(root){const nodes=root.querySelectorAll?root.querySelectorAll('*'):[];nodes.forEach(node=>{node.childNodes.forEach(child=>{if(child.nodeType===3){const next=repair(child.nodeValue);if(next!==child.nodeValue)child.nodeValue=next;}});['placeholder','title','aria-label'].forEach(attribute=>{if(node.hasAttribute(attribute)){const next=repair(node.getAttribute(attribute));if(next!==node.getAttribute(attribute))node.setAttribute(attribute,next);}});});}
+  const run=()=>scan(document);if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
 })();
 </script>
 </body>
