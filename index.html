@@ -897,7 +897,7 @@
     </div>
   </div>
   <nav class="tabs" id="navTabs" aria-label="Main navigation">
-    <button data-page="bespoke" class="bespoke-tab active" onclick="showPage('bespoke')">âœ¦ Start with Bespoke</button>
+    <button data-page="bespoke" class="bespoke-tab active" onclick="showPage('bespoke')">Start with Bespoke</button>
     <button data-page="home" onclick="showPage('home')">Home</button>
     <button data-page="marketplace" onclick="showPage('marketplace')">Marketplace</button>
     <button data-page="editor" onclick="showPage('editor')">Editor</button>
@@ -3046,7 +3046,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function repair(text){return legacyFixes.reduce((value,[from,to])=>value.split(from).join(to),text);}
   function scan(root){const nodes=root.querySelectorAll?root.querySelectorAll('*'):[];nodes.forEach(node=>{node.childNodes.forEach(child=>{if(child.nodeType===3){const next=repair(child.nodeValue);if(next!==child.nodeValue)child.nodeValue=next;}});['placeholder','title','aria-label'].forEach(attribute=>{if(node.hasAttribute(attribute)){const next=repair(node.getAttribute(attribute));if(next!==node.getAttribute(attribute))node.setAttribute(attribute,next);}});});}
   function fixQuantityControls(){document.querySelectorAll('button[onclick*="changeQty"],button[onclick*="changeSvcQty"]').forEach(button=>{const action=button.getAttribute('onclick')||'';button.textContent=action.includes(',-1)')?'-':'+';});document.querySelectorAll('button[onclick*="removeLine"]').forEach(button=>{button.textContent='x';});}
-  const run=()=>{scan(document);fixQuantityControls();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+  function scanTextNodes(){const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;while(node=walker.nextNode()){const next=repair(node.nodeValue);if(next!==node.nodeValue)node.nodeValue=next;}}
+  const run=()=>{scan(document);scanTextNodes();fixQuantityControls();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
 })();
 </script>
 </body>
