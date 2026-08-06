@@ -1,9 +1,11 @@
 const { supabaseConfig, supabaseRequest } = require('../_supabase');
 const { sendEmail, escapeHtml } = require('../_email');
+const { authenticate, isAdmin, sendAuthError } = require('../_auth');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST required' }); return; }
   try {
+    const auth=await authenticate(req); if(!isAdmin(auth)){res.status(403).json({error:'Only the admin can upload deliverables.'});return;}
     const url = new URL(req.url, `http://${req.headers.host}`);
     const projectId = url.searchParams.get('project_id');
     if (!projectId) { res.status(400).json({ error: 'Project id is required.' }); return; }
@@ -17,7 +19,7 @@ module.exports = async function handler(req, res) {
     const uploadText=await upload.text();
     if(!upload.ok){let details=uploadText;try{details=JSON.parse(uploadText)}catch(error){} res.status(upload.status).json({error:'Could not upload file.',details});return;}
     const fileUrl=`${base}/storage/v1/object/public/project-files/${path}`;
-    const saved=await supabaseRequest('project_files',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({project_id:projectId,file_name:rawName,file_url:fileUrl,file_kind:'deliverable'})});
+    const saved=await supabaseRequest('project_files',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({project_id:projectId,file_name:rawName,file_path:path,file_url:fileUrl,file_kind:'deliverable'})});
     if(!saved.response.ok){res.status(saved.response.status).json({error:'File uploaded but could not save project record.',details:saved.payload});return;}
     try {
       const project=await supabaseRequest(`projects?id=eq.${encodeURIComponent(projectId)}&select=buyer_email,buyer_name,service_title`);
@@ -33,7 +35,7 @@ module.exports = async function handler(req, res) {
       }
     } catch(error){ console.error('Deliverable email failed:',error.message); }
     res.status(201).json({file:Array.isArray(saved.payload)?saved.payload[0]:saved.payload});
-  } catch(error){res.status(500).json({error:error.message});}
+  } catch(error){sendAuthError(res,error);}
 };
 
 module.exports.config={api:{bodyParser:false}};

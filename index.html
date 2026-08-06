@@ -1620,17 +1620,21 @@ function persistAccountState(){
     localStorage.setItem(SAVED_ITEMS_KEY, JSON.stringify(savedItems));
   }catch(error){ /* storage is optional */ }
 }
+function authHeaders(headers={}){
+  const token=currentUser?.session?.access_token;
+  return token?{...headers,Authorization:'Bearer '+token}:headers;
+}
 async function trackAccount(isNewSignup=false){
   if(!currentUser?.email) return;
-  try{ await fetch('/api/accounts/upsert',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:currentUser.email,name:currentUser.name,role:currentUser.role,is_new_signup:isNewSignup})}); }catch(error){ /* tracking is best effort */ }
+  try{ await fetch('/api/accounts/upsert',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({email:currentUser.email,name:currentUser.name,role:currentUser.role,is_new_signup:isNewSignup})}); }catch(error){ /* tracking is best effort */ }
 }
 async function loadBuyerData(){
   if(!currentUser?.email || buyerDataLoading) return;
   buyerDataLoading=true;
   try{
     const [ordersResponse,projectsResponse]=await Promise.all([
-      fetch('/api/orders/list?buyer_email='+encodeURIComponent(currentUser.email)),
-      fetch('/api/projects/list?buyer_email='+encodeURIComponent(currentUser.email))
+      fetch('/api/orders/list?buyer_email='+encodeURIComponent(currentUser.email),{headers:authHeaders()}),
+      fetch('/api/projects/list?buyer_email='+encodeURIComponent(currentUser.email),{headers:authHeaders()})
     ]);
     const ordersPayload=await ordersResponse.json();
     const projectsPayload=await projectsResponse.json();
@@ -1807,7 +1811,7 @@ async function loadCrmProjects(){
   const wrap=document.getElementById('crmProjects');
   if(!wrap) return;
   try{
-    const [projectsResponse,ordersResponse]=await Promise.all([fetch('/api/projects/list'),fetch('/api/orders/list')]);
+    const [projectsResponse,ordersResponse]=await Promise.all([fetch('/api/projects/list',{headers:authHeaders()}),fetch('/api/orders/list',{headers:authHeaders()})]);
     const payload=await projectsResponse.json();
     const ordersPayload=await ordersResponse.json();
     if(!projectsResponse.ok) throw new Error(payload.error||'Could not load CRM projects');
@@ -1842,23 +1846,23 @@ function renderManualPaymentApprovals(){
 async function approveManualPayment(orderNumber){
   if(!currentUser?.email){toast('Sign in as the admin to approve payments.');return;}
   if(!window.confirm('Confirm that this UTR matches the payment received?')) return;
-  try{const response=await fetch('/api/commerce?action=approve-manual-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:orderNumber,admin_email:currentUser.email})});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not approve payment');toast('Payment approved and receipt email queued.');await loadCrmProjects();}catch(error){toast(error.message);}
+  try{const response=await fetch('/api/commerce?action=approve-manual-payment',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNumber})});const payload=await response.json();if(!response.ok)throw new Error(payload.error||'Could not approve payment');toast('Payment approved and receipt email queued.');await loadCrmProjects();}catch(error){toast(error.message);}
 }
 async function uploadCrmFile(id,input){
   const file=input?.files?.[0]; if(!file) return;
-  try{ const response=await fetch('/api/projects/file?project_id='+encodeURIComponent(id),{method:'POST',headers:{'Content-Type':file.type||'application/octet-stream','X-File-Name':file.name},body:file}); const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Upload failed'); toast('Result uploaded to the client project'); await loadCrmProjects(); }catch(error){toast(error.message);}
+  try{ const response=await fetch('/api/projects/file?project_id='+encodeURIComponent(id),{method:'POST',headers:authHeaders({'Content-Type':file.type||'application/octet-stream','X-File-Name':file.name}),body:file}); const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Upload failed'); toast('Result uploaded to the client project'); await loadCrmProjects(); }catch(error){toast(error.message);}
 }
 async function updateCrmProject(id,status){
-  try{ const response=await fetch('/api/projects/update',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,status,admin_email:currentUser?.email})}); if(!response.ok) throw new Error('Update failed'); toast('Project status updated'); await loadCrmProjects(); }catch(error){ toast(error.message); }
+  try{ const response=await fetch('/api/projects/update',{method:'PATCH',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({id,status,admin_email:currentUser?.email})}); if(!response.ok) throw new Error('Update failed'); toast('Project status updated'); await loadCrmProjects(); }catch(error){ toast(error.message); }
 }
 async function markCrmRevision(id){
   const project=crmProjects.find(item=>item.id===id); if(!project) return;
-  try{ const response=await fetch('/api/projects/update',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,revision_count:Number(project.revision_count||0)+1,status:'revision_requested'})}); if(!response.ok) throw new Error('Could not record revision'); toast('Revision recorded'); await loadCrmProjects(); }catch(error){ toast(error.message); }
+  try{ const response=await fetch('/api/projects/update',{method:'PATCH',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({id,revision_count:Number(project.revision_count||0)+1,status:'revision_requested'})}); if(!response.ok) throw new Error('Could not record revision'); toast('Revision recorded'); await loadCrmProjects(); }catch(error){ toast(error.message); }
 }
 async function replyToCrmProject(id){
   const message=window.prompt('Write the update for the client:');
   if(!message?.trim()) return;
-  try{ const response=await fetch('/api/projects/message',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({project_id:id,message:message.trim(),sender_role:'designer',sender_name:currentUser?.name||'Makers Row designer'})}); if(!response.ok) throw new Error('Could not save reply'); toast('Reply saved to the project'); }catch(error){ toast(error.message); }
+  try{ const response=await fetch('/api/projects/message',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({project_id:id,message:message.trim(),sender_role:'designer',sender_name:currentUser?.name||'Makers Row designer'})}); if(!response.ok) throw new Error('Could not save reply'); toast('Reply saved to the project'); }catch(error){ toast(error.message); }
 }
 function renderCreatorListings(listings){
   if(!listings.length) return '<div class="account-empty" style="margin-top:15px;">No uploads yet. Start by publishing your first template, graphic, or AI service.</div>';
@@ -2150,9 +2154,9 @@ async function startManualPayment(){
   const inrTotal=Math.max(150,Math.round(displayTotal*USD_TO_INR));
   const deliverables=cart.map(line=>({title:line.title,kind:line.kind,thumb:line.thumb,files:line.assetFiles||['Digital delivery'],downloadable:line.kind!=='bespoke'}));
   try{
-    const create=await fetch('/api/commerce?action=create-manual-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:orderNo,buyer_email:currentUser.email,buyer_name:currentUser.name||'',total:inrTotal,items:deliverables})});
+    const create=await fetch('/api/commerce?action=create-manual-payment',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNo,buyer_email:currentUser.email,buyer_name:currentUser.name||'',total:inrTotal,items:deliverables})});
     const created=await create.json(); if(!create.ok) throw new Error(created.error||'Could not save payment order.');
-    const proof=await fetch('/api/commerce?action=submit-manual-proof',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:orderNo,payment_reference:reference})});
+    const proof=await fetch('/api/commerce?action=submit-manual-proof',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNo,payment_reference:reference})});
     const submitted=await proof.json(); if(!proof.ok) throw new Error(submitted.error||'Could not submit payment proof.');
     orderHistory.unshift({id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_submitted',paymentStatus:'submitted',emailStatus:'Payment proof submitted — awaiting admin confirmation',deliverables});
     persistAccountState(); cart=[];persistCart();closePayment();renderCart();toast('Payment proof submitted. Your order will be released after confirmation.');showPage('account');renderAccount();
@@ -2167,7 +2171,7 @@ async function startCashfreeCheckout(){
   const inrTotal=Math.max(150,Math.round(displayTotal*USD_TO_INR));
   const order={id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_pending',deliverables:cart.map(line=>({title:line.title,kind:line.kind,thumb:line.thumb,files:line.assetFiles||['Digital delivery'],downloadable:line.kind!=='bespoke'}))};
   try{
-    const response=await fetch('/api/commerce?action=create-payment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:orderNo,buyer_email:currentUser.email,buyer_name:currentUser.name||'',total:inrTotal,items:order.deliverables})});
+    const response=await fetch('/api/commerce?action=create-payment',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNo,buyer_email:currentUser.email,buyer_name:currentUser.name||'',total:inrTotal,items:order.deliverables})});
     const payload=await response.json();
     if(!response.ok) throw new Error(payload.error||'Could not start Cashfree checkout.');
     order.cashfreeOrderId=payload.order_id; orderHistory.unshift(order); persistAccountState();
@@ -2220,7 +2224,7 @@ function completeCheckout(){
 }
 async function createRemoteOrder(order){
   try{
-    const response=await fetch('/api/orders/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_number:order.id,buyer_email:order.email,buyer_name:currentUser?.name||'',total:order.total,currency:'USD',items:(order.deliverables||[]).map(file=>({title:file.title,kind:file.kind,qty:1,price:0,files:file.files||[],thumb:(file.thumb||'').startsWith('data:')?'':file.thumb||'',downloadable:Boolean(file.downloadable)}))})});
+    const response=await fetch('/api/orders/create',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:order.id,buyer_email:order.email,buyer_name:currentUser?.name||'',total:order.total,currency:'USD',items:(order.deliverables||[]).map(file=>({title:file.title,kind:file.kind,qty:1,price:0,files:file.files||[],thumb:(file.thumb||'').startsWith('data:')?'':file.thumb||'',downloadable:Boolean(file.downloadable)}))})});
     if(!response.ok) throw new Error('Order was only saved locally');
     const payload=await response.json();
     order.remoteId=payload.order?.id||null;
@@ -2513,7 +2517,7 @@ function confirmAddService(){
 
 async function createSharedProject({serviceForCanva, style, notes, email, phone, referenceNames}){
   try{
-    const response=await fetch('/api/projects/create',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({buyer_email:email,buyer_name:currentUser?.name||'',service_id:serviceForCanva.id,service_title:serviceForCanva.title,style,brief:notes||'Creative brief submitted through Makers Row.',phone,reference_names:referenceNames})});
+    const response=await fetch('/api/projects/create',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({buyer_email:email,buyer_name:currentUser?.name||'',service_id:serviceForCanva.id,service_title:serviceForCanva.title,style,brief:notes||'Creative brief submitted through Makers Row.',phone,reference_names:referenceNames})});
     const payload=await response.json();
     if(!response.ok) throw new Error(payload.error||'Could not send brief to the designer');
     const line=cart.find(item=>item.kind==='bespoke' && item.serviceId===serviceForCanva.id);
@@ -2889,7 +2893,7 @@ async function handlePaymentReturn(){
   if(params.get('payment')!=='return'||!params.get('order_id')) return;
   const orderId=params.get('order_id');
   try{
-    const response=await fetch('/api/commerce?action=verify-payment&order_id='+encodeURIComponent(orderId));
+    const response=await fetch('/api/commerce?action=verify-payment&order_id='+encodeURIComponent(orderId),{headers:authHeaders()});
     const payload=await response.json();
     if(payload.paid){ toast('Payment confirmed. Your receipt is on its way by email.'); if(currentUser){ await loadBuyerData(); showPage('account'); renderAccount(); } }
     else toast('Payment is still being confirmed. Check your account shortly.');

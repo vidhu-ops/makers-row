@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const { supabaseRequest } = require('./_supabase');
 const { sendEmail, escapeHtml } = require('./_email');
+const { authenticate, isAdmin, sendAuthError } = require('./_auth');
 
 const CASHFREE_VERSION = process.env.CASHFREE_API_VERSION || '2025-01-01';
 function config() {
@@ -50,32 +51,38 @@ function receipt(order, label='Payment confirmed') {
 }
 async function sendReceipt(order) { return sendEmail({...receipt(order),to:order.buyer_email,idempotencyKey:`receipt-${order.order_number}`}); }
 async function createManualPayment(req,res) {
+  const auth=await authenticate(req);
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
   if(!data.order_number||!data.buyer_email||!Array.isArray(data.items)||!Number(data.total)){res.status(400).json({error:'Order number, buyer email, items, and total are required.'});return;}
   if(!manualPaymentConfig().enabled){res.status(503).json({error:'Manual payment details have not been configured yet.'});return;}
+  if(String(data.buyer_email).trim().toLowerCase()!==auth.email){res.status(403).json({error:'An order must belong to the signed-in buyer.'});return;}
   const orderNumber=String(data.order_number).replace(/[^A-Za-z0-9_-]/g,'').slice(0,45);
   const record=await saveOrder({order_number:orderNumber,buyer_email:String(data.buyer_email).trim().toLowerCase(),buyer_name:data.buyer_name||null,total:Number(data.total),currency:'INR',status:'received',payment_method:'upi_or_bank_transfer',payment_status:'pending',items:data.items});
   res.status(201).json({order:record,order_id:orderNumber,payment:manualPaymentConfig()});
 }
 async function submitManualProof(req,res) {
+  const auth=await authenticate(req);
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
   if(!data.order_number||!data.payment_reference){res.status(400).json({error:'Order number and UTR/payment reference are required.'});return;}
+  const existing=await supabaseRequest(`orders?order_number=eq.${encodeURIComponent(String(data.order_number))}&select=buyer_email&limit=1`);
+  const existingOrder=Array.isArray(existing.payload)?existing.payload[0]:null;
+  if(!existingOrder||existingOrder.buyer_email!==auth.email){res.status(403).json({error:'You can only submit proof for your own order.'});return;}
   const order=await updateOrder(String(data.order_number),{payment_status:'submitted',payment_reference:String(data.payment_reference).trim().slice(0,120),payment_proof_url:data.payment_proof_url||null,payment_submitted_at:new Date().toISOString()});
   res.status(200).json({order,message:'Payment proof submitted. Your order will be released after admin confirmation.'});
 }
 async function approveManualPayment(req,res) {
+  const auth=await authenticate(req); if(!isAdmin(auth)){res.status(403).json({error:'Admin approval is required.'});return;}
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
-  const adminEmail=String(data.admin_email||'').trim().toLowerCase();
-  const configuredAdmin=String(process.env.ADMIN_EMAIL||'vidhugupta1996@gmail.com').trim().toLowerCase();
-  if(adminEmail!==configuredAdmin){res.status(403).json({error:'Admin approval is required.'});return;}
   if(!data.order_number){res.status(400).json({error:'Order number is required.'});return;}
   const order=await updateOrder(String(data.order_number),{status:'in_progress',payment_status:'paid',payment_verified_at:new Date().toISOString(),admin_note:data.admin_note||null});
   if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}
   res.status(200).json({order});
 }
 async function createPayment(req,res) {
+  const auth=await authenticate(req);
   const raw=await bodyText(req); const data=raw?JSON.parse(raw):{};
   if(!data.order_number||!data.buyer_email||!Array.isArray(data.items)||!Number(data.total)){res.status(400).json({error:'Order number, buyer email, items, and total are required.'});return;}
+  if(String(data.buyer_email).trim().toLowerCase()!==auth.email){res.status(403).json({error:'An order must belong to the signed-in buyer.'});return;}
   const orderNumber=String(data.order_number).replace(/[^A-Za-z0-9_-]/g,'').slice(0,45);
   const record=await saveOrder({order_number:orderNumber,buyer_email:String(data.buyer_email).trim().toLowerCase(),buyer_name:data.buyer_name||null,total:Number(data.total),currency:'INR',status:'received',items:data.items});
   const payment=await cashfree('/orders',{method:'POST',idempotencyKey:`makers-row-${orderNumber}`,body:JSON.stringify({order_id:orderNumber,order_amount:Math.max(1,Math.round(Number(data.total)*100)/100),order_currency:'INR',customer_details:{customer_id:String(data.buyer_email).toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,50)||`buyer${Date.now()}`,customer_name:data.buyer_name||'Makers Row buyer',customer_email:String(data.buyer_email).trim().toLowerCase(),customer_phone:data.phone||'9999999999'},order_note:`Makers' Row order ${orderNumber}`,order_meta:{return_url:`${appUrl()}/?payment=return&order_id=${encodeURIComponent(orderNumber)}`,notify_url:`${appUrl()}/api/commerce?action=webhook`}})});
@@ -94,10 +101,13 @@ async function webhook(req,res) {
   res.status(200).json({received:true});
 }
 async function verifyPayment(req,res) {
+  const auth=await authenticate(req);
   const orderId=new URL(req.url,`http://${req.headers.host}`).searchParams.get('order_id'); if(!orderId){res.status(400).json({error:'order_id is required.'});return;}
+  const existing=await supabaseRequest(`orders?order_number=eq.${encodeURIComponent(orderId)}&select=buyer_email&limit=1`); const existingOrder=Array.isArray(existing.payload)?existing.payload[0]:null;
+  if(!existingOrder||existingOrder.buyer_email!==auth.email){res.status(403).json({error:'You can only verify your own order.'});return;}
   const payment=await cashfree(`/orders/${encodeURIComponent(orderId)}`,{method:'GET'}); const paid=payment.order_status==='PAID'; let order=null;
   if(paid){order=await updateOrder(orderId,{status:'in_progress'});if(order?.buyer_email){try{await sendReceipt(order);}catch(error){console.error('Receipt email failed:',error.message);}}}
   res.status(200).json({paid,order_status:payment.order_status,order});
 }
-module.exports=async function handler(req,res){try{const action=new URL(req.url,`http://${req.headers.host}`).searchParams.get('action')||'create-payment';if(action==='payment-config'&&req.method==='GET'){res.status(200).json(manualPaymentConfig());return;}if(action==='create-payment'&&req.method==='POST')return createPayment(req,res);if(action==='create-manual-payment'&&req.method==='POST')return createManualPayment(req,res);if(action==='submit-manual-proof'&&req.method==='POST')return submitManualProof(req,res);if(action==='approve-manual-payment'&&req.method==='POST')return approveManualPayment(req,res);if(action==='webhook'&&req.method==='POST')return webhook(req,res);if(action==='verify-payment'&&req.method==='GET')return verifyPayment(req,res);res.status(405).json({error:'Unsupported commerce action.'});}catch(error){console.error(error);res.status(500).json({error:error.message});}};
+module.exports=async function handler(req,res){try{const action=new URL(req.url,`http://${req.headers.host}`).searchParams.get('action')||'create-payment';if(action==='payment-config'&&req.method==='GET'){res.status(200).json(manualPaymentConfig());return;}if(action==='create-payment'&&req.method==='POST')return createPayment(req,res);if(action==='create-manual-payment'&&req.method==='POST')return createManualPayment(req,res);if(action==='submit-manual-proof'&&req.method==='POST')return submitManualProof(req,res);if(action==='approve-manual-payment'&&req.method==='POST')return approveManualPayment(req,res);if(action==='webhook'&&req.method==='POST')return webhook(req,res);if(action==='verify-payment'&&req.method==='GET')return verifyPayment(req,res);res.status(405).json({error:'Unsupported commerce action.'});}catch(error){console.error(error);sendAuthError(res,error);}};
 module.exports.config={api:{bodyParser:false}};

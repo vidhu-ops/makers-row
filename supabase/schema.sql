@@ -31,6 +31,7 @@ create table if not exists public.project_files (
   id uuid primary key default gen_random_uuid(),
   project_id uuid not null references public.projects(id) on delete cascade,
   file_name text not null,
+  file_path text,
   file_url text not null,
   file_kind text not null default 'deliverable',
   created_at timestamptz not null default now()
@@ -77,8 +78,8 @@ alter table public.orders enable row level security;
 alter table public.accounts enable row level security;
 
 insert into storage.buckets (id, name, public)
-values ('project-files', 'project-files', true)
-on conflict (id) do update set public = true;
+values ('project-files', 'project-files', false)
+on conflict (id) do update set public = false;
 
 -- Safe migration for an existing database.
 alter table public.orders add column if not exists payment_method text not null default 'cashfree';
@@ -88,3 +89,5 @@ alter table public.orders add column if not exists payment_proof_url text;
 alter table public.orders add column if not exists payment_submitted_at timestamptz;
 alter table public.orders add column if not exists payment_verified_at timestamptz;
 alter table public.orders add column if not exists admin_note text;
+alter table public.project_files add column if not exists file_path text;
+update storage.buckets set public = false where id = 'project-files';

@@ -1,11 +1,14 @@
 const { supabaseRequest } = require('../_supabase');
 const { sendEmail, escapeHtml } = require('../_email');
+const { authenticate, sendAuthError } = require('../_auth');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST required' }); return; }
   try {
+    const auth=await authenticate(req);
     const body = typeof req.body === 'string' ? JSON.parse(req.body) : (req.body || {});
     if (!body.email) { res.status(400).json({ error: 'Email is required.' }); return; }
+    if(String(body.email).trim().toLowerCase()!==auth.email){res.status(403).json({error:'You can only update your own account.'});return;}
     const record = {
       email: String(body.email).trim().toLowerCase(),
       name: body.name || null,
@@ -30,5 +33,5 @@ module.exports = async function handler(req, res) {
       } catch (error) { console.error('Welcome email failed:', error.message); }
     }
     res.status(200).json({ account: Array.isArray(payload) ? payload[0] : payload });
-  } catch (error) { res.status(500).json({ error: error.message }); }
+  } catch (error) { sendAuthError(res,error); }
 };
