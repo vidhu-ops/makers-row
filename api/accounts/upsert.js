@@ -25,9 +25,9 @@ module.exports = async function handler(req, res) {
       try {
         await sendEmail({
           to: record.email,
-          subject: "Welcome to Makers' Row",
-          html: `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>Welcome to Makers' Row, ${escapeHtml(record.name || 'there')}!</h2><p>Your account is ready. Browse the marketplace, save creative work, add services to your cart, and track every order from your account.</p><p>We’re glad you’re here.</p><p>Makers' Row</p></div>`,
-          text: `Welcome to Makers' Row, ${record.name || 'there'}! Your account is ready. Browse the marketplace, save creative work, add services to your cart, and track every order from your account.`,
+          subject: "Welcome to Get It Done",
+          html: `<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>Welcome to Get It Done, ${escapeHtml(record.name || 'there')}!</h2><p>Your account is ready. Browse the marketplace, save creative work, add services to your cart, and track every order from your account.</p><p>We're glad you're here.</p><p>Get It Done</p></div>`,
+          text: `Welcome to Get It Done, ${record.name || 'there'}! Your account is ready. Browse the marketplace, save creative work, add services to your cart, and track every order from your account.`,
           idempotencyKey: `welcome-${record.email}`
         });
       } catch (error) { console.error('Welcome email failed:', error.message); }
@@ -35,3 +35,4 @@ module.exports = async function handler(req, res) {
     res.status(200).json({ account: Array.isArray(payload) ? payload[0] : payload });
   } catch (error) { sendAuthError(res,error); }
 };
+

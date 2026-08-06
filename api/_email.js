@@ -1,6 +1,6 @@
 async function sendEmail({ to, subject, html, text, idempotencyKey }) {
   const apiKey = process.env.RESEND_API_KEY;
-  const from = process.env.RESEND_FROM_EMAIL || 'Makers\' Row <onboarding@resend.dev>';
+  const from = process.env.RESEND_FROM_EMAIL || 'Get It Done <onboarding@resend.dev>';
   if (!apiKey) return { skipped: true, reason: 'RESEND_API_KEY is not configured.' };
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
@@ -19,3 +19,4 @@ function escapeHtml(value) {
 }
 
 module.exports = { sendEmail, escapeHtml };
+

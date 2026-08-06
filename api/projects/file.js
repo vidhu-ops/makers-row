@@ -1,6 +1,11 @@
 const { supabaseConfig, supabaseRequest } = require('../_supabase');
 const { sendEmail, escapeHtml } = require('../_email');
 const { authenticate, isAdmin, sendAuthError } = require('../_auth');
+async function signedDeliveryUrl(base,key,path,fallback){
+  const response=await fetch(`${base}/storage/v1/object/sign/project-files/${path.split('/').map(encodeURIComponent).join('/')}`,{method:'POST',headers:{'Content-Type':'application/json',apikey:key,Authorization:`Bearer ${key}`},body:JSON.stringify({expiresIn:604800})});
+  const payload=await response.json().catch(()=>({}));
+  return response.ok&&payload.signedURL?(payload.signedURL.startsWith('http')?payload.signedURL:`${base}/storage/v1${payload.signedURL}`):fallback;
+}
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') { res.status(405).json({ error: 'POST required' }); return; }
@@ -19,6 +24,7 @@ module.exports = async function handler(req, res) {
     const uploadText=await upload.text();
     if(!upload.ok){let details=uploadText;try{details=JSON.parse(uploadText)}catch(error){} res.status(upload.status).json({error:'Could not upload file.',details});return;}
     const fileUrl=`${base}/storage/v1/object/public/project-files/${path}`;
+    const deliveryUrl=await signedDeliveryUrl(base,key,path,fileUrl);
     const saved=await supabaseRequest('project_files',{method:'POST',headers:{Prefer:'return=representation'},body:JSON.stringify({project_id:projectId,file_name:rawName,file_path:path,file_url:fileUrl,file_kind:'deliverable'})});
     if(!saved.response.ok){res.status(saved.response.status).json({error:'File uploaded but could not save project record.',details:saved.payload});return;}
     try {
@@ -27,9 +33,9 @@ module.exports = async function handler(req, res) {
       if(buyer?.buyer_email&&process.env.RESEND_API_KEY){
         await sendEmail({
           to:buyer.buyer_email,
-          subject:`Your Makers' Row file is ready · ${buyer.service_title||'Bespoke project'}`,
-          html:`<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>Your finished work is ready</h2><p>Hi ${escapeHtml(buyer.buyer_name||'there')},</p><p>Your ${escapeHtml(buyer.service_title||'bespoke project')} has a new deliverable: <strong>${escapeHtml(rawName)}</strong>.</p><p><a href="${escapeHtml(fileUrl)}">Open your file</a></p><p>You can also find it in your Makers' Row account.</p></div>`,
-          text:`Your finished work is ready. Open ${rawName}: ${fileUrl}`,
+          subject:`Your Get It Done file is ready  -  ${buyer.service_title||'Bespoke project'}`,
+          html:`<div style="font-family:Arial,sans-serif;line-height:1.6;color:#12141A"><h2>Your finished work is ready</h2><p>Hi ${escapeHtml(buyer.buyer_name||'there')},</p><p>Your ${escapeHtml(buyer.service_title||'bespoke project')} has a new deliverable: <strong>${escapeHtml(rawName)}</strong>.</p><p><a href="${escapeHtml(deliveryUrl)}">Open your file</a></p><p>You can also find it in your Get It Done account.</p></div>`,
+          text:`Your finished work is ready. Open ${rawName}: ${deliveryUrl}`,
           idempotencyKey:`deliverable-${projectId}-${rawName}`
         });
       }
@@ -39,3 +45,4 @@ module.exports = async function handler(req, res) {
 };
 
 module.exports.config={api:{bodyParser:false}};
+

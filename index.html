@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Makers' Row — Buy, Edit, Sell &amp; Commission Design Work</title>
+<title>Get It Done | Fast personalized digital work</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -413,7 +413,7 @@
   .alignment-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px;}
   .alignment-grid .tool-btn{margin:0;padding:8px 4px;font-size:.72rem;justify-content:center;text-align:center;}
 
-﻿  /* ---------- BESPOKE (Swiggy-style services) ---------- */
+ï»¿  /* ---------- BESPOKE (Swiggy-style services) ---------- */
   .file-drop{
     border:2px dashed var(--line);border-radius:10px;padding:20px;text-align:center;font-size:0.85rem;color:var(--ink-soft);
     cursor:pointer;background:var(--bg);
@@ -502,6 +502,7 @@
     grid-column:1/-1;font-family:'Syne',sans-serif;font-size:1.15rem;margin:10px 0 -2px;padding-top:4px;
     border-top:0;
   }
+  .hero .brand-tagline{font:600 .72rem 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:rgba(231,236,245,.72);margin:8px 0 18px;}
   .head-actions{display:flex;align-items:center;gap:8px;}
   .currency-select{border:1px solid var(--line);background:var(--white);border-radius:999px;padding:8px 10px;font-weight:750;font-size:.78rem;color:var(--ink);}
   .account-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--white);color:var(--ink);border-radius:999px;padding:7px 12px 7px 7px;font-weight:700;font-size:.8rem;}
@@ -884,9 +885,9 @@
 
 <header>
   <div class="headbar">
-    <div class="logo"><span class="mark" aria-hidden="true"></span>Makers' Row</div>
+    <div class="logo"><span class="mark" aria-hidden="true"></span>Get It Done</div>
     <div class="head-actions">
-      <select class="currency-select" id="currencySelect" aria-label="Choose currency" onchange="setCurrency(this.value)"><option value="INR">₹ INR</option><option value="USD">$ USD</option></select>
+      <select class="currency-select" id="currencySelect" aria-label="Choose currency" onchange="setCurrency(this.value)"><option value="INR">INR  INR</option><option value="USD">$ USD</option></select>
       <button class="account-btn" id="accountButton" aria-label="Open account" onclick="showAccount()"><span class="account-avatar" id="accountAvatar">?</span><span id="accountButtonLabel">Sign in</span></button>
       <button class="cart-btn" aria-label="Open cart" onclick="showPage('cart')">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -895,7 +896,7 @@
     </div>
   </div>
   <nav class="tabs" id="navTabs" aria-label="Main navigation">
-    <button data-page="bespoke" class="bespoke-tab active" onclick="showPage('bespoke')">✦ Start with Bespoke</button>
+    <button data-page="bespoke" class="bespoke-tab active" onclick="showPage('bespoke')">âœ¦ Start with Bespoke</button>
     <button data-page="home" onclick="showPage('home')">Home</button>
     <button data-page="marketplace" onclick="showPage('marketplace')">Marketplace</button>
     <button data-page="editor" onclick="showPage('editor')">Editor</button>
@@ -919,13 +920,14 @@
     <div class="hero">
       <div class="hero-grid">
         <div>
-          <div class="brand-lockup">Makers' <span>Row</span></div>
-          <div class="rating-pill"><span class="stars">★★★★★</span><span>4.9</span><span class="divider">·</span><span class="muted">2,300+ buyers</span></div>
-          <h1>Buy ready-made work, <em>edit it live</em>, or hand it off entirely.</h1>
-          <p class="lead">Independent designers sell templates and assets here. Pick one, tweak it in-browser, or commission a human designer and receive your finished creative within the day.</p>
+          <div class="brand-lockup">Get It <span>Done</span></div>
+          <div class="brand-tagline">Creative marketplace · Fast personalized digital work</div>
+          <div class="rating-pill"><span class="stars">â˜…â˜…â˜…â˜…â˜…</span><span>4.9</span><span class="divider"> - </span><span class="muted">2,300+ buyers</span></div>
+          <h1>Fast, personalized digital work for <em>everything you need.</em></h1>
+          <p class="lead">Shop ready-made assets, edit them yourself, or brief a creative professional. Get personalized digital work delivered quickly, with typical bespoke requests completed within the day.</p>
           <div class="hero-ctas">
             <button class="btn btn-solid" onclick="showPage('marketplace')">Browse the marketplace</button>
-            <button class="btn btn-coral" onclick="showPage('bespoke')">Get bespoke work →</button>
+            <button class="btn btn-coral" onclick="showPage('bespoke')">Get personalized work</button>
           </div>
         </div>
         <div class="sticker-board">
@@ -943,7 +945,7 @@
             <img src="https://picsum.photos/seed/homecard3/300/180" alt="">
             <div class="cap">Pitch Deck Kit</div>
           </div>
-          <div class="price-tag" style="top:260px;left:60%;transform:rotate(6deg);background:var(--coral);color:white;">Bespoke</div>
+          <div class="price-tag" style="top:260px;left:60%;transform:rotate(6deg);background:var(--coral);color:white;">Done today</div>
         </div>
       </div>
     </div>
@@ -951,9 +953,9 @@
     <div class="bespoke-intro">
       <div class="bespoke-promise">
         <span class="eyebrow" style="color:var(--coral);">The easiest way to get exactly what you want</span>
-        <h2>Start with a creative. Shape it together.</h2>
-        <p>Pick the kind of work you need, choose the visual direction you like, and upload references. We send a first draft, you say yes or request a change, and we keep improving it with you.</p>
-        <button class="btn btn-coral" onclick="showPage('bespoke')">Start a Bespoke brief →</button>
+        <h2>Shop it. Personalize it. Get it done.</h2>
+        <p>Choose the digital work you need, pick the visual direction you like, and upload references. We send a first draft, you say yes or request a change, and we keep improving it with you.</p>
+        <button class="btn btn-coral" onclick="showPage('bespoke')">Start a Bespoke brief â†’</button>
         <div class="promise-points">
           <div class="promise-point"><span>Included</span>2 revision rounds</div>
           <div class="promise-point"><span>You decide</span>Approve or request changes</div>
@@ -983,7 +985,7 @@
       <div class="feature-card">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--cobalt)" stroke-width="1.6"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
         <h3>Edit it right here</h3>
-        <p>Open anything in the built-in editor — move text, swap colors, pull in new stock images — and download your version, no other software required.</p>
+        <p>Open anything in the built-in editor â€” move text, swap colors, pull in new stock images â€” and download your version, no other software required.</p>
       </div>
       <div class="feature-card">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--cobalt)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
@@ -993,7 +995,7 @@
       <div class="feature-card">
         <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="var(--coral)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
         <h3>Or go bespoke</h3>
-          <p>Describe what you need, attach references, leave your number — a designer starts right away and your finished creative arrives in your inbox within the day.</p>
+          <p>Describe what you need, attach references, leave your number â€” a designer starts right away and your finished creative arrives in your inbox within the day.</p>
       </div>
     </div>
 
@@ -1014,7 +1016,7 @@
         <div class="how-step">
           <div class="how-num">3</div>
           <h4>Checkout</h4>
-          <p>One cart holds everything — off-the-shelf purchases, edited files, and bespoke requests alike.</p>
+          <p>One cart holds everything â€” off-the-shelf purchases, edited files, and bespoke requests alike.</p>
         </div>
         <div class="how-step">
           <div class="how-num">4</div>
@@ -1029,18 +1031,18 @@
       <p class="section-sub">A few notes from people who've bought, edited, or commissioned work here.</p>
       <div class="testi-grid">
         <div class="testi-card">
-          <div class="stars">★★★★★</div>
+          <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
           <p>"Grabbed a pitch deck template, swapped in our colors in the editor, and had it ready before my next meeting."</p>
           <div class="testi-who"><div class="testi-avatar">R</div><div><div class="name">Rhea M.</div><div class="role">Startup founder</div></div></div>
         </div>
         <div class="testi-card">
-          <div class="stars">★★★★★</div>
+          <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
           <p>"Sent a bespoke request for a logo at 11pm and had three concepts in my inbox before noon the next day."</p>
           <div class="testi-who"><div class="testi-avatar">D</div><div><div class="name">Daniel O.</div><div class="role">Small business owner</div></div></div>
         </div>
         <div class="testi-card">
-          <div class="stars">★★★★★</div>
-          <p>"I list my icon packs here between client work — the checkout and payout flow just gets out of the way."</p>
+          <div class="stars">â˜…â˜…â˜…â˜…â˜…</div>
+          <p>"I list my icon packs here between client work â€” the checkout and payout flow just gets out of the way."</p>
           <div class="testi-who"><div class="testi-avatar">L</div><div><div class="name">Lena K.</div><div class="role">Freelance illustrator</div></div></div>
         </div>
       </div>
@@ -1052,15 +1054,15 @@
 <section class="page" id="page-portfolio">
   <div class="wrap">
     <div class="marketplace-hero">
-      <div><span class="eyebrow">Selected work</span><h1>See the quality before you order.</h1><p>Explore selected identity, packaging, editorial, and campaign work by the Makers' Row designer. The full live portfolio is on Behance.</p></div>
-      <a class="btn btn-coral" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">Open full Behance portfolio ↗</a>
+      <div><span class="eyebrow">Selected work</span><h1>See the quality before you order.</h1><p>Explore selected identity, packaging, editorial, and campaign work by the Get It Done designer. The full live portfolio is on Behance.</p></div>
+      <a class="btn btn-coral" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">Open full Behance portfolio â†—</a>
     </div>
     <div class="portfolio-grid">
-      <article class="portfolio-card"><div class="portfolio-art"><span>PACKAGING / PRODUCT</span></div><div class="portfolio-copy"><h3>Packaging & product worlds</h3><p>Commercial packaging directions with a clear shelf presence, visual hierarchy, and campaign-ready artwork.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance ↗</a></div></article>
-      <article class="portfolio-card"><div class="portfolio-art art-two"><span>INFOGRAPHICS / EDITORIAL</span></div><div class="portfolio-copy"><h3>Infographics & editorial systems</h3><p>Information made easier to scan through structured layouts, strong typography, and clear visual storytelling.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance ↗</a></div></article>
-      <article class="portfolio-card"><div class="portfolio-art art-three"><span>BROCHURE / CAMPAIGN</span></div><div class="portfolio-copy"><h3>Brochures and campaign creatives</h3><p>Brand-led print and digital work for products, events, businesses, and customer-facing campaigns.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance ↗</a></div></article>
+      <article class="portfolio-card"><div class="portfolio-art"><span>PACKAGING / PRODUCT</span></div><div class="portfolio-copy"><h3>Packaging & product worlds</h3><p>Commercial packaging directions with a clear shelf presence, visual hierarchy, and campaign-ready artwork.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance â†—</a></div></article>
+      <article class="portfolio-card"><div class="portfolio-art art-two"><span>INFOGRAPHICS / EDITORIAL</span></div><div class="portfolio-copy"><h3>Infographics & editorial systems</h3><p>Information made easier to scan through structured layouts, strong typography, and clear visual storytelling.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance â†—</a></div></article>
+      <article class="portfolio-card"><div class="portfolio-art art-three"><span>BROCHURE / CAMPAIGN</span></div><div class="portfolio-copy"><h3>Brochures and campaign creatives</h3><p>Brand-led print and digital work for products, events, businesses, and customer-facing campaigns.</p><a class="portfolio-link" href="https://www.behance.net/vidhugupta199650a4" target="_blank" rel="noopener">View on Behance â†—</a></div></article>
     </div>
-    <div class="bespoke-intro" style="margin-top:36px;"><div class="bespoke-promise"><span class="eyebrow" style="color:var(--coral);">Like what you see?</span><h2>Start with the service that fits your brief.</h2><p>Choose a ready-made service, upload references, and receive the finished product within the day for typical creative requests.</p><button class="btn btn-coral" onclick="showPage('bespoke')">Start a bespoke brief →</button></div><div class="revision-card"><h3>Portfolio-led ordering</h3><p>Use the work above as a visual reference when you tell us what you want. Your references stay attached to the project for the designer and CRM.</p></div></div>
+    <div class="bespoke-intro" style="margin-top:36px;"><div class="bespoke-promise"><span class="eyebrow" style="color:var(--coral);">Like what you see?</span><h2>Start with the service that fits your brief.</h2><p>Choose a ready-made service, upload references, and receive the finished product within the day for typical creative requests.</p><button class="btn btn-coral" onclick="showPage('bespoke')">Start a bespoke brief â†’</button></div><div class="revision-card"><h3>Portfolio-led ordering</h3><p>Use the work above as a visual reference when you tell us what you want. Your references stay attached to the project for the designer and CRM.</p></div></div>
   </div>
 </section>
 
@@ -1070,8 +1072,8 @@
     <div class="marketplace-hero">
       <div>
         <span class="eyebrow">The digital shelf</span>
-        <h1>Find the right starting point for your next idea.</h1>
-        <p>Shop ready-made templates, graphics, stock packs, and AI services from independent creators. Buy it, customize it, or ask a human to finish it.</p>
+        <h1>Shop digital work. Get it done.</h1>
+        <p>Find templates, branding, websites, apps, video, AI services, and more. Buy it ready-made, edit it yourself, or ask a creator to personalize it for you.</p>
       </div>
       <div class="market-stats">
         <div class="market-stat"><strong>16+</strong><span>ready-to-buy listings</span></div>
@@ -1080,11 +1082,11 @@
       </div>
     </div>
     <span class="eyebrow">The marketplace</span>
-    <h2 class="section-title">Templates, graphics &amp; AI services, made by independent creators</h2>
-    <p class="section-sub">Everything here is buyable instantly and editable in your browser before you check out. Prices are set by each seller.</p>
+    <h2 class="section-title">Everything digital, ready when you are</h2>
+    <p class="section-sub">Shop individual services and useful packs from branding to software. See the price, turnaround, deliverables, and next step before you order.</p>
 
     <div class="market-toolbar">
-      <input type="text" class="search-input" id="marketSearch" placeholder="Search for a template, icon set, logo pack…" oninput="renderMarket()">
+      <input type="text" class="search-input" id="marketSearch" placeholder="Search for a template, icon set, logo packâ€¦" oninput="renderMarket()">
       <select class="sort-select" id="marketSort" onchange="renderMarket()">
         <option value="popular">Sort: Most popular</option>
         <option value="price-asc">Sort: Price, low to high</option>
@@ -1113,7 +1115,7 @@
   <div class="wrap">
     <span class="eyebrow">Live editor</span>
     <h2 class="section-title" id="editorTitle">Design canvas</h2>
-    <p class="section-sub" id="editorSub">Add text, shapes, upload your own images, or pull in a stock photo — then add your finished design straight to your cart.</p>
+    <p class="section-sub" id="editorSub">Add text, shapes, upload your own images, or pull in a stock photo â€” then add your finished design straight to your cart.</p>
 
     <div class="editor-shell">
       <div class="panel">
@@ -1128,19 +1130,19 @@
           <div class="editor-note">Your logo and colors are saved for your next design in this browser.</div>
         </div>
         <h4>Add</h4>
-        <button class="tool-btn" onclick="addHeading()">＋ Heading text</button>
-        <button class="tool-btn" onclick="addBody()">＋ Body text</button>
+        <button class="tool-btn" onclick="addHeading()">ï¼‹ Heading text</button>
+        <button class="tool-btn" onclick="addBody()">ï¼‹ Body text</button>
         <div class="row2">
-          <button class="tool-btn" onclick="addShape('rect')">▭ Rect</button>
-          <button class="tool-btn" onclick="addShape('circle')">◯ Circle</button>
-          <button class="tool-btn" onclick="addShape('triangle')">△ Tri</button>
+          <button class="tool-btn" onclick="addShape('rect')">â–­ Rect</button>
+          <button class="tool-btn" onclick="addShape('circle')">â—¯ Circle</button>
+          <button class="tool-btn" onclick="addShape('triangle')">â–³ Tri</button>
         </div>
-        <button class="tool-btn" onclick="document.getElementById('imgUpload').click()">⭱ Upload image</button>
+        <button class="tool-btn" onclick="document.getElementById('imgUpload').click()">â­± Upload image</button>
         <input type="file" id="imgUpload" accept="image/*" style="display:none" onchange="handleUpload(event)">
 
         <h4 style="margin-top:18px;">Find images</h4>
         <input type="text" class="search-input" id="stockQuery" placeholder="e.g. coffee, mountains, office" style="padding:9px 11px;font-size:0.85rem;">
-        <button class="tool-btn" style="margin-top:8px;" onclick="searchStock()">🔍 Search stock photos</button>
+        <button class="tool-btn" style="margin-top:8px;" onclick="searchStock()">ðŸ” Search stock photos</button>
         <div class="stock-results" id="stockResults"></div>
         <div class="editor-note">Stock search here pulls placeholder demo photos. In production this panel calls a licensed image API (Google/Shutterstock-style search) the same way Canva's photo panel does.</div>
       </div>
@@ -1159,35 +1161,35 @@
           <button class="tool-btn" onclick="layerAction('back')">Send back</button>
         </div>
         <div class="row2">
-          <button class="tool-btn" onclick="duplicateObj()">⧉ Duplicate</button>
-          <button class="tool-btn" onclick="deleteObj()">🗑 Delete</button>
+          <button class="tool-btn" onclick="duplicateObj()">â§‰ Duplicate</button>
+          <button class="tool-btn" onclick="deleteObj()">ðŸ—‘ Delete</button>
         </div>
         <h4 style="margin-top:18px;">Arrange</h4>
         <div class="alignment-grid">
-          <button class="tool-btn" type="button" onclick="alignObject('left')">← Left</button><button class="tool-btn" type="button" onclick="alignObject('center')">↔ Center</button><button class="tool-btn" type="button" onclick="alignObject('right')">Right →</button>
-          <button class="tool-btn" type="button" onclick="alignObject('top')">↑ Top</button><button class="tool-btn" type="button" onclick="alignObject('middle')">↕ Middle</button><button class="tool-btn" type="button" onclick="alignObject('bottom')">Bottom ↓</button>
+          <button class="tool-btn" type="button" onclick="alignObject('left')">â† Left</button><button class="tool-btn" type="button" onclick="alignObject('center')">â†” Center</button><button class="tool-btn" type="button" onclick="alignObject('right')">Right â†’</button>
+          <button class="tool-btn" type="button" onclick="alignObject('top')">â†‘ Top</button><button class="tool-btn" type="button" onclick="alignObject('middle')">â†• Middle</button><button class="tool-btn" type="button" onclick="alignObject('bottom')">Bottom â†“</button>
         </div>
-        <div class="row2"><button class="tool-btn" type="button" onclick="rotateObject(-15)">↶ Rotate</button><button class="tool-btn" type="button" onclick="rotateObject(15)">↷ Rotate</button></div>
+        <div class="row2"><button class="tool-btn" type="button" onclick="rotateObject(-15)">â†¶ Rotate</button><button class="tool-btn" type="button" onclick="rotateObject(15)">â†· Rotate</button></div>
 
         <h4 style="margin-top:18px;">Canvas</h4>
         <div class="field"><label>Background color</label><input type="color" id="bgColor" value="#ffffff" oninput="applyBg(this.value)"></div>
         <div class="row2">
-          <button class="tool-btn" onclick="historyUndo()">↺ Undo</button>
-          <button class="tool-btn" onclick="historyRedo()">↻ Redo</button>
+          <button class="tool-btn" onclick="historyUndo()">â†º Undo</button>
+          <button class="tool-btn" onclick="historyRedo()">â†» Redo</button>
         </div>
         <div class="row2">
-          <button class="tool-btn" onclick="zoomCanvas(0.85)">－ Zoom</button>
-          <button class="tool-btn" onclick="zoomCanvas(1.15)">＋ Zoom</button>
+          <button class="tool-btn" onclick="zoomCanvas(0.85)">ï¼ Zoom</button>
+          <button class="tool-btn" onclick="zoomCanvas(1.15)">ï¼‹ Zoom</button>
         </div>
 
         <h4 style="margin-top:18px;">Finish up</h4>
-        <button class="tool-btn" onclick="downloadPNG()">⬇ Download PNG</button>
+        <button class="tool-btn" onclick="downloadPNG()">â¬‡ Download PNG</button>
         <div class="field" style="margin-top:10px;">
           <label id="editorPriceLabel">Price for this design (USD)</label>
           <input type="number" id="editorPrice" value="8" min="0" step="0.5">
         </div>
         <button class="btn btn-cobalt" style="width:100%;justify-content:center;" onclick="addEditorToCart()">Add design to cart</button>
-        <div class="editor-note">Prefer a person to finish this for you instead? <a href="#" onclick="showPage('bespoke');return false;" style="color:var(--cobalt-deep);font-weight:600;">Send it to Bespoke →</a></div>
+        <div class="editor-note">Prefer a person to finish this for you instead? <a href="#" onclick="showPage('bespoke');return false;" style="color:var(--cobalt-deep);font-weight:600;">Send it to Bespoke â†’</a></div>
       </div>
     </div>
   </div>
@@ -1199,8 +1201,8 @@
     <div class="bespoke-intro">
       <div class="bespoke-promise">
         <span class="eyebrow" style="color:var(--coral);">Bespoke creative desk</span>
-        <h1>Choose the work. Show us the vibe. We’ll shape it with you.</h1>
-        <p>Tell us what to make, pick a direction, and attach references. You’ll review the draft and can say yes or request changes. Two revision rounds are included; a third is charged only after you approve the quote.</p>
+        <h1>Choose the work. Show us the vibe. We'll shape it with you.</h1>
+        <p>Tell us what to make, pick a direction, and attach references. You'll review the draft and can say yes or request changes. Two revision rounds are included; a third is charged only after you approve the quote.</p>
         <div class="promise-points">
           <div class="promise-point"><span>01</span>Pick your service</div>
           <div class="promise-point"><span>02</span>Choose your style</div>
@@ -1212,7 +1214,7 @@
         <div><h3>Your review loop</h3><p>We keep the work moving without making you pay for normal collaboration.</p></div>
         <div class="revision-steps">
           <div class="revision-step"><b>1</b><span>First draft delivered to your email.</span></div>
-          <div class="revision-step"><b>2</b><span>Say “yes” or request revision round one.</span></div>
+          <div class="revision-step"><b>2</b><span>Say â€œyesâ€ or request revision round one.</span></div>
           <div class="revision-step"><b>3</b><span>Revision round two is included. A third is optional and quoted first.</span></div>
         </div>
       </div>
@@ -1223,21 +1225,21 @@
         <div class="studio-logo">MR</div>
         <div class="studio-title-row">
           <div>
-            <h2>Makers' Row Studio</h2>
+            <h2>Get It Done Studio</h2>
             <div class="studio-meta">
-              <span class="pill green">★ 4.9 · 2.3k orders</span>
-              <span class="pill">⚡ Finished within the day</span>
-              <span>Digital services · Email delivery</span>
+              <span class="pill green">â˜… 4.9  -  2.3k orders</span>
+              <span class="pill">âš¡ Finished within the day</span>
+              <span>Digital services  -  Email delivery</span>
             </div>
           </div>
           <button class="btn btn-sm btn-ghost" onclick="document.getElementById('svcSearch').focus()">Search menu</button>
         </div>
-        <div class="studio-offers">🎉 Your brief includes style preferences, reference uploads, two revision rounds, and a clear quote before any third revision.</div>
+        <div class="studio-offers">ðŸŽ‰ Your brief includes style preferences, reference uploads, two revision rounds, and a clear quote before any third revision.</div>
       </div>
     </div>
 
     <div class="svc-toolbar">
-      <input type="text" class="svc-search" id="svcSearch" placeholder="Search for logo, pitch deck, social post…" oninput="renderServices()">
+      <input type="text" class="svc-search" id="svcSearch" placeholder="Search for logo, pitch deck, social postâ€¦" oninput="renderServices()">
       <div class="svc-filters">
         <button class="svc-filter active" data-filter="all" onclick="setSvcFilter('all')">All</button>
         <button class="svc-filter" data-filter="express" onclick="setSvcFilter('express')">Express</button>
@@ -1260,7 +1262,7 @@
     <span class="sc-count" id="stickyCount">0 items</span>
         <span class="sc-total" id="stickyTotal">$0.00</span>
   </div>
-  <button class="sc-go" type="button">View cart →</button>
+  <button class="sc-go" type="button">View cart â†’</button>
 </div>
 
 <div class="svc-modal-backdrop" id="svcModal" onclick="if(event.target===this)closeSvcModal()">
@@ -1268,7 +1270,7 @@
     <h3 id="svcModalTitle">Add notes</h3>
     <p class="sheet-sub" id="svcModalSub">Tell the designer what you need. You can add more services after this.</p>
     <div class="field"><label for="svcStyle">What kind of creative feels right?</label><select id="svcStyle"><option value="Clean and minimal">Clean and minimal</option><option value="Bold and expressive">Bold and expressive</option><option value="Warm and organic">Warm and organic</option><option value="Editorial and premium">Editorial and premium</option><option value="Playful and colorful">Playful and colorful</option><option value="Match my references">Match my references</option></select></div>
-    <div class="field"><label for="svcNotes">Brief / notes</label><textarea id="svcNotes" rows="3" placeholder="What should we make, who is it for, words to include, size, deadline…"></textarea></div>
+    <div class="field"><label for="svcNotes">Brief / notes</label><textarea id="svcNotes" rows="3" placeholder="What should we make, who is it for, words to include, size, deadlineâ€¦"></textarea></div>
     <div class="field"><label for="svcReferences">Upload references</label><input type="file" id="svcReferences" accept="image/*,.pdf,.svg" multiple onchange="handleSvcReferences(event)"><div class="reference-list" id="svcReferenceList">Add screenshots, links exported as PDFs, moodboards, or examples you like.</div></div>
     <div class="field"><label for="svcEmail">Delivery email</label><input type="email" id="svcEmail" placeholder="you@email.com" required></div>
     <div class="field"><label>Phone (optional)</label><input type="tel" id="svcPhone" placeholder="For clarifications"></div>
@@ -1281,25 +1283,25 @@
 
 <div class="auth-backdrop" id="authModal" onclick="if(event.target===this)closeAuth()">
   <div class="auth-sheet" role="dialog" aria-modal="true" aria-labelledby="authTitle">
-    <button class="auth-close" type="button" aria-label="Close account dialog" onclick="closeAuth()">×</button>
-    <span class="eyebrow">Makers' Row account</span>
+    <button class="auth-close" type="button" aria-label="Close account dialog" onclick="closeAuth()">Ã—</button>
+    <span class="eyebrow">Get It Done account</span>
     <h3 id="authTitle">Welcome back</h3>
     <p class="account-muted" id="authSub">Sign in to keep your orders, saved items, and creative briefs together.</p>
     <div class="auth-tabs"><button id="authLoginTab" class="active" type="button" onclick="switchAuth('login')">Log in</button><button id="authSignupTab" type="button" onclick="switchAuth('signup')">Sign up</button></div>
     <form id="authForm" onsubmit="submitAuth(event)">
       <div class="field" id="authNameField" style="display:none;"><label for="authName">Full name</label><input type="text" id="authName" placeholder="Your name"></div>
-      <div class="field role-field" id="authRoleField" style="display:none;"><label for="authRole">I’m joining as</label><select id="authRole"><option value="buyer">Buyer — find and order creative work</option><option value="creator">Creator — upload, sell, and manage projects</option></select></div>
+      <div class="field role-field" id="authRoleField" style="display:none;"><label for="authRole">I'm joining as</label><select id="authRole"><option value="buyer">Buyer â€” find and order creative work</option><option value="creator">Creator â€” upload, sell, and manage projects</option></select></div>
       <div class="field"><label for="authEmail">Email</label><input type="email" id="authEmail" placeholder="you@email.com" required></div>
       <div class="field"><label for="authPassword">Password</label><input type="password" id="authPassword" placeholder="At least 6 characters" minlength="6" required></div>
       <button class="btn btn-cobalt auth-submit" id="authSubmit" type="submit">Log in</button>
     </form>
-    <p class="auth-note">Your account profile, orders, and project activity are saved to Makers' Row. Your password is handled by secure Supabase Auth and is never stored in this browser.</p>
+    <p class="auth-note">Your account profile, orders, and project activity are saved to Get It Done. Your password is handled by secure Supabase Auth and is never stored in this browser.</p>
   </div>
 </div>
 
 <div class="auth-backdrop" id="paymentModal" onclick="if(event.target===this)closePayment()">
   <div class="auth-sheet payment-sheet" role="dialog" aria-modal="true" aria-labelledby="paymentTitle">
-    <button class="auth-close" type="button" aria-label="Close payment dialog" onclick="closePayment()">×</button>
+    <button class="auth-close" type="button" aria-label="Close payment dialog" onclick="closePayment()">Ã—</button>
     <span class="eyebrow">Secure checkout</span>
     <h3 id="paymentTitle">Complete your order</h3>
     <p class="account-muted">Your files and Bespoke delivery details will be connected to <strong id="paymentEmail"></strong>.</p>
@@ -1312,20 +1314,20 @@
             <div id="manualPaymentDetails" class="manual-payment-details">Loading payment details...</div>
             <div class="field"><label for="paymentReference">UPI transaction ID / UTR *</label><input id="paymentReference" maxlength="120" placeholder="e.g. 412345678901"></div>
             <div class="field"><label for="paymentScreenshot">Payment screenshot (optional)</label><input id="paymentScreenshot" type="file" accept="image/png,image/jpeg,image/webp"></div>
-            <button class="btn btn-coral auth-submit" id="manualPayButton" type="submit">I have paid <span id="manualButtonTotal">₹0</span></button>
+            <button class="btn btn-coral auth-submit" id="manualPayButton" type="submit">I have paid <span id="manualButtonTotal">INR 0</span></button>
             <p class="payment-disclaimer">Payment is confirmed manually after we match your UTR. Keep your UPI receipt until confirmation.</p>
           </div>
           <div class="payment-methods"><label><input type="radio" name="paymentMethod" value="manual" checked onchange="togglePaymentMethod(this.value)"> UPI / bank transfer</label><label><input type="radio" name="paymentMethod" value="cashfree" onchange="togglePaymentMethod(this.value)"> Card / automatic checkout</label></div>
           <h4 id="cashfreeHeading">Pay securely with Cashfree</h4>
-          <p class="account-muted">You’ll be redirected to Cashfree to choose UPI, cards, net banking, or other available methods. Your order is saved before payment starts.</p>
-          <button class="btn btn-coral auth-submit" id="cashfreePayButton" type="submit">Continue to Cashfree <span id="paymentButtonTotal">₹0</span></button>
+          <p class="account-muted">You'll be redirected to Cashfree to choose UPI, cards, net banking, or other available methods. Your order is saved before payment starts.</p>
+          <button class="btn btn-coral auth-submit" id="cashfreePayButton" type="submit">Continue to Cashfree <span id="paymentButtonTotal">INR 0</span></button>
           <p class="payment-disclaimer">Cashfree checkout is currently processed in INR. The final payment confirmation comes from the verified Cashfree webhook.</p>
         </div>
         <aside class="payment-summary">
           <h4>Order summary</h4>
           <div class="payment-items" id="paymentItems"></div>
           <div class="payment-total"><span>Total</span><span id="paymentTotal">$0.00</span></div>
-          <div class="payment-trust">✓ <span>Account order tracking<br>Digital delivery and Bespoke status updates</span></div>
+          <div class="payment-trust">âœ“ <span>Account order tracking<br>Digital delivery and Bespoke status updates</span></div>
         </aside>
       </div>
     </form>
@@ -1357,8 +1359,8 @@
             <option value="Prompt Packs">Prompt Packs</option>
           </select>
         </div>
-        <div class="field"><label id="slPriceLabel">Price (USD) · min $2.50 *</label><input type="number" id="slPrice" min="2.5" step="0.5" value="10" required></div>
-        <div class="field"><label>Short description</label><textarea id="slDesc" rows="3" placeholder="What's included, file formats, sizes…"></textarea></div>
+        <div class="field"><label id="slPriceLabel">Price (USD)  -  min $2.50 *</label><input type="number" id="slPrice" min="2.5" step="0.5" value="10" required></div>
+        <div class="field"><label>Short description</label><textarea id="slDesc" rows="3" placeholder="What's included, file formats, sizesâ€¦"></textarea></div>
         <div class="field">
           <label>Preview image / file</label>
           <div class="file-drop" id="sellDrop" onclick="document.getElementById('slFile').click()">Click to upload a preview image</div>
@@ -1411,8 +1413,8 @@
 <section class="page" id="page-account">
   <div class="wrap">
     <span class="eyebrow">Your account</span>
-    <h2 class="section-title" id="accountGreeting">Welcome to your Makers' Row</h2>
-    <p class="section-sub">Track orders, save ideas, manage your profile, and return to anything you’re still shaping.</p>
+    <h2 class="section-title" id="accountGreeting">Welcome to Get It Done</h2>
+    <p class="section-sub">Track orders, save ideas, manage your profile, and return to anything you're still shaping.</p>
     <div class="account-shell">
       <aside class="account-side">
         <div class="account-profile"><span class="account-avatar" id="dashboardAvatar">?</span><div><strong id="dashboardName">Guest</strong><span id="dashboardEmail">Sign in to sync your work</span></div></div>
@@ -1431,17 +1433,18 @@
 <!-- ============ ABOUT ============ -->
 <section class="page" id="page-about">
   <div class="wrap">
-    <span class="eyebrow">About Makers' Row</span>
-    <h2 class="section-title">One marketplace, three ways to get design work done</h2>
+    <span class="eyebrow">About Get It Done</span>
+    <h2 class="section-title">The creative marketplace for getting digital work done</h2>
+    <div class="about-block" style="background:#12141A;color:#FBFCFE;border-radius:16px;border:0;"><h3 style="color:#FBFCFE;margin-bottom:8px;">Shop, edit, or get personalized work delivered quickly.</h3><p style="color:#D6DCE8;">Get It Done brings digital services and creative products into one simple marketplace. Find what you need, add your references, and let the right creator take it from brief to finished file.</p></div>
 
     <div class="about-block">
-      <p>Makers' Row exists because "make it yourself" and "hire someone" shouldn't be two completely different products. Most people need something in between: a good starting point they can bend to their needs, made by someone who's good at this, at a price that doesn't require a full agency retainer.</p>
-      <p>So the marketplace works three ways. You can buy a finished template, graphic or AI-service pack outright and download it immediately. You can open anything — bought or not yet bought — in the built-in editor and rework it yourself: swap text, recolor, drop in a new photo, resize, then add your version to the cart. Or, if you'd rather not touch a single layer, you can describe what you need on the Bespoke tab and have a designer build it around your brief, delivered to your email within the day.</p>
+      <p>Get It Done exists for the space between doing everything yourself and hiring a large agency. Shop a ready-made digital product, edit it quickly, or ask a creative professional to make something personalized for you.</p>
+      <p>Get It Done works three ways. Buy a finished template or asset, edit it in the browser, or ask a creator to make something personalized. Add references, choose your direction, review the work, and receive finished files in your account and by email.</p>
     </div>
 
     <div class="about-block">
       <h3 style="margin-bottom:12px;">For buyers</h3>
-      <p>Browsing doesn't require an account. Filter by Templates, Graphics &amp; Stock, or AI Services, or search directly. Every listing shows the seller, the price, and whether it's ready to download or worth customizing first. Add as many items as you like — off-the-shelf purchases, edited designs, and bespoke requests all sit in the same cart, and checkout is a single step.</p>
+      <p>Browsing doesn't require an account. Filter by Templates, Graphics &amp; Stock, or AI Services, or search directly. Every listing shows the seller, the price, and whether it's ready to download or worth customizing first. Add as many items as you like â€” off-the-shelf purchases, edited designs, and bespoke requests all sit in the same cart, and checkout is a single step.</p>
     </div>
 
     <div class="about-block">
@@ -1451,7 +1454,7 @@
 
     <div class="about-block">
       <h3 style="margin-bottom:12px;">The editor</h3>
-      <p>The in-browser editor covers the core of what you'd expect from a design tool: text and headings, shapes, your own uploaded images, a stock-photo search panel, color and font controls, layering, undo/redo, zoom, and a one-click PNG export. It's built for quick, practical edits — not for replacing a full design suite, but for getting a template from "close enough" to "exactly right" without leaving the page.</p>
+      <p>The in-browser editor covers the core of what you'd expect from a design tool: text and headings, shapes, your own uploaded images, a stock-photo search panel, color and font controls, layering, undo/redo, zoom, and a one-click PNG export. It's built for quick, practical edits â€” not for replacing a full design suite, but for getting a template from "close enough" to "exactly right" without leaving the page.</p>
     </div>
 
     <div class="about-block">
@@ -1462,7 +1465,7 @@
       </div>
       <div class="faq-item">
         <h4>Can I edit something before I buy it?</h4>
-        <p>Yes. Opening a marketplace listing in the editor doesn't charge you — you only pay when you add the finished result to your cart and check out.</p>
+        <p>Yes. Opening a marketplace listing in the editor doesn't charge you â€” you only pay when you add the finished result to your cart and check out.</p>
       </div>
       <div class="faq-item">
         <h4>Where do the stock photos come from?</h4>
@@ -1480,8 +1483,8 @@
 
 <footer>
   <div class="wrap">
-    <div>© 2026 Makers' Row — a marketplace for design work, done your way.</div>
-    <div>Home · Marketplace · Editor · Bespoke · Sell · About</div>
+    <div>&copy; 2026 Get It Done - a creative marketplace for fast, personalized digital work.</div>
+    <div>Home  -  Marketplace  -  Editor  -  Bespoke  -  Sell  -  About</div>
   </div>
 </footer>
 
@@ -1555,7 +1558,7 @@ function canvaDraftStatus(line){
 
 function formatMoney(usd){
   const value=Number(usd)||0;
-  if(currency==='INR') return '₹'+Math.round(value*USD_TO_INR).toLocaleString('en-IN');
+  if(currency==='INR') return 'INR '+Math.round(value*USD_TO_INR).toLocaleString('en-IN');
   return '$'+value.toFixed(2);
 }
 function toUSD(displayValue){
@@ -1601,7 +1604,7 @@ function updateListingPriceField(usdValue){
   input.step=currency==='INR'?'1':'0.5';
   const display=Math.max(min,currency==='INR'?usdValue*USD_TO_INR:usdValue);
   input.value=currency==='INR'?Math.round(display):display.toFixed(2);
-  label.textContent=currency==='INR'?'Price (INR) · min ₹150 *':'Price (USD) · min $2.50 *';
+  label.textContent=currency==='INR'?'Price (INR)  -  min INR 150 *':'Price (USD)  -  min $2.50 *';
 }
 
 function persistMarketplace(){
@@ -1719,13 +1722,13 @@ async function submitAuth(event){
     const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Could not create account.');
     currentUser={...(payload.account||{}),name,email,role,session:payload.session||null,joined:new Date().toISOString()};
     localStorage.setItem(ACCOUNT_PROFILE_KEY,JSON.stringify(currentUser));
-    toast('Account created — welcome to Makers\' Row');
+    toast('Account created - welcome to Get It Done');
   }else{
     const response=await fetch('/api/auth',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'login',email,password})});
     const payload=await response.json(); if(!response.ok) throw new Error(payload.error||'Email or password is incorrect.');
     const profile=payload.account||{email};
-    if(!profile || profile.email!==email){ toast('No account found for this email — try Sign up'); return; }
-    currentUser={...(payload.account||{}),name:payload.account?.name||payload.user?.user_metadata?.name||'Makers\' Row member',email,role:payload.account?.role||payload.user?.user_metadata?.role||'buyer',session:payload.session||null};
+    if(!profile || profile.email!==email){ toast('No account found for this email â€” try Sign up'); return; }
+    currentUser={...(payload.account||{}),name:payload.account?.name||payload.user?.user_metadata?.name||'Get It Done member',email,role:payload.account?.role||payload.user?.user_metadata?.role||'buyer',session:payload.session||null};
     localStorage.setItem(ACCOUNT_PROFILE_KEY,JSON.stringify(currentUser));
     toast('Welcome back, '+(currentUser.name||'there'));
   }
@@ -1751,9 +1754,9 @@ function setAccountPanel(panel){
 }
 function renderAccount(){
   if(!currentUser) return;
-  const name=currentUser.name||'Makers\' Row member';
+  const name=currentUser.name||'Get It Done member';
   const creator=currentUser.role==='creator';
-  document.getElementById('accountGreeting').textContent=creator?'Creator studio · '+name.split(' ')[0]:'Welcome back, '+name.split(' ')[0];
+  document.getElementById('accountGreeting').textContent=creator?'Creator studio  -  '+name.split(' ')[0]:'Welcome back, '+name.split(' ')[0];
   document.getElementById('dashboardName').textContent=name;
   document.getElementById('dashboardEmail').textContent=currentUser.email;
   document.getElementById('dashboardAvatar').textContent=initials(name);
@@ -1780,7 +1783,7 @@ function renderAccountPanel(){
   }
   if(activeAccountPanel==='saved'){
     const saved=marketplace.filter(item=>savedItems.includes(item.id));
-    panel.innerHTML='<h3>Saved items</h3><p class="account-muted">Keep promising creative ideas here until you are ready to buy or customize.</p>'+(saved.length?'<div class="account-orders">'+saved.map(item=>`<div class="account-order"><div><strong>${item.title}</strong><span>${item.seller} · ${formatMoney(item.price)}</span></div><button class="btn btn-sm btn-solid" onclick="customize('${item.id}')">Customize</button></div>`).join('')+'</div>':'<div class="account-empty">You have not saved anything yet. Browse the Marketplace and tap Save on an item you like.</div>');
+    panel.innerHTML='<h3>Saved items</h3><p class="account-muted">Keep promising creative ideas here until you are ready to buy or customize.</p>'+(saved.length?'<div class="account-orders">'+saved.map(item=>`<div class="account-order"><div><strong>${item.title}</strong><span>${item.seller}  -  ${formatMoney(item.price)}</span></div><button class="btn btn-sm btn-solid" onclick="customize('${item.id}')">Customize</button></div>`).join('')+'</div>':'<div class="account-empty">You have not saved anything yet. Browse the Marketplace and tap Save on an item you like.</div>');
     return;
   }
   panel.innerHTML=`<h3>Your creative shelf</h3><p class="account-muted">Keep your shopping, downloads, and Bespoke work organized in one account.</p><div class="account-stats"><div class="account-stat"><strong>${totalOrders}</strong><span>Orders</span></div><div class="account-stat"><strong>${savedItems.length}</strong><span>Saved items</span></div><div class="account-stat"><strong>${formatMoney(totalSpent)}</strong><span>Total spend</span></div></div><h4 style="margin:18px 0 0;">Recent orders</h4>${renderOrderHistory(3)}${renderBuyerProjects(3)}`;
@@ -1788,12 +1791,12 @@ function renderAccountPanel(){
 }
 function normalizeRemoteOrder(order){
   const paymentStatus=order.payment_status||'pending';
-  return {id:order.order_number,date:new Date(order.created_at).toLocaleDateString(),items:(order.items||[]).reduce((sum,item)=>sum+Number(item.qty||1),0),total:Number(order.total||0),email:order.buyer_email,status:order.status,paymentStatus,paymentReference:order.payment_reference,emailStatus:paymentStatus==='submitted'?'Payment proof submitted — awaiting admin confirmation':paymentStatus==='paid'?'Payment confirmed':order.status==='in_progress'?'Order in progress':'Payment pending',deliverables:(order.items||[]).map(item=>({...item,downloadable:item.kind!=='bespoke'}))};
+  return {id:order.order_number,date:new Date(order.created_at).toLocaleDateString(),items:(order.items||[]).reduce((sum,item)=>sum+Number(item.qty||1),0),total:Number(order.total||0),email:order.buyer_email,status:order.status,paymentStatus,paymentReference:order.payment_reference,emailStatus:paymentStatus==='submitted'?'Payment proof submitted â€” awaiting admin confirmation':paymentStatus==='paid'?'Payment confirmed':order.status==='in_progress'?'Order in progress':'Payment pending',deliverables:(order.items||[]).map(item=>({...item,downloadable:item.kind!=='bespoke'}))};
 }
 function renderBuyerProjects(limit){
   const projects=typeof limit==='number'?buyerProjects.slice(0,limit):buyerProjects;
   if(!projects.length) return '';
-  return '<h4 style="margin:22px 0 0;">Bespoke projects</h4><div class="account-orders">'+projects.map(project=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;"><div><strong>${escapeHtml(project.service_title)}</strong><span>${new Date(project.updated_at||project.created_at).toLocaleDateString()} · ${escapeHtml(project.buyer_email)}</span></div><span class="creator-status">${escapeHtml((project.status||'new').replaceAll('_',' '))}</span></div><p style="white-space:pre-wrap;margin:10px 0;color:var(--ink-soft);">${escapeHtml(project.brief)}</p><div class="account-muted">Revisions: ${project.revision_count||0}/2 · ${project.project_messages?.length||0} updates · ${project.project_files?.length||0} files</div>${(project.project_messages||[]).slice(-2).map(message=>`<div class="editor-note" style="margin-top:8px;"><strong>${escapeHtml(message.sender_name||message.sender_role)}:</strong> ${escapeHtml(message.message)}</div>`).join('')}${(project.project_files||[]).length?'<div class="order-files">'+project.project_files.map(file=>`<div class="order-file"><span>▣ ${escapeHtml(file.file_name)}</span><a class="btn btn-sm btn-solid" href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener">Open file</a></div>`).join('')+'</div>':''}</div>`).join('')+'</div>';
+  return '<h4 style="margin:22px 0 0;">Bespoke projects</h4><div class="account-orders">'+projects.map(project=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;"><div><strong>${escapeHtml(project.service_title)}</strong><span>${new Date(project.updated_at||project.created_at).toLocaleDateString()}  -  ${escapeHtml(project.buyer_email)}</span></div><span class="creator-status">${escapeHtml((project.status||'new').replaceAll('_',' '))}</span></div><p style="white-space:pre-wrap;margin:10px 0;color:var(--ink-soft);">${escapeHtml(project.brief)}</p><div class="account-muted">Revisions: ${project.revision_count||0}/2  -  ${project.project_messages?.length||0} updates  -  ${project.project_files?.length||0} files</div>${(project.project_messages||[]).slice(-2).map(message=>`<div class="editor-note" style="margin-top:8px;"><strong>${escapeHtml(message.sender_name||message.sender_role)}:</strong> ${escapeHtml(message.message)}</div>`).join('')}${(project.project_files||[]).length?'<div class="order-files">'+project.project_files.map(file=>`<div class="order-file"><span>â–£ ${escapeHtml(file.file_name)}</span><a class="btn btn-sm btn-solid" href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener">Open file</a></div>`).join('')+'</div>':''}</div>`).join('')+'</div>';
 }
 function creatorListings(){
   return marketplace.filter(item=>item.userCreated && (!item.creatorEmail || item.creatorEmail===currentUser?.email));
@@ -1805,19 +1808,19 @@ function renderCreatorPanel(){
   const earnings=listings.reduce((sum,item)=>sum+(item.sales||0)*item.price*.8,0);
   const projects=listings.filter(item=>item.listingStatus!=='Live').length;
   if(activeAccountPanel==='crm-projects'){
-    panel.innerHTML='<h3>Client CRM</h3><p class="account-muted">Manage briefs, replies, revisions, and deliverables from one place.</p><div id="crmProjects"><div class="account-empty">Loading client projects…</div></div>';
+    panel.innerHTML='<h3>Client CRM</h3><p class="account-muted">Manage briefs, replies, revisions, and deliverables from one place.</p><div id="crmProjects"><div class="account-empty">Loading client projectsâ€¦</div></div>';
     loadCrmProjects();
     return;
   }
   if(activeAccountPanel==='creator-listings'){
-    panel.innerHTML='<h3>My listings</h3><p class="account-muted">Upload work, watch its status, and see how buyers are finding it.</p><button class="btn btn-coral" type="button" onclick="showPage(\'sell\')">＋ Upload new work</button>'+renderCreatorListings(listings);
+    panel.innerHTML='<h3>My listings</h3><p class="account-muted">Upload work, watch its status, and see how buyers are finding it.</p><button class="btn btn-coral" type="button" onclick="showPage(\'sell\')">ï¼‹ Upload new work</button>'+renderCreatorListings(listings);
     return;
   }
   if(activeAccountPanel==='creator-projects'){
     panel.innerHTML='<h3>Projects &amp; activity</h3><p class="account-muted">A simple view of what is happening with your work after you publish it.</p><div class="revision-steps" style="margin:18px 0;"><div class="revision-step"><b>1</b><span><strong>Uploaded</strong><br>We check the preview, title, and category.</span></div><div class="revision-step"><b>2</b><span><strong>Live in marketplace</strong><br>Buyers can discover, save, buy, or customize your work.</span></div><div class="revision-step"><b>3</b><span><strong>Order received</strong><br>Track sales here and deliver Bespoke work within the day.</span></div></div>'+renderCreatorListings(listings);
     return;
   }
-  panel.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;"><div><span class="creator-badge">Creator account</span><h3 style="margin-top:8px;">Your studio overview</h3><p class="account-muted">Publish your work, understand buyer activity, and grow your digital shelf.</p></div><button class="btn btn-coral" type="button" onclick="showPage('sell')">＋ Upload new work</button></div><div class="account-stats"><div class="account-stat"><strong>${listings.length}</strong><span>Live listings</span></div><div class="account-stat"><strong>${sales}</strong><span>Total sales</span></div><div class="account-stat"><strong>${formatMoney(earnings)}</strong><span>Creator earnings*</span></div></div><p class="account-muted" style="font-size:.7rem;">*Demo estimate after a 20% marketplace fee. Real payouts connect after payment and seller onboarding.</p><h4 style="margin:18px 0 0;">Latest activity</h4>${renderCreatorListings(listings.slice(0,3))}`;
+  panel.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;"><div><span class="creator-badge">Creator account</span><h3 style="margin-top:8px;">Your studio overview</h3><p class="account-muted">Publish your work, understand buyer activity, and grow your digital shelf.</p></div><button class="btn btn-coral" type="button" onclick="showPage('sell')">ï¼‹ Upload new work</button></div><div class="account-stats"><div class="account-stat"><strong>${listings.length}</strong><span>Live listings</span></div><div class="account-stat"><strong>${sales}</strong><span>Total sales</span></div><div class="account-stat"><strong>${formatMoney(earnings)}</strong><span>Creator earnings*</span></div></div><p class="account-muted" style="font-size:.7rem;">*Demo estimate after a 20% marketplace fee. Real payouts connect after payment and seller onboarding.</p><h4 style="margin:18px 0 0;">Latest activity</h4>${renderCreatorListings(listings.slice(0,3))}`;
 }
 
 let crmProjects=[];
@@ -1843,11 +1846,11 @@ function renderCrmProjects(){
   const awaiting=crmProjects.filter(project=>['awaiting_review','revision_requested'].includes(project.status)).length;
   const delivered=crmProjects.filter(project=>['delivered','closed'].includes(project.status)).length;
   const clientCount=new Set([...crmProjects.map(project=>project.buyer_email),...crmOrders.map(order=>order.buyer_email)].filter(Boolean)).size;
-  const orderRows=crmOrders.slice(0,8).map(order=>`<div class="creator-row"><div><strong>${escapeHtml(order.order_number)}</strong><span>${escapeHtml(order.buyer_name||order.buyer_email)} · ${new Date(order.created_at).toLocaleDateString()}</span></div><span class="creator-status">${escapeHtml(order.status||'received')}</span><span>${(order.items||[]).length} items</span><span>${formatMoney(Number(order.total||0))}</span></div>`).join('');
+  const orderRows=crmOrders.slice(0,8).map(order=>`<div class="creator-row"><div><strong>${escapeHtml(order.order_number)}</strong><span>${escapeHtml(order.buyer_name||order.buyer_email)}  -  ${new Date(order.created_at).toLocaleDateString()}</span></div><span class="creator-status">${escapeHtml(order.status||'received')}</span><span>${(order.items||[]).length} items</span><span>${formatMoney(Number(order.total||0))}</span></div>`).join('');
   const projectRows=crmProjects.length?'<div class="account-orders">'+crmProjects.map(project=>{
     const files=project.project_files||[];
     const previews=files.map(file=>{ const isImage=/\.(png|jpe?g|gif|webp|svg)$/i.test(file.file_name||''); return `<div class="crm-file">${isImage?`<a href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener"><img src="${escapeHtml(file.file_url)}" alt="${escapeHtml(file.file_name)}"></a>`:'<span class="crm-file-icon">FILE</span>'}<div><strong>${escapeHtml(file.file_name)}</strong><a href="${escapeHtml(file.file_url)}" target="_blank" rel="noopener">Open preview</a></div></div>`; }).join('');
-    return `<div class="account-order crm-card" style="display:block;"><div class="crm-card-head"><div><span class="creator-badge">${escapeHtml(project.status||'new')}</span><h4>${escapeHtml(project.service_title)}</h4><span>${escapeHtml(project.buyer_name||'Unnamed client')} · <a href="mailto:${escapeHtml(project.buyer_email)}">${escapeHtml(project.buyer_email)}</a>${project.phone?' · '+escapeHtml(project.phone):''}</span></div><select class="crm-status" onchange="updateCrmProject('${project.id}',this.value)"><option value="new" ${project.status==='new'?'selected':''}>New</option><option value="in_progress" ${project.status==='in_progress'?'selected':''}>In progress</option><option value="awaiting_review" ${project.status==='awaiting_review'?'selected':''}>Awaiting review</option><option value="revision_requested" ${project.status==='revision_requested'?'selected':''}>Revision requested</option><option value="approved" ${project.status==='approved'?'selected':''}>Approved</option><option value="delivered" ${project.status==='delivered'?'selected':''}>Delivered</option><option value="closed" ${project.status==='closed'?'selected':''}>Closed</option></select></div><div class="crm-grid"><div><h5>Brief</h5><p style="white-space:pre-wrap;">${escapeHtml(project.brief)}</p><p class="account-muted"><strong>Style:</strong> ${escapeHtml(project.style||'Not specified')}<br><strong>References:</strong> ${(project.reference_names||[]).map(escapeHtml).join(', ')||'None'}<br><strong>Revisions:</strong> ${project.revision_count||0}/2</p></div><div><h5>Conversation</h5>${(project.project_messages||[]).slice(-3).map(message=>`<div class="editor-note"><strong>${escapeHtml(message.sender_name||message.sender_role)}:</strong> ${escapeHtml(message.message)}</div>`).join('')||'<p class="account-muted">No messages yet.</p>'}</div></div>${previews?`<h5>Uploaded results</h5><div class="crm-files">${previews}</div>`:''}<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;"><button class="btn btn-sm btn-solid" onclick="replyToCrmProject('${project.id}')">Reply to client</button><button class="btn btn-sm btn-ghost" onclick="markCrmRevision('${project.id}')">Add revision</button><label class="btn btn-sm btn-ghost">Upload result<input type="file" hidden onchange="uploadCrmFile('${project.id}',this)"></label></div></div>`;
+    return `<div class="account-order crm-card" style="display:block;"><div class="crm-card-head"><div><span class="creator-badge">${escapeHtml(project.status||'new')}</span><h4>${escapeHtml(project.service_title)}</h4><span>${escapeHtml(project.buyer_name||'Unnamed client')}  -  <a href="mailto:${escapeHtml(project.buyer_email)}">${escapeHtml(project.buyer_email)}</a>${project.phone?'  -  '+escapeHtml(project.phone):''}</span></div><select class="crm-status" onchange="updateCrmProject('${project.id}',this.value)"><option value="new" ${project.status==='new'?'selected':''}>New</option><option value="in_progress" ${project.status==='in_progress'?'selected':''}>In progress</option><option value="awaiting_review" ${project.status==='awaiting_review'?'selected':''}>Awaiting review</option><option value="revision_requested" ${project.status==='revision_requested'?'selected':''}>Revision requested</option><option value="approved" ${project.status==='approved'?'selected':''}>Approved</option><option value="delivered" ${project.status==='delivered'?'selected':''}>Delivered</option><option value="closed" ${project.status==='closed'?'selected':''}>Closed</option></select></div><div class="crm-grid"><div><h5>Brief</h5><p style="white-space:pre-wrap;">${escapeHtml(project.brief)}</p><p class="account-muted"><strong>Style:</strong> ${escapeHtml(project.style||'Not specified')}<br><strong>References:</strong> ${(project.reference_names||[]).map(escapeHtml).join(', ')||'None'}<br><strong>Revisions:</strong> ${project.revision_count||0}/2</p></div><div><h5>Conversation</h5>${(project.project_messages||[]).slice(-3).map(message=>`<div class="editor-note"><strong>${escapeHtml(message.sender_name||message.sender_role)}:</strong> ${escapeHtml(message.message)}</div>`).join('')||'<p class="account-muted">No messages yet.</p>'}</div></div>${previews?`<h5>Uploaded results</h5><div class="crm-files">${previews}</div>`:''}<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;"><button class="btn btn-sm btn-solid" onclick="replyToCrmProject('${project.id}')">Reply to client</button><button class="btn btn-sm btn-ghost" onclick="markCrmRevision('${project.id}')">Add revision</button><label class="btn btn-sm btn-ghost">Upload result<input type="file" hidden onchange="uploadCrmFile('${project.id}',this)"></label></div></div>`;
   }).join('')+'</div>':'<div class="account-empty">No client briefs yet. New Bespoke submissions will appear here.</div>';
   wrap.innerHTML=`<div class="account-stats"><div class="account-stat"><strong>${clientCount}</strong><span>Tracked clients</span></div><div class="account-stat"><strong>${crmOrders.length}</strong><span>Orders</span></div><div class="account-stat"><strong>${awaiting}</strong><span>Needs attention</span></div><div class="account-stat"><strong>${delivered}</strong><span>Delivered</span></div></div><h4 style="margin:22px 0 10px;">Recent orders</h4><div class="creator-table"><div class="creator-row head"><span>Order / client</span><span>Status</span><span>Items</span><span>Total</span></div>${orderRows||'<div class="account-empty">No orders tracked yet.</div>'}</div><h4 style="margin:22px 0 10px;">Client projects</h4>${projectRows}`;
 }
@@ -1856,7 +1859,7 @@ function renderManualPaymentApprovals(){
   const pending=crmOrders.filter(order=>order.payment_status==='submitted');
   if(!wrap||!pending.length) return;
   const section=document.createElement('section'); section.className='manual-approval-list';
-  section.innerHTML='<div class="crm-section-heading"><div><h4>Payment review queue</h4><p class="account-muted">Check the UTR against your UPI app or bank statement. Review the screenshot, then approve only when the amount and reference match.</p></div><span class="creator-badge">'+pending.length+' awaiting review</span></div>'+pending.map(order=>`<article class="payment-review-card"><div class="payment-review-head"><div><span class="eyebrow">Manual UPI payment</span><h4>${escapeHtml(order.order_number)}</h4><p>${escapeHtml(order.buyer_name||'Buyer')} · <a href="mailto:${escapeHtml(order.buyer_email)}">${escapeHtml(order.buyer_email)}</a></p></div><strong class="payment-review-amount">${formatMoney(Number(order.total||0))}</strong></div><div class="payment-review-grid"><div><h5>Payment details</h5><dl><dt>UTR / reference</dt><dd class="mono">${escapeHtml(order.payment_reference||'Not supplied')}</dd><dt>Submitted</dt><dd>${order.payment_submitted_at?new Date(order.payment_submitted_at).toLocaleString():'Not recorded'}</dd><dt>Method</dt><dd>${escapeHtml(order.payment_method||'UPI / bank transfer')}</dd></dl></div><div><h5>Customer screenshot</h5>${order.payment_proof_url?`<a href="${escapeHtml(order.payment_proof_url)}" target="_blank" rel="noopener"><img class="payment-proof-image" src="${escapeHtml(order.payment_proof_url)}" alt="Payment screenshot for ${escapeHtml(order.order_number)}"></a>`:'<div class="payment-proof-empty">No screenshot uploaded. Verify the UTR manually.</div>'}</div></div><div class="payment-review-actions"><button class="btn btn-coral" onclick="approveManualPayment('${escapeHtml(order.order_number)}')">Approve &amp; start work</button><button class="btn btn-ghost" onclick="requestPaymentCorrection('${escapeHtml(order.order_number)}')">Request correction</button></div></article>`).join('');
+  section.innerHTML='<div class="crm-section-heading"><div><h4>Payment review queue</h4><p class="account-muted">Check the UTR against your UPI app or bank statement. Review the screenshot, then approve only when the amount and reference match.</p></div><span class="creator-badge">'+pending.length+' awaiting review</span></div>'+pending.map(order=>`<article class="payment-review-card"><div class="payment-review-head"><div><span class="eyebrow">Manual UPI payment</span><h4>${escapeHtml(order.order_number)}</h4><p>${escapeHtml(order.buyer_name||'Buyer')}  -  <a href="mailto:${escapeHtml(order.buyer_email)}">${escapeHtml(order.buyer_email)}</a></p></div><strong class="payment-review-amount">${formatMoney(Number(order.total||0))}</strong></div><div class="payment-review-grid"><div><h5>Payment details</h5><dl><dt>UTR / reference</dt><dd class="mono">${escapeHtml(order.payment_reference||'Not supplied')}</dd><dt>Submitted</dt><dd>${order.payment_submitted_at?new Date(order.payment_submitted_at).toLocaleString():'Not recorded'}</dd><dt>Method</dt><dd>${escapeHtml(order.payment_method||'UPI / bank transfer')}</dd></dl></div><div><h5>Customer screenshot</h5>${order.payment_proof_url?`<a href="${escapeHtml(order.payment_proof_url)}" target="_blank" rel="noopener"><img class="payment-proof-image" src="${escapeHtml(order.payment_proof_url)}" alt="Payment screenshot for ${escapeHtml(order.order_number)}"></a>`:'<div class="payment-proof-empty">No screenshot uploaded. Verify the UTR manually.</div>'}</div></div><div class="payment-review-actions"><button class="btn btn-coral" onclick="approveManualPayment('${escapeHtml(order.order_number)}')">Approve &amp; start work</button><button class="btn btn-ghost" onclick="requestPaymentCorrection('${escapeHtml(order.order_number)}')">Request correction</button></div></article>`).join('');
   wrap.appendChild(section);
 }
 async function requestPaymentCorrection(orderNumber){
@@ -1883,17 +1886,17 @@ async function markCrmRevision(id){
 async function replyToCrmProject(id){
   const message=window.prompt('Write the update for the client:');
   if(!message?.trim()) return;
-  try{ const response=await fetch('/api/projects/message',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({project_id:id,message:message.trim(),sender_role:'designer',sender_name:currentUser?.name||'Makers Row designer'})}); if(!response.ok) throw new Error('Could not save reply'); toast('Reply saved to the project'); }catch(error){ toast(error.message); }
+  try{ const response=await fetch('/api/projects/message',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({project_id:id,message:message.trim(),sender_role:'designer',sender_name:currentUser?.name||'Get It Done designer'})}); if(!response.ok) throw new Error('Could not save reply'); toast('Reply saved to the project'); }catch(error){ toast(error.message); }
 }
 function renderCreatorListings(listings){
   if(!listings.length) return '<div class="account-empty" style="margin-top:15px;">No uploads yet. Start by publishing your first template, graphic, or AI service.</div>';
-  return '<div class="creator-table"><div class="creator-row head"><span>Listing</span><span>Status</span><span>Sales</span><span>Earnings</span></div>'+listings.map(item=>`<div class="creator-row"><div><strong>${item.title}</strong><span>${item.category} · ${formatMoney(item.price)} · ${(item.assetFiles||[]).length} file${(item.assetFiles||[]).length===1?'':'s'}</span></div><span class="creator-status">${item.listingStatus||'Live'}</span><span>${item.sales||0}</span><span>${formatMoney((item.sales||0)*item.price*.8)}</span></div>`).join('')+'</div>';
+  return '<div class="creator-table"><div class="creator-row head"><span>Listing</span><span>Status</span><span>Sales</span><span>Earnings</span></div>'+listings.map(item=>`<div class="creator-row"><div><strong>${item.title}</strong><span>${item.category}  -  ${formatMoney(item.price)}  -  ${(item.assetFiles||[]).length} file${(item.assetFiles||[]).length===1?'':'s'}</span></div><span class="creator-status">${item.listingStatus||'Live'}</span><span>${item.sales||0}</span><span>${formatMoney((item.sales||0)*item.price*.8)}</span></div>`).join('')+'</div>';
 }
 function renderOrderHistory(limit){
   const allOrders=[...remoteOrders.map(normalizeRemoteOrder),...orderHistory.filter(local=>!remoteOrders.some(remote=>remote.order_number===local.id))];
   const orders=typeof limit==='number'?allOrders.slice(0,limit):allOrders;
   if(!orders.length) return '<div class="account-empty">Your orders will appear here after checkout. Start with Bespoke or browse the Marketplace.</div>';
-  return '<div class="account-orders">'+orders.map(order=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:12px;"><div><strong>${order.id}</strong><span>${order.date} · ${order.items} item${order.items===1?'':'s'} · ${order.email||currentUser.email}</span></div><span class="order-price">${formatMoney(Number(order.total))}</span></div><div class="order-files">${(order.deliverables||[]).map((file,index)=>(file.files||['Preview file']).map((fileName,fileIndex)=>`<div class="order-file"><span>▣ ${file.title} · ${fileName}</span>${file.downloadable?`<button class="btn btn-sm btn-solid" onclick="downloadOrderFile('${order.id}',${index},${fileIndex})">Download</button>`:'<span class="email-status">Delivered within the day</span>'}</div>`).join('')).join('')}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;"><span class="email-status">${order.emailStatus||'Receipt available'}</span><button class="btn btn-sm btn-ghost" onclick="emailOrder('${order.id}')">Email receipt</button></div></div>`).join('')+'</div>';
+  return '<div class="account-orders">'+orders.map(order=>`<div class="account-order" style="display:block;"><div style="display:flex;justify-content:space-between;gap:12px;"><div><strong>${order.id}</strong><span>${order.date}  -  ${order.items} item${order.items===1?'':'s'}  -  ${order.email||currentUser.email}</span></div><span class="order-price">${formatMoney(Number(order.total))}</span></div><div class="order-files">${(order.deliverables||[]).map((file,index)=>(file.files||['Preview file']).map((fileName,fileIndex)=>`<div class="order-file"><span>â–£ ${file.title}  -  ${fileName}</span>${file.downloadable?`<button class="btn btn-sm btn-solid" onclick="downloadOrderFile('${order.id}',${index},${fileIndex})">Download</button>`:'<span class="email-status">Delivered within the day</span>'}</div>`).join('')).join('')}</div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;"><span class="email-status">${order.emailStatus||'Receipt available'}</span><button class="btn btn-sm btn-ghost" onclick="emailOrder('${order.id}')">Email receipt</button></div></div>`).join('')+'</div>';
 }
 function downloadOrderFile(orderId,index,fileIndex=0){
   const order=orderHistory.find(item=>item.id===orderId);
@@ -1914,8 +1917,8 @@ function emailOrder(orderId){
   order.emailStatus='Receipt prepared for '+(order.email||currentUser.email);
   persistAccountState();
   renderAccount();
-  const subject=encodeURIComponent('Makers\' Row order '+order.id);
-  const body=encodeURIComponent('Your Makers\' Row order '+order.id+' totalled $'+Number(order.total).toFixed(2)+'. Your purchased files are available in your account.');
+  const subject=encodeURIComponent('Get It Done order '+order.id);
+  const body=encodeURIComponent('Your Get It Done order '+order.id+' totalled $'+Number(order.total).toFixed(2)+'. Your purchased files are available in your account.');
   window.location.href='mailto:'+(order.email||currentUser.email)+'?subject='+subject+'&body='+body;
   toast('Receipt prepared for your email');
 }
@@ -1968,7 +1971,7 @@ function setCategory(cat){
 
 function starString(rating){
   const full = Math.round(rating);
-  return '★★★★★'.slice(0,full) + '☆☆☆☆☆'.slice(0,5-full);
+  return 'â˜…â˜…â˜…â˜…â˜…'.slice(0,full) + 'â˜†â˜†â˜†â˜†â˜†'.slice(0,5-full);
 }
 
 function renderMarket(){
@@ -2001,20 +2004,20 @@ function renderMarket(){
     card.className='card';
     card.innerHTML = `
       <div class="thumb-wrap">
-        ${it.trending ? '<div class="ribbon">🔥 Bestseller</div>' : ''}
+        ${it.trending ? '<div class="ribbon">ðŸ”¥ Bestseller</div>' : ''}
         <img class="thumb" src="${thumbURL(it)}" alt="${it.title}" loading="lazy">
         <div class="price-tag">${formatMoney(it.price)}</div>
       </div>
       <div class="body">
         <span class="cat-label">${it.category}</span>
         <h4>${it.title}</h4>
-        <div class="meta-row"><span class="stars">${starString(it.rating||4.5)}</span><span>${(it.rating||4.5).toFixed(1)}</span><span>· ${it.sales||0} sold</span></div>
+        <div class="meta-row"><span class="stars">${starString(it.rating||4.5)}</span><span>${(it.rating||4.5).toFixed(1)}</span><span> -  ${it.sales||0} sold</span></div>
         <div class="seller">by ${it.seller}</div>
         <span class="delivery-badge">${it.category.includes('AI') ? 'Same-day service' : 'Instant download'}</span>
         <div class="card-actions">
           <button class="btn btn-solid" onclick="quickAdd('${it.id}')">Add to cart</button>
           <button class="btn btn-ghost" onclick="customize('${it.id}')">Customize</button>
-          <button class="save-btn ${savedItems.includes(it.id)?'saved':''}" onclick="toggleSaved('${it.id}')">${savedItems.includes(it.id)?'♥ Saved':'♡ Save'}</button>
+          <button class="save-btn ${savedItems.includes(it.id)?'saved':''}" onclick="toggleSaved('${it.id}')">${savedItems.includes(it.id)?'â™¥ Saved':'â™¡ Save'}</button>
         </div>
       </div>`;
     grid.appendChild(card);
@@ -2087,13 +2090,13 @@ function renderCart(){
       <img src="${line.thumb}" alt="">
       <div class="info">
         <div class="t">${line.title}</div>
-        <div class="s">${line.kind==='bespoke' ? 'Bespoke request · '+line.meta : (line.meta||'')}</div>
+        <div class="s">${line.kind==='bespoke' ? 'Bespoke request  -  '+line.meta : (line.meta||'')}</div>
       </div>
       <div class="qty-ctrl">
-        <button onclick="changeQty('${line.id}',-1)">−</button><span class="mono">${line.qty}</span><button onclick="changeQty('${line.id}',1)">+</button>
+        <button onclick="changeQty('${line.id}',-1)">âˆ’</button><span class="mono">${line.qty}</span><button onclick="changeQty('${line.id}',1)">+</button>
       </div>
       <div class="mono" style="width:70px;text-align:right;">${formatMoney(line.price*line.qty)}</div>
-      <button class="btn btn-sm btn-ghost" onclick="removeLine('${line.id}')">✕</button>
+      <button class="btn btn-sm btn-ghost" onclick="removeLine('${line.id}')">âœ•</button>
     `;
     linesWrap.appendChild(div);
 
@@ -2143,9 +2146,9 @@ async function loadManualPaymentDetails(){
     if(!response.ok||!data.enabled) throw new Error('Manual payment details are not configured yet.');
     const amount=Math.max(150,Math.round(cart.reduce((sum,line)=>sum+line.price*line.qty,0)*USD_TO_INR));
     const manualButtonTotal=document.getElementById('manualButtonTotal');
-    if(manualButtonTotal) manualButtonTotal.textContent='₹'+amount.toLocaleString('en-IN');
+    if(manualButtonTotal) manualButtonTotal.textContent='INR '+amount.toLocaleString('en-IN');
     const qr=data.qr_image_url?`<img src="${escapeHtml(data.qr_image_url)}" alt="UPI payment QR code">`:'';
-    wrap.innerHTML=`<strong>Pay ₹${amount.toLocaleString('en-IN')}</strong><br>${data.upi_id?`UPI ID: <strong>${escapeHtml(data.upi_id)}</strong><br>`:''}${data.account_name?`Account name: ${escapeHtml(data.account_name)}<br>`:''}${data.account_number?`Account number: ${escapeHtml(data.account_number)}<br>`:''}${data.ifsc?`IFSC: ${escapeHtml(data.ifsc)}<br>`:''}${data.bank_name?`Bank: ${escapeHtml(data.bank_name)}`:''}${qr}`;
+    wrap.innerHTML=`<strong>Pay INR ${amount.toLocaleString('en-IN')}</strong><br>${data.upi_id?`UPI ID: <strong>${escapeHtml(data.upi_id)}</strong><br>`:''}${data.account_name?`Account name: ${escapeHtml(data.account_name)}<br>`:''}${data.account_number?`Account number: ${escapeHtml(data.account_number)}<br>`:''}${data.ifsc?`IFSC: ${escapeHtml(data.ifsc)}<br>`:''}${data.bank_name?`Bank: ${escapeHtml(data.bank_name)}`:''}${qr}`;
   }catch(error){wrap.innerHTML='<span style="color:#B83A2E">Manual payment details are not available yet. Please try again later.</span>';}
 }
 function updatePaymentSummary(){
@@ -2155,9 +2158,9 @@ function updatePaymentSummary(){
   if(!items || !totalEl || !buttonTotal) return;
   const total=cart.reduce((sum,line)=>sum+line.price*line.qty,0);
   const cashfreeTotal=Math.max(150,Math.round(total*USD_TO_INR));
-  totalEl.textContent='₹'+cashfreeTotal.toLocaleString('en-IN');
-  buttonTotal.textContent='₹'+cashfreeTotal.toLocaleString('en-IN');
-  items.innerHTML=cart.map(line=>`<div class="payment-item"><span>${line.title}${line.qty>1?' ×'+line.qty:''}</span><strong>${formatMoney(line.price*line.qty)}</strong></div>`).join('');
+  totalEl.textContent='INR '+cashfreeTotal.toLocaleString('en-IN');
+  buttonTotal.textContent='INR '+cashfreeTotal.toLocaleString('en-IN');
+  items.innerHTML=cart.map(line=>`<div class="payment-item"><span>${line.title}${line.qty>1?' Ã—'+line.qty:''}</span><strong>${formatMoney(line.price*line.qty)}</strong></div>`).join('');
 }
 function closePayment(){ document.getElementById('paymentModal').classList.remove('open'); }
 function submitPayment(event){
@@ -2169,7 +2172,7 @@ async function startManualPayment(){
   if(!currentUser || !cart.length) return;
   const reference=document.getElementById('paymentReference')?.value.trim();
   if(!reference){toast('Enter the UPI transaction ID or UTR after paying.');return;}
-  const button=document.getElementById('manualPayButton'); if(button){button.disabled=true;button.textContent='Submitting payment proof…';}
+  const button=document.getElementById('manualPayButton'); if(button){button.disabled=true;button.textContent='Submitting payment proofâ€¦';}
   const orderNo='MR-'+Date.now().toString(36).toUpperCase();
   const displayTotal=cart.reduce((sum,line)=>sum+line.price*line.qty,0);
   const inrTotal=Math.max(150,Math.round(displayTotal*USD_TO_INR));
@@ -2181,14 +2184,14 @@ async function startManualPayment(){
     if(screenshot){const upload=await fetch('/api/commerce?action=upload-payment-proof&order_id='+encodeURIComponent(orderNo),{method:'POST',headers:authHeaders({'Content-Type':screenshot.type||'image/jpeg','X-File-Name':screenshot.name}),body:screenshot});const uploaded=await upload.json();if(!upload.ok)throw new Error(uploaded.error||'Could not upload payment screenshot.');}
     const proof=await fetch('/api/commerce?action=submit-manual-proof',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({order_number:orderNo,payment_reference:reference})});
     const submitted=await proof.json(); if(!proof.ok) throw new Error(submitted.error||'Could not submit payment proof.');
-    orderHistory.unshift({id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_submitted',paymentStatus:'submitted',emailStatus:'Payment proof submitted — awaiting admin confirmation',deliverables});
+    orderHistory.unshift({id:orderNo,date:new Date().toLocaleDateString(),items:cart.reduce((sum,line)=>sum+line.qty,0),total:inrTotal,email:currentUser.email,status:'payment_submitted',paymentStatus:'submitted',emailStatus:'Payment proof submitted â€” awaiting admin confirmation',deliverables});
     persistAccountState(); cart=[];persistCart();closePayment();renderCart();toast('Payment proof submitted. Your order will be released after confirmation.');showPage('account');renderAccount();
-  }catch(error){toast(error.message);if(button){button.disabled=false;button.innerHTML='I have paid <span id="manualButtonTotal">₹0</span>';}}
+  }catch(error){toast(error.message);if(button){button.disabled=false;button.innerHTML='I have paid <span id="manualButtonTotal">INR 0</span>';}}
 }
 async function startCashfreeCheckout(){
   if(!currentUser || !cart.length) return;
   const button=document.getElementById('cashfreePayButton');
-  if(button){ button.disabled=true; button.innerHTML='Creating secure payment…'; }
+  if(button){ button.disabled=true; button.innerHTML='Creating secure paymentâ€¦'; }
   const orderNo='MR-'+Date.now().toString(36).toUpperCase();
   const displayTotal=cart.reduce((sum,line)=>sum+line.price*line.qty,0);
   const inrTotal=Math.max(150,Math.round(displayTotal*USD_TO_INR));
@@ -2204,7 +2207,7 @@ async function startCashfreeCheckout(){
     await cashfree.checkout({paymentSessionId:payload.payment_session_id,redirectTarget:'_self'});
   }catch(error){
     toast(error.message);
-    if(button){ button.disabled=false; button.innerHTML='Continue to Cashfree <span id="paymentButtonTotal">₹0</span>'; }
+    if(button){ button.disabled=false; button.innerHTML='Continue to Cashfree <span id="paymentButtonTotal">INR 0</span>'; }
   }
 }
 function completeCheckout(){
@@ -2225,7 +2228,7 @@ function completeCheckout(){
     <div class="order-confirm">
       <div class="ok-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg></div>
       <h4>Order received</h4>
-      <div class="ordno">Order ${orderNo} · total ${formatMoney(orderTotal)} · no payment was taken</div>
+      <div class="ordno">Order ${orderNo}  -  total ${formatMoney(orderTotal)}  -  no payment was taken</div>
       <p style="color:var(--ink-soft);font-size:0.84rem;line-height:1.5;margin:0 0 8px;">Ready-made items include a preview download in this demo. Bespoke requests are finished and sent to your email within the day.</p>
       ${lines}
     </div>`;
@@ -2240,7 +2243,7 @@ function completeCheckout(){
   });
   createRemoteOrder(orderHistory[0]);
   persistAccountState();
-  toast('Checkout complete — thank you!');
+  toast('Checkout complete â€” thank you!');
   cart = [];
   persistCart();
   renderCart();
@@ -2274,105 +2277,105 @@ function downloadAsset(id){
 const inr = value => value / USD_TO_INR;
 const serviceCategories = ['Branding','Social','Presentations','Websites & Content','Print','Product','AI Assist','Video & Animation','Audio & Voice','Marketing & Business','Documents & Data','Apps & Software','Backend & Servers','Automation & Integrations','UI/UX & Product','Personal Identity','Writing & Translation','Photography & Image','SEO & Growth','E-commerce & Marketplace','Business Operations'];
 const bespokeServices = [
-  {id:'s1',cat:'Branding',title:'Logo & brand mark',desc:'Primary logo plus two concepts, PNG/SVG/PDF delivery, open editable file, and one revision round.',price:inr(3000),eta:'~60 min',rating:4.9,orders:820,seed:'svc-logo',tags:['popular','best'],packageLabel:'Pack · 2 concepts'},
-  {id:'s2',cat:'Branding',title:'Brand color & type kit',desc:'Palette, type pairing, usage notes, swatches, and a ready-to-share mini brand sheet.',price:inr(2300),eta:'~45 min',rating:4.7,orders:210,seed:'svc-kit',tags:['express'],packageLabel:'Pack · brand starter'},
-  {id:'s3',cat:'Branding',title:'Favicon + app icon set',desc:'Favicon, app icon, social avatar, and export sizes for web, mobile, and social profiles.',price:inr(1512),eta:'~30 min',rating:4.6,orders:140,seed:'svc-favicon',tags:['express'],packageLabel:'Pack · 6 exports'},
-  {id:'s4',cat:'Social',title:'Instagram post (single)',desc:'One feed post sized for Instagram with editable text, brand colors, and export-ready PNG.',price:inr(150),eta:'~25 min',rating:4.8,orders:1100,seed:'svc-ig',tags:['popular','express'],packageLabel:'Single · 1 creative'},
-  {id:'s5',cat:'Social',title:'Instagram story pack (5)',desc:'Five coordinated stories with templates, your copy/images, safe zones, and mobile-first exports.',price:inr(800),eta:'~50 min',rating:4.8,orders:540,seed:'svc-stories',tags:['popular'],packageLabel:'Pack · 5 stories'},
-  {id:'s6',cat:'Social',title:'LinkedIn banner + post',desc:'Profile banner and one announcement graphic with professional hierarchy and desktop/mobile crops.',price:inr(500),eta:'~40 min',rating:4.5,orders:190,seed:'svc-li',tags:['express'],packageLabel:'Pack · 2 creatives'},
-  {id:'s7',cat:'Social',title:'YouTube thumbnail',desc:'One click-focused thumbnail with title treatment, subject cutout, contrast pass, and JPG/PNG exports.',price:inr(200),eta:'~30 min',rating:4.7,orders:460,seed:'svc-yt',tags:['popular','express'],packageLabel:'Single · 1 thumbnail'},
-  {id:'s8',cat:'Presentations',title:'Pitch deck (up to 10 slides)',desc:'Narrative deck from your outline with clean startup styling, charts, icons, speaker notes, PDF, and open file.',price:inr(3000),eta:'~90 min',rating:4.9,orders:310,seed:'svc-deck',tags:['best','popular'],packageLabel:'Pack · up to 10 slides'},
-  {id:'s9',cat:'Presentations',title:'One-pager / one-sheet',desc:'Single-page PDF for investors, sales, or partnerships with hierarchy, icons, and print/web exports.',price:inr(800),eta:'~45 min',rating:4.6,orders:175,seed:'svc-onepager',tags:['express'],packageLabel:'Single · 1 page'},
-  {id:'s10',cat:'Presentations',title:'Slide redesign (3 slides)',desc:'Polish three existing slides with layout, type, charts, visual consistency, PDF, and editable file.',price:inr(500),eta:'~50 min',rating:4.7,orders:98,seed:'svc-redesign',tags:[],packageLabel:'Pack · 3 slides'},
-  {id:'s11',cat:'Print',title:'Flyer / poster (A4)',desc:'Print-ready A4 PDF with bleed, crop marks, CMYK-safe layout, and a web PNG version.',price:inr(850),eta:'~45 min',rating:4.6,orders:240,seed:'svc-flyer',tags:['express'],packageLabel:'Single · A4'},
-  {id:'s12',cat:'Print',title:'Business card (front + back)',desc:'Double-sided business card with print-ready CMYK PDF, bleed, crop marks, and open file.',price:inr(1500),eta:'~35 min',rating:4.5,orders:160,seed:'svc-card',tags:['express'],packageLabel:'Single · front + back'},
-  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu or price list layout for cafés, salons, clinics, and service businesses with PDF and open file.',price:inr(3500),eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[],packageLabel:'Pack · up to 4 pages'},
-  {id:'s14',cat:'Product',title:'Packaging mockup',desc:'Product artwork placed on a realistic packaging scene with presentation-ready JPG and source layout.',price:inr(2000),eta:'~60 min',rating:4.7,orders:130,seed:'svc-pack',tags:['popular'],packageLabel:'Pack · 2 mockup views'},
-  {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup with responsive crops, callout hierarchy, and web-ready exports.',price:inr(3000),eta:'~180 min',rating:4.6,orders:88,seed:'svc-hero',tags:[],packageLabel:'Pack · desktop + mobile'},
-  {id:'s16',cat:'AI Assist',title:'AI creative direction pack',desc:'Curated AI visual directions, prompt refinement, reference synthesis, and designer shortlist notes.',price:inr(300),eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express'],packageLabel:'Pack · 8 directions'},
-  {id:'s17',cat:'AI Assist',title:'AI automation & agent setup',desc:'Practical workflow map, prompt system, tool setup, and handoff notes for a repeatable AI assistant.',price:inr(3000),eta:'same day',rating:4.8,orders:145,seed:'svc-agent',tags:['popular','best'],packageLabel:'Pack · strategy + setup'},
-  {id:'s18',cat:'AI Assist',title:'Background remove (5 images)',desc:'Clean cutouts with transparent PNG delivery. Priced at ₹30 per image with a five-image minimum.',price:inr(150),eta:'~20 min',rating:4.8,orders:700,seed:'svc-bg',tags:['express','popular'],packageLabel:'Pack · 5 images'},
-  {id:'s19',cat:'Websites & Content',title:'Landing page copy',desc:'Headline, sections, CTA, trust points, and conversion-focused copy for one webpage.',price:inr(3000),eta:'~60 min',rating:4.8,orders:180,seed:'svc-copy',tags:['popular','express'],packageLabel:'Single · 1 page'},
-  {id:'s20',cat:'Websites & Content',title:'Website homepage design',desc:'Polished homepage direction with layout, visual hierarchy, responsive notes, PDF, and open design file.',price:inr(5000),eta:'same day',rating:4.9,orders:240,seed:'svc-webhome',tags:['popular','best'],packageLabel:'Single · homepage'},
-  {id:'s21',cat:'Websites & Content',title:'Website content pack (5 pages)',desc:'Clear, on-brand copy for Home, About, Services, FAQ, and Contact pages with page-by-page structure.',price:inr(7000),eta:'same day',rating:4.7,orders:95,seed:'svc-webcontent',tags:['best'],packageLabel:'Pack · 5 pages'},
-  {id:'s22',cat:'Websites & Content',title:'No-code landing page build',desc:'Responsive landing page assembled from your brief, copy, references, forms, and mobile layout.',price:inr(2500),eta:'same day',rating:4.8,orders:70,seed:'svc-webbuild',tags:['popular'],packageLabel:'Single · 1 landing page'},
-  {id:'s23',cat:'Video & Animation',title:'Social reel edit (30 sec)',desc:'Fast-paced vertical reel with cuts, captions, music timing, color polish, and one revision.',price:inr(1200),eta:'same day',rating:4.8,orders:320,seed:'svc-reel',tags:['popular','express'],packageLabel:'Single · 30 seconds'},
-  {id:'s24',cat:'Video & Animation',title:'Short-form video pack (3)',desc:'Three vertical videos for Reels, Shorts, or TikTok with hooks, captions, transitions, and exports.',price:inr(3000),eta:'same day',rating:4.8,orders:180,seed:'svc-shorts',tags:['popular'],packageLabel:'Pack · 3 videos'},
-  {id:'s25',cat:'Video & Animation',title:'Product promo video (30 sec)',desc:'Product-led promo with storyboard, kinetic text, music bed, CTA ending, and social exports.',price:inr(3500),eta:'same day',rating:4.7,orders:130,seed:'svc-productvideo',tags:['best'],packageLabel:'Single · 30 seconds'},
-  {id:'s26',cat:'Video & Animation',title:'Explainer animation (60 sec)',desc:'Storyboard, simple character or icon animation, voiceover timing, subtitles, and 1080p delivery.',price:inr(6000),eta:'1–2 days',rating:4.9,orders:84,seed:'svc-explainer',tags:['best'],packageLabel:'Single · 60 seconds'},
-  {id:'s27',cat:'Video & Animation',title:'Motion graphics titles (5)',desc:'Five animated title cards, lower thirds, transitions, or promo frames for your content system.',price:inr(2500),eta:'same day',rating:4.6,orders:100,seed:'svc-motion',tags:['express'],packageLabel:'Pack · 5 animations'},
-  {id:'s28',cat:'Video & Animation',title:'Animated logo sting',desc:'Short animated logo reveal for videos, websites, and social intros with transparent export.',price:inr(1800),eta:'~90 min',rating:4.7,orders:116,seed:'svc-logosting',tags:['popular'],packageLabel:'Single · 3–5 seconds'},
-  {id:'s29',cat:'Audio & Voice',title:'Podcast cleanup (30 min)',desc:'Noise reduction, silence cleanup, leveling, EQ, and mastered WAV/MP3 delivery.',price:inr(1200),eta:'same day',rating:4.7,orders:66,seed:'svc-podcast',tags:['express'],packageLabel:'Single · up to 30 min'},
-  {id:'s30',cat:'Audio & Voice',title:'Voiceover sync (60 sec)',desc:'Voiceover timing and sync for one short video with clean delivery and caption timing notes.',price:inr(2500),eta:'same day',rating:4.8,orders:54,seed:'svc-voice',tags:['popular'],packageLabel:'Single · 60 seconds'},
-  {id:'s31',cat:'Audio & Voice',title:'Podcast cover + audiogram pack',desc:'Podcast cover art plus three audiogram frames for promotion across social platforms.',price:inr(1800),eta:'same day',rating:4.6,orders:72,seed:'svc-audiogram',tags:[],packageLabel:'Pack · cover + 3 frames'},
-  {id:'s32',cat:'Marketing & Business',title:'Ad creative pack (3)',desc:'Three paid-social ad concepts with hooks, visual hierarchy, copy variations, and platform crops.',price:inr(1500),eta:'same day',rating:4.7,orders:128,seed:'svc-adcreative',tags:['popular','express'],packageLabel:'Pack · 3 ads'},
-  {id:'s33',cat:'Marketing & Business',title:'Campaign copy pack (5 ads)',desc:'Five ad copy variations with primary text, headline, CTA, audience angle, and testing notes.',price:inr(2000),eta:'same day',rating:4.7,orders:88,seed:'svc-adcopy',tags:['popular'],packageLabel:'Pack · 5 ads'},
-  {id:'s34',cat:'Marketing & Business',title:'Social content calendar (30 days)',desc:'Thirty-day content plan with themes, hooks, captions, formats, and a practical posting schedule.',price:inr(3000),eta:'same day',rating:4.8,orders:92,seed:'svc-calendar',tags:['best'],packageLabel:'Pack · 30 days'},
-  {id:'s35',cat:'Marketing & Business',title:'Resume + LinkedIn refresh',desc:'ATS-friendly resume polish, LinkedIn headline, About section, and role-specific positioning.',price:inr(1500),eta:'same day',rating:4.7,orders:145,seed:'svc-resume',tags:['express'],packageLabel:'Pack · resume + profile'},
-  {id:'s36',cat:'Documents & Data',title:'Ebook / lead magnet layout',desc:'Designed PDF layout with cover, typography, page hierarchy, callouts, and a share-ready export.',price:inr(3500),eta:'same day',rating:4.8,orders:64,seed:'svc-ebook',tags:['best'],packageLabel:'Pack · up to 12 pages'},
-  {id:'s37',cat:'Documents & Data',title:'Case study PDF',desc:'Structured case study with problem, process, proof points, charts, and a polished sales-ready PDF.',price:inr(2500),eta:'same day',rating:4.6,orders:52,seed:'svc-case-study',tags:['popular'],packageLabel:'Single · up to 6 pages'},
-  {id:'s38',cat:'Documents & Data',title:'Report / infographic page',desc:'One clear data-led page with charts, icons, callouts, and web/print exports.',price:inr(2000),eta:'~90 min',rating:4.7,orders:78,seed:'svc-infographic',tags:['express'],packageLabel:'Single · 1 page'},
-  {id:'s39',cat:'Documents & Data',title:'Spreadsheet dashboard design',desc:'Clean KPI dashboard layout for a spreadsheet or reporting workflow with chart and filter guidance.',price:inr(3000),eta:'same day',rating:4.6,orders:44,seed:'svc-dashboard',tags:[],packageLabel:'Single · 1 dashboard'}
+  {id:'s1',cat:'Branding',title:'Logo & brand mark',desc:'Primary logo plus two concepts, PNG/SVG/PDF delivery, open editable file, and one revision round.',price:inr(3000),eta:'~60 min',rating:4.9,orders:820,seed:'svc-logo',tags:['popular','best'],packageLabel:'Pack  -  2 concepts'},
+  {id:'s2',cat:'Branding',title:'Brand color & type kit',desc:'Palette, type pairing, usage notes, swatches, and a ready-to-share mini brand sheet.',price:inr(2300),eta:'~45 min',rating:4.7,orders:210,seed:'svc-kit',tags:['express'],packageLabel:'Pack  -  brand starter'},
+  {id:'s3',cat:'Branding',title:'Favicon + app icon set',desc:'Favicon, app icon, social avatar, and export sizes for web, mobile, and social profiles.',price:inr(1512),eta:'~30 min',rating:4.6,orders:140,seed:'svc-favicon',tags:['express'],packageLabel:'Pack  -  6 exports'},
+  {id:'s4',cat:'Social',title:'Instagram post (single)',desc:'One feed post sized for Instagram with editable text, brand colors, and export-ready PNG.',price:inr(150),eta:'~25 min',rating:4.8,orders:1100,seed:'svc-ig',tags:['popular','express'],packageLabel:'Single  -  1 creative'},
+  {id:'s5',cat:'Social',title:'Instagram story pack (5)',desc:'Five coordinated stories with templates, your copy/images, safe zones, and mobile-first exports.',price:inr(800),eta:'~50 min',rating:4.8,orders:540,seed:'svc-stories',tags:['popular'],packageLabel:'Pack  -  5 stories'},
+  {id:'s6',cat:'Social',title:'LinkedIn banner + post',desc:'Profile banner and one announcement graphic with professional hierarchy and desktop/mobile crops.',price:inr(500),eta:'~40 min',rating:4.5,orders:190,seed:'svc-li',tags:['express'],packageLabel:'Pack  -  2 creatives'},
+  {id:'s7',cat:'Social',title:'YouTube thumbnail',desc:'One click-focused thumbnail with title treatment, subject cutout, contrast pass, and JPG/PNG exports.',price:inr(200),eta:'~30 min',rating:4.7,orders:460,seed:'svc-yt',tags:['popular','express'],packageLabel:'Single  -  1 thumbnail'},
+  {id:'s8',cat:'Presentations',title:'Pitch deck (up to 10 slides)',desc:'Narrative deck from your outline with clean startup styling, charts, icons, speaker notes, PDF, and open file.',price:inr(3000),eta:'~90 min',rating:4.9,orders:310,seed:'svc-deck',tags:['best','popular'],packageLabel:'Pack  -  up to 10 slides'},
+  {id:'s9',cat:'Presentations',title:'One-pager / one-sheet',desc:'Single-page PDF for investors, sales, or partnerships with hierarchy, icons, and print/web exports.',price:inr(800),eta:'~45 min',rating:4.6,orders:175,seed:'svc-onepager',tags:['express'],packageLabel:'Single  -  1 page'},
+  {id:'s10',cat:'Presentations',title:'Slide redesign (3 slides)',desc:'Polish three existing slides with layout, type, charts, visual consistency, PDF, and editable file.',price:inr(500),eta:'~50 min',rating:4.7,orders:98,seed:'svc-redesign',tags:[],packageLabel:'Pack  -  3 slides'},
+  {id:'s11',cat:'Print',title:'Flyer / poster (A4)',desc:'Print-ready A4 PDF with bleed, crop marks, CMYK-safe layout, and a web PNG version.',price:inr(850),eta:'~45 min',rating:4.6,orders:240,seed:'svc-flyer',tags:['express'],packageLabel:'Single  -  A4'},
+  {id:'s12',cat:'Print',title:'Business card (front + back)',desc:'Double-sided business card with print-ready CMYK PDF, bleed, crop marks, and open file.',price:inr(1500),eta:'~35 min',rating:4.5,orders:160,seed:'svc-card',tags:['express'],packageLabel:'Single  -  front + back'},
+  {id:'s13',cat:'Print',title:'Menu / price list design',desc:'Clean menu or price list layout for cafÃ©s, salons, clinics, and service businesses with PDF and open file.',price:inr(3500),eta:'~55 min',rating:4.4,orders:72,seed:'svc-menu',tags:[],packageLabel:'Pack  -  up to 4 pages'},
+  {id:'s14',cat:'Product',title:'Packaging mockup',desc:'Product artwork placed on a realistic packaging scene with presentation-ready JPG and source layout.',price:inr(2000),eta:'~60 min',rating:4.7,orders:130,seed:'svc-pack',tags:['popular'],packageLabel:'Pack  -  2 mockup views'},
+  {id:'s15',cat:'Product',title:'App / web hero mock',desc:'Landing hero visual or device mockup with responsive crops, callout hierarchy, and web-ready exports.',price:inr(3000),eta:'~180 min',rating:4.6,orders:88,seed:'svc-hero',tags:[],packageLabel:'Pack  -  desktop + mobile'},
+  {id:'s16',cat:'AI Assist',title:'AI creative direction pack',desc:'Curated AI visual directions, prompt refinement, reference synthesis, and designer shortlist notes.',price:inr(300),eta:'~35 min',rating:4.5,orders:390,seed:'svc-ailogo',tags:['popular','express'],packageLabel:'Pack  -  8 directions'},
+  {id:'s17',cat:'AI Assist',title:'AI automation & agent setup',desc:'Practical workflow map, prompt system, tool setup, and handoff notes for a repeatable AI assistant.',price:inr(3000),eta:'same day',rating:4.8,orders:145,seed:'svc-agent',tags:['popular','best'],packageLabel:'Pack  -  strategy + setup'},
+  {id:'s18',cat:'AI Assist',title:'Background remove (5 images)',desc:'Clean cutouts with transparent PNG delivery. Priced at INR 30 per image with a five-image minimum.',price:inr(150),eta:'~20 min',rating:4.8,orders:700,seed:'svc-bg',tags:['express','popular'],packageLabel:'Pack  -  5 images'},
+  {id:'s19',cat:'Websites & Content',title:'Landing page copy',desc:'Headline, sections, CTA, trust points, and conversion-focused copy for one webpage.',price:inr(3000),eta:'~60 min',rating:4.8,orders:180,seed:'svc-copy',tags:['popular','express'],packageLabel:'Single  -  1 page'},
+  {id:'s20',cat:'Websites & Content',title:'Website homepage design',desc:'Polished homepage direction with layout, visual hierarchy, responsive notes, PDF, and open design file.',price:inr(5000),eta:'same day',rating:4.9,orders:240,seed:'svc-webhome',tags:['popular','best'],packageLabel:'Single  -  homepage'},
+  {id:'s21',cat:'Websites & Content',title:'Website content pack (5 pages)',desc:'Clear, on-brand copy for Home, About, Services, FAQ, and Contact pages with page-by-page structure.',price:inr(7000),eta:'same day',rating:4.7,orders:95,seed:'svc-webcontent',tags:['best'],packageLabel:'Pack  -  5 pages'},
+  {id:'s22',cat:'Websites & Content',title:'No-code landing page build',desc:'Responsive landing page assembled from your brief, copy, references, forms, and mobile layout.',price:inr(2500),eta:'same day',rating:4.8,orders:70,seed:'svc-webbuild',tags:['popular'],packageLabel:'Single  -  1 landing page'},
+  {id:'s23',cat:'Video & Animation',title:'Social reel edit (30 sec)',desc:'Fast-paced vertical reel with cuts, captions, music timing, color polish, and one revision.',price:inr(1200),eta:'same day',rating:4.8,orders:320,seed:'svc-reel',tags:['popular','express'],packageLabel:'Single  -  30 seconds'},
+  {id:'s24',cat:'Video & Animation',title:'Short-form video pack (3)',desc:'Three vertical videos for Reels, Shorts, or TikTok with hooks, captions, transitions, and exports.',price:inr(3000),eta:'same day',rating:4.8,orders:180,seed:'svc-shorts',tags:['popular'],packageLabel:'Pack  -  3 videos'},
+  {id:'s25',cat:'Video & Animation',title:'Product promo video (30 sec)',desc:'Product-led promo with storyboard, kinetic text, music bed, CTA ending, and social exports.',price:inr(3500),eta:'same day',rating:4.7,orders:130,seed:'svc-productvideo',tags:['best'],packageLabel:'Single  -  30 seconds'},
+  {id:'s26',cat:'Video & Animation',title:'Explainer animation (60 sec)',desc:'Storyboard, simple character or icon animation, voiceover timing, subtitles, and 1080p delivery.',price:inr(6000),eta:'1â€“2 days',rating:4.9,orders:84,seed:'svc-explainer',tags:['best'],packageLabel:'Single  -  60 seconds'},
+  {id:'s27',cat:'Video & Animation',title:'Motion graphics titles (5)',desc:'Five animated title cards, lower thirds, transitions, or promo frames for your content system.',price:inr(2500),eta:'same day',rating:4.6,orders:100,seed:'svc-motion',tags:['express'],packageLabel:'Pack  -  5 animations'},
+  {id:'s28',cat:'Video & Animation',title:'Animated logo sting',desc:'Short animated logo reveal for videos, websites, and social intros with transparent export.',price:inr(1800),eta:'~90 min',rating:4.7,orders:116,seed:'svc-logosting',tags:['popular'],packageLabel:'Single  -  3â€“5 seconds'},
+  {id:'s29',cat:'Audio & Voice',title:'Podcast cleanup (30 min)',desc:'Noise reduction, silence cleanup, leveling, EQ, and mastered WAV/MP3 delivery.',price:inr(1200),eta:'same day',rating:4.7,orders:66,seed:'svc-podcast',tags:['express'],packageLabel:'Single  -  up to 30 min'},
+  {id:'s30',cat:'Audio & Voice',title:'Voiceover sync (60 sec)',desc:'Voiceover timing and sync for one short video with clean delivery and caption timing notes.',price:inr(2500),eta:'same day',rating:4.8,orders:54,seed:'svc-voice',tags:['popular'],packageLabel:'Single  -  60 seconds'},
+  {id:'s31',cat:'Audio & Voice',title:'Podcast cover + audiogram pack',desc:'Podcast cover art plus three audiogram frames for promotion across social platforms.',price:inr(1800),eta:'same day',rating:4.6,orders:72,seed:'svc-audiogram',tags:[],packageLabel:'Pack  -  cover + 3 frames'},
+  {id:'s32',cat:'Marketing & Business',title:'Ad creative pack (3)',desc:'Three paid-social ad concepts with hooks, visual hierarchy, copy variations, and platform crops.',price:inr(1500),eta:'same day',rating:4.7,orders:128,seed:'svc-adcreative',tags:['popular','express'],packageLabel:'Pack  -  3 ads'},
+  {id:'s33',cat:'Marketing & Business',title:'Campaign copy pack (5 ads)',desc:'Five ad copy variations with primary text, headline, CTA, audience angle, and testing notes.',price:inr(2000),eta:'same day',rating:4.7,orders:88,seed:'svc-adcopy',tags:['popular'],packageLabel:'Pack  -  5 ads'},
+  {id:'s34',cat:'Marketing & Business',title:'Social content calendar (30 days)',desc:'Thirty-day content plan with themes, hooks, captions, formats, and a practical posting schedule.',price:inr(3000),eta:'same day',rating:4.8,orders:92,seed:'svc-calendar',tags:['best'],packageLabel:'Pack  -  30 days'},
+  {id:'s35',cat:'Marketing & Business',title:'Resume + LinkedIn refresh',desc:'ATS-friendly resume polish, LinkedIn headline, About section, and role-specific positioning.',price:inr(1500),eta:'same day',rating:4.7,orders:145,seed:'svc-resume',tags:['express'],packageLabel:'Pack  -  resume + profile'},
+  {id:'s36',cat:'Documents & Data',title:'Ebook / lead magnet layout',desc:'Designed PDF layout with cover, typography, page hierarchy, callouts, and a share-ready export.',price:inr(3500),eta:'same day',rating:4.8,orders:64,seed:'svc-ebook',tags:['best'],packageLabel:'Pack  -  up to 12 pages'},
+  {id:'s37',cat:'Documents & Data',title:'Case study PDF',desc:'Structured case study with problem, process, proof points, charts, and a polished sales-ready PDF.',price:inr(2500),eta:'same day',rating:4.6,orders:52,seed:'svc-case-study',tags:['popular'],packageLabel:'Single  -  up to 6 pages'},
+  {id:'s38',cat:'Documents & Data',title:'Report / infographic page',desc:'One clear data-led page with charts, icons, callouts, and web/print exports.',price:inr(2000),eta:'~90 min',rating:4.7,orders:78,seed:'svc-infographic',tags:['express'],packageLabel:'Single  -  1 page'},
+  {id:'s39',cat:'Documents & Data',title:'Spreadsheet dashboard design',desc:'Clean KPI dashboard layout for a spreadsheet or reporting workflow with chart and filter guidance.',price:inr(3000),eta:'same day',rating:4.6,orders:44,seed:'svc-dashboard',tags:[],packageLabel:'Single  -  1 dashboard'}
 ];
 
 bespokeServices.push(
-  {id:'s40',cat:'Apps & Software',title:'Mobile app UI kit',desc:'Core mobile screens, navigation, components, states, and handoff-ready design file for iOS or Android.',price:inr(7000),eta:'1–2 days',rating:4.9,orders:96,seed:'svc-app-ui',tags:['popular','best'],packageLabel:'Pack · up to 12 screens'},
-  {id:'s41',cat:'Apps & Software',title:'App prototype flow',desc:'Clickable prototype for onboarding, core task flow, empty states, errors, and a shareable review link.',price:inr(5000),eta:'same day',rating:4.8,orders:82,seed:'svc-prototype',tags:['popular'],packageLabel:'Pack · 1 user journey'},
-  {id:'s42',cat:'Apps & Software',title:'No-code app build',desc:'Functional MVP assembled in a no-code platform with screens, data fields, forms, and launch handoff notes.',price:inr(12000),eta:'2–4 days',rating:4.7,orders:54,seed:'svc-nocode',tags:['best'],packageLabel:'Single · MVP build'},
-  {id:'s43',cat:'Apps & Software',title:'Software dashboard design',desc:'Desktop SaaS dashboard with navigation, KPI cards, tables, filters, permissions states, and responsive layouts.',price:inr(8500),eta:'1–2 days',rating:4.8,orders:71,seed:'svc-saas',tags:['popular'],packageLabel:'Pack · up to 8 views'},
-  {id:'s44',cat:'Apps & Software',title:'Browser extension interface',desc:'Extension popup, settings, onboarding, permissions, empty states, and developer-ready interaction notes.',price:inr(4500),eta:'same day',rating:4.6,orders:32,seed:'svc-extension',tags:[],packageLabel:'Single · extension UI'},
-  {id:'s45',cat:'Backend & Servers',title:'Backend architecture plan',desc:'API, database, authentication, roles, storage, environments, and deployment architecture mapped for your product.',price:inr(5000),eta:'same day',rating:4.8,orders:63,seed:'svc-architecture',tags:['best'],packageLabel:'Single · architecture pack'},
-  {id:'s46',cat:'Backend & Servers',title:'API endpoint setup',desc:'Design and connect documented REST endpoints with validation, error handling, request examples, and handoff notes.',price:inr(6500),eta:'1–2 days',rating:4.7,orders:48,seed:'svc-api',tags:['popular'],packageLabel:'Pack · up to 5 endpoints'},
-  {id:'s47',cat:'Backend & Servers',title:'Database setup & connection',desc:'Tables, relationships, indexes, environment variables, seed data, and secure application connection setup.',price:inr(6000),eta:'same day',rating:4.8,orders:59,seed:'svc-database',tags:['popular'],packageLabel:'Single · one database'},
-  {id:'s48',cat:'Backend & Servers',title:'Server deployment & domain connection',desc:'Connect hosting, domain, DNS, SSL, environment variables, and production deployment with a handoff checklist.',price:inr(4500),eta:'same day',rating:4.7,orders:76,seed:'svc-server',tags:['express'],packageLabel:'Single · one deployment'},
-  {id:'s49',cat:'Backend & Servers',title:'Backend maintenance plan',desc:'Monthly monitoring checklist, dependency updates, backups, incident notes, and small fixes for a live product.',price:inr(3500),eta:'monthly setup',rating:4.6,orders:38,seed:'svc-maintenance',tags:[],packageLabel:'Pack · 1 month plan'},
-  {id:'s50',cat:'Automation & Integrations',title:'Personal workflow automation',desc:'Automate a repeatable personal task across email, calendar, forms, sheets, notifications, and task tools.',price:inr(3000),eta:'same day',rating:4.8,orders:112,seed:'svc-personal-auto',tags:['popular','express'],packageLabel:'Single · 1 workflow'},
-  {id:'s51',cat:'Automation & Integrations',title:'Business process automation',desc:'Map a manual process and connect triggers, approvals, records, alerts, and handoffs across your business tools.',price:inr(7500),eta:'1–2 days',rating:4.8,orders:67,seed:'svc-business-auto',tags:['best'],packageLabel:'Pack · 1 process'},
-  {id:'s52',cat:'Automation & Integrations',title:'App integration setup',desc:'Connect two or more tools with field mapping, webhooks or native integrations, test data, and failure notes.',price:inr(5000),eta:'same day',rating:4.7,orders:84,seed:'svc-integration',tags:['popular'],packageLabel:'Pack · up to 2 tools'},
-  {id:'s53',cat:'Automation & Integrations',title:'Email and notification automation',desc:'Set up welcome, reminder, status, and follow-up notifications with templates, triggers, and testing.',price:inr(3500),eta:'same day',rating:4.6,orders:91,seed:'svc-notifications',tags:['express'],packageLabel:'Pack · up to 4 flows'},
-  {id:'s54',cat:'UI/UX & Product',title:'UX audit & improvement plan',desc:'Review a website or app flow for friction, hierarchy, accessibility, and conversion with prioritized recommendations.',price:inr(3500),eta:'same day',rating:4.8,orders:73,seed:'svc-ux-audit',tags:['popular'],packageLabel:'Single · 1 product audit'},
-  {id:'s55',cat:'UI/UX & Product',title:'Wireframe pack',desc:'Low-fidelity screens for structure, navigation, content hierarchy, and responsive behavior before visual design.',price:inr(4000),eta:'same day',rating:4.7,orders:58,seed:'svc-wireframe',tags:[],packageLabel:'Pack · up to 8 screens'},
-  {id:'s56',cat:'UI/UX & Product',title:'Design system starter',desc:'Buttons, inputs, cards, grids, type scale, color tokens, spacing, and usage rules for a consistent product.',price:inr(6500),eta:'1–2 days',rating:4.9,orders:69,seed:'svc-design-system',tags:['best'],packageLabel:'Pack · starter system'},
-  {id:'s57',cat:'UI/UX & Product',title:'Usability test summary',desc:'Review up to five user sessions or recordings and turn findings into clear product improvements and priorities.',price:inr(3000),eta:'same day',rating:4.6,orders:31,seed:'svc-usability',tags:[],packageLabel:'Pack · up to 5 sessions'},
-  {id:'s58',cat:'Personal Identity',title:'Digital business card',desc:'Shareable mobile-first digital card with profile, bio, links, QR code, contact actions, and branded visuals.',price:inr(1500),eta:'same day',rating:4.8,orders:190,seed:'svc-digital-card',tags:['popular','express'],packageLabel:'Single · 1 profile'},
-  {id:'s59',cat:'Personal Identity',title:'Personal brand starter kit',desc:'Personal logo or monogram, colors, type pairing, profile image treatment, and social profile direction.',price:inr(4000),eta:'same day',rating:4.8,orders:105,seed:'svc-personal-brand',tags:['popular'],packageLabel:'Pack · identity starter'},
-  {id:'s60',cat:'Personal Identity',title:'Personal font / lettering set',desc:'Custom display lettering or a small personal font direction with character samples, spacing, and export guidance.',price:inr(6000),eta:'1–2 days',rating:4.7,orders:42,seed:'svc-font',tags:['best'],packageLabel:'Pack · character set'},
-  {id:'s61',cat:'Personal Identity',title:'Portfolio / creator profile',desc:'Personal portfolio page direction with bio, work presentation, services, contact CTA, and responsive structure.',price:inr(5500),eta:'same day',rating:4.8,orders:88,seed:'svc-portfolio',tags:['popular'],packageLabel:'Single · 1 profile site'},
-  {id:'s62',cat:'Personal Identity',title:'QR contact card pack',desc:'Printable and digital QR contact card with vCard link, social links, brand styling, and multiple export sizes.',price:inr(1200),eta:'~45 min',rating:4.6,orders:130,seed:'svc-qr-card',tags:['express'],packageLabel:'Pack · print + digital'}
+  {id:'s40',cat:'Apps & Software',title:'Mobile app UI kit',desc:'Core mobile screens, navigation, components, states, and handoff-ready design file for iOS or Android.',price:inr(7000),eta:'1â€“2 days',rating:4.9,orders:96,seed:'svc-app-ui',tags:['popular','best'],packageLabel:'Pack  -  up to 12 screens'},
+  {id:'s41',cat:'Apps & Software',title:'App prototype flow',desc:'Clickable prototype for onboarding, core task flow, empty states, errors, and a shareable review link.',price:inr(5000),eta:'same day',rating:4.8,orders:82,seed:'svc-prototype',tags:['popular'],packageLabel:'Pack  -  1 user journey'},
+  {id:'s42',cat:'Apps & Software',title:'No-code app build',desc:'Functional MVP assembled in a no-code platform with screens, data fields, forms, and launch handoff notes.',price:inr(12000),eta:'2â€“4 days',rating:4.7,orders:54,seed:'svc-nocode',tags:['best'],packageLabel:'Single  -  MVP build'},
+  {id:'s43',cat:'Apps & Software',title:'Software dashboard design',desc:'Desktop SaaS dashboard with navigation, KPI cards, tables, filters, permissions states, and responsive layouts.',price:inr(8500),eta:'1â€“2 days',rating:4.8,orders:71,seed:'svc-saas',tags:['popular'],packageLabel:'Pack  -  up to 8 views'},
+  {id:'s44',cat:'Apps & Software',title:'Browser extension interface',desc:'Extension popup, settings, onboarding, permissions, empty states, and developer-ready interaction notes.',price:inr(4500),eta:'same day',rating:4.6,orders:32,seed:'svc-extension',tags:[],packageLabel:'Single  -  extension UI'},
+  {id:'s45',cat:'Backend & Servers',title:'Backend architecture plan',desc:'API, database, authentication, roles, storage, environments, and deployment architecture mapped for your product.',price:inr(5000),eta:'same day',rating:4.8,orders:63,seed:'svc-architecture',tags:['best'],packageLabel:'Single  -  architecture pack'},
+  {id:'s46',cat:'Backend & Servers',title:'API endpoint setup',desc:'Design and connect documented REST endpoints with validation, error handling, request examples, and handoff notes.',price:inr(6500),eta:'1â€“2 days',rating:4.7,orders:48,seed:'svc-api',tags:['popular'],packageLabel:'Pack  -  up to 5 endpoints'},
+  {id:'s47',cat:'Backend & Servers',title:'Database setup & connection',desc:'Tables, relationships, indexes, environment variables, seed data, and secure application connection setup.',price:inr(6000),eta:'same day',rating:4.8,orders:59,seed:'svc-database',tags:['popular'],packageLabel:'Single  -  one database'},
+  {id:'s48',cat:'Backend & Servers',title:'Server deployment & domain connection',desc:'Connect hosting, domain, DNS, SSL, environment variables, and production deployment with a handoff checklist.',price:inr(4500),eta:'same day',rating:4.7,orders:76,seed:'svc-server',tags:['express'],packageLabel:'Single  -  one deployment'},
+  {id:'s49',cat:'Backend & Servers',title:'Backend maintenance plan',desc:'Monthly monitoring checklist, dependency updates, backups, incident notes, and small fixes for a live product.',price:inr(3500),eta:'monthly setup',rating:4.6,orders:38,seed:'svc-maintenance',tags:[],packageLabel:'Pack  -  1 month plan'},
+  {id:'s50',cat:'Automation & Integrations',title:'Personal workflow automation',desc:'Automate a repeatable personal task across email, calendar, forms, sheets, notifications, and task tools.',price:inr(3000),eta:'same day',rating:4.8,orders:112,seed:'svc-personal-auto',tags:['popular','express'],packageLabel:'Single  -  1 workflow'},
+  {id:'s51',cat:'Automation & Integrations',title:'Business process automation',desc:'Map a manual process and connect triggers, approvals, records, alerts, and handoffs across your business tools.',price:inr(7500),eta:'1â€“2 days',rating:4.8,orders:67,seed:'svc-business-auto',tags:['best'],packageLabel:'Pack  -  1 process'},
+  {id:'s52',cat:'Automation & Integrations',title:'App integration setup',desc:'Connect two or more tools with field mapping, webhooks or native integrations, test data, and failure notes.',price:inr(5000),eta:'same day',rating:4.7,orders:84,seed:'svc-integration',tags:['popular'],packageLabel:'Pack  -  up to 2 tools'},
+  {id:'s53',cat:'Automation & Integrations',title:'Email and notification automation',desc:'Set up welcome, reminder, status, and follow-up notifications with templates, triggers, and testing.',price:inr(3500),eta:'same day',rating:4.6,orders:91,seed:'svc-notifications',tags:['express'],packageLabel:'Pack  -  up to 4 flows'},
+  {id:'s54',cat:'UI/UX & Product',title:'UX audit & improvement plan',desc:'Review a website or app flow for friction, hierarchy, accessibility, and conversion with prioritized recommendations.',price:inr(3500),eta:'same day',rating:4.8,orders:73,seed:'svc-ux-audit',tags:['popular'],packageLabel:'Single  -  1 product audit'},
+  {id:'s55',cat:'UI/UX & Product',title:'Wireframe pack',desc:'Low-fidelity screens for structure, navigation, content hierarchy, and responsive behavior before visual design.',price:inr(4000),eta:'same day',rating:4.7,orders:58,seed:'svc-wireframe',tags:[],packageLabel:'Pack  -  up to 8 screens'},
+  {id:'s56',cat:'UI/UX & Product',title:'Design system starter',desc:'Buttons, inputs, cards, grids, type scale, color tokens, spacing, and usage rules for a consistent product.',price:inr(6500),eta:'1â€“2 days',rating:4.9,orders:69,seed:'svc-design-system',tags:['best'],packageLabel:'Pack  -  starter system'},
+  {id:'s57',cat:'UI/UX & Product',title:'Usability test summary',desc:'Review up to five user sessions or recordings and turn findings into clear product improvements and priorities.',price:inr(3000),eta:'same day',rating:4.6,orders:31,seed:'svc-usability',tags:[],packageLabel:'Pack  -  up to 5 sessions'},
+  {id:'s58',cat:'Personal Identity',title:'Digital business card',desc:'Shareable mobile-first digital card with profile, bio, links, QR code, contact actions, and branded visuals.',price:inr(1500),eta:'same day',rating:4.8,orders:190,seed:'svc-digital-card',tags:['popular','express'],packageLabel:'Single  -  1 profile'},
+  {id:'s59',cat:'Personal Identity',title:'Personal brand starter kit',desc:'Personal logo or monogram, colors, type pairing, profile image treatment, and social profile direction.',price:inr(4000),eta:'same day',rating:4.8,orders:105,seed:'svc-personal-brand',tags:['popular'],packageLabel:'Pack  -  identity starter'},
+  {id:'s60',cat:'Personal Identity',title:'Personal font / lettering set',desc:'Custom display lettering or a small personal font direction with character samples, spacing, and export guidance.',price:inr(6000),eta:'1â€“2 days',rating:4.7,orders:42,seed:'svc-font',tags:['best'],packageLabel:'Pack  -  character set'},
+  {id:'s61',cat:'Personal Identity',title:'Portfolio / creator profile',desc:'Personal portfolio page direction with bio, work presentation, services, contact CTA, and responsive structure.',price:inr(5500),eta:'same day',rating:4.8,orders:88,seed:'svc-portfolio',tags:['popular'],packageLabel:'Single  -  1 profile site'},
+  {id:'s62',cat:'Personal Identity',title:'QR contact card pack',desc:'Printable and digital QR contact card with vCard link, social links, brand styling, and multiple export sizes.',price:inr(1200),eta:'~45 min',rating:4.6,orders:130,seed:'svc-qr-card',tags:['express'],packageLabel:'Pack  -  print + digital'}
 );
 
 bespokeServices.push(
-  {id:'s63',cat:'Branding',title:'Complete brand identity system',desc:'Logo family, color system, typography, imagery direction, icons, patterns, social avatar, and a cohesive editable source file.',price:inr(12000),eta:'2–3 days',rating:4.9,orders:184,seed:'svc-brand-system',tags:['popular','best'],packageLabel:'Pack · full identity'},
-  {id:'s64',cat:'Branding',title:'Brand guidelines / brand book',desc:'Detailed brand rulebook covering logo use, color values, typography, layout, photography, voice, examples, and do/don’t guidance.',price:inr(6500),eta:'1–2 days',rating:4.9,orders:126,seed:'svc-brand-guidelines',tags:['best'],packageLabel:'Pack · up to 20 pages'},
-  {id:'s65',cat:'Branding',title:'Brand strategy & positioning',desc:'Audience, differentiation, positioning statement, brand personality, messaging pillars, and a practical creative direction brief.',price:inr(7500),eta:'1–2 days',rating:4.8,orders:98,seed:'svc-brand-strategy',tags:['popular'],packageLabel:'Single · strategy pack'},
-  {id:'s66',cat:'Branding',title:'Business naming + tagline',desc:'Name directions, availability-check checklist, naming rationale, tagline options, and a recommended verbal identity route.',price:inr(3500),eta:'same day',rating:4.7,orders:142,seed:'svc-naming',tags:['express','popular'],packageLabel:'Pack · 20 directions'},
-  {id:'s67',cat:'Branding',title:'Logo refresh / redesign',desc:'Modernize an existing mark while protecting recognition, with refined proportions, responsive versions, and export-ready files.',price:inr(4000),eta:'same day',rating:4.8,orders:210,seed:'svc-logo-refresh',tags:['popular'],packageLabel:'Pack · 2 routes'},
-  {id:'s68',cat:'Branding',title:'Custom icon & illustration set',desc:'Branded icons or simple illustrations for a website, app, product, or presentation with consistent stroke and color rules.',price:inr(4500),eta:'same day',rating:4.7,orders:76,seed:'svc-brand-icons',tags:[],packageLabel:'Pack · 12 icons'},
-  {id:'s69',cat:'Branding',title:'Brand voice & messaging kit',desc:'Tone of voice, elevator pitch, value proposition, bio, headline options, CTA bank, and reusable messaging examples.',price:inr(4500),eta:'same day',rating:4.8,orders:81,seed:'svc-brand-voice',tags:['popular'],packageLabel:'Pack · messaging system'},
-  {id:'s70',cat:'Branding',title:'Social brand template pack',desc:'Reusable branded templates for posts, stories, reels covers, profile headers, and announcements across key platforms.',price:inr(5000),eta:'same day',rating:4.8,orders:156,seed:'svc-brand-social',tags:['popular','best'],packageLabel:'Pack · 12 templates'},
-  {id:'s71',cat:'Branding',title:'Stationery & email signature kit',desc:'Letterhead, invoice, quotation, business card, email signature, and document header using your approved brand identity.',price:inr(3000),eta:'same day',rating:4.6,orders:93,seed:'svc-stationery',tags:['express'],packageLabel:'Pack · 6 assets'},
-  {id:'s72',cat:'Branding',title:'Brand audit & improvement plan',desc:'Review your current identity across logo, color, typography, web, social, and customer touchpoints with prioritized fixes.',price:inr(2500),eta:'same day',rating:4.7,orders:64,seed:'svc-brand-audit',tags:['express'],packageLabel:'Single · audit report'},
-  {id:'s73',cat:'Writing & Translation',title:'Website copywriting pack',desc:'Conversion-focused copy for a complete small website including headlines, sections, CTAs, trust points, and FAQs.',price:inr(6000),eta:'1–2 days',rating:4.8,orders:138,seed:'svc-copy-pack',tags:['popular'],packageLabel:'Pack · up to 5 pages'},
-  {id:'s74',cat:'Writing & Translation',title:'Blog / article writing',desc:'Well-structured original article with research outline, headings, readable formatting, suggested visuals, and SEO metadata.',price:inr(1800),eta:'same day',rating:4.7,orders:205,seed:'svc-blog',tags:['express'],packageLabel:'Single · up to 1200 words'},
-  {id:'s75',cat:'Writing & Translation',title:'Product descriptions pack',desc:'Clear benefit-led product copy with feature hierarchy, use cases, specs, search terms, and consistent brand voice.',price:inr(2500),eta:'same day',rating:4.8,orders:117,seed:'svc-product-copy',tags:['popular'],packageLabel:'Pack · 10 products'},
-  {id:'s76',cat:'Writing & Translation',title:'Translation & localization',desc:'Natural localization of web, app, marketing, or product content with terminology consistency and context review.',price:inr(1500),eta:'same day',rating:4.7,orders:86,seed:'svc-translation',tags:['express'],packageLabel:'Pack · up to 1000 words'},
-  {id:'s77',cat:'Writing & Translation',title:'Editing & proofreading',desc:'Grammar, clarity, structure, tone, consistency, and final polish for professional documents and customer-facing content.',price:inr(1200),eta:'same day',rating:4.8,orders:174,seed:'svc-proofread',tags:['express'],packageLabel:'Single · up to 2000 words'},
-  {id:'s78',cat:'Photography & Image',title:'Product photo retouching pack',desc:'Clean, color-correct, crop, and polish product images for websites, catalogues, marketplaces, and social campaigns.',price:inr(2500),eta:'same day',rating:4.8,orders:194,seed:'svc-product-retouch',tags:['popular'],packageLabel:'Pack · 10 images'},
-  {id:'s79',cat:'Photography & Image',title:'Image background & composite pack',desc:'Remove backgrounds, create clean composites, add realistic shadows, and deliver transparent or marketplace-ready exports.',price:inr(1500),eta:'same day',rating:4.7,orders:246,seed:'svc-image-composite',tags:['express'],packageLabel:'Pack · 10 images'},
-  {id:'s80',cat:'Photography & Image',title:'Photo color grading',desc:'Consistent exposure, white balance, skin tones, contrast, and editorial color treatment for a cohesive image set.',price:inr(2000),eta:'same day',rating:4.6,orders:72,seed:'svc-color-grade',tags:[],packageLabel:'Pack · 15 images'},
-  {id:'s81',cat:'Photography & Image',title:'Creative moodboard & art direction',desc:'Reference board, composition direction, lighting, prop guidance, shot list, and visual route for a campaign or product shoot.',price:inr(3500),eta:'same day',rating:4.8,orders:61,seed:'svc-art-direction',tags:['popular'],packageLabel:'Single · direction pack'},
-  {id:'s82',cat:'SEO & Growth',title:'SEO audit & action plan',desc:'Technical, on-page, content, and competitor review with prioritized fixes, keyword opportunities, and a practical growth roadmap.',price:inr(4500),eta:'same day',rating:4.8,orders:104,seed:'svc-seo-audit',tags:['popular','best'],packageLabel:'Single · audit report'},
-  {id:'s83',cat:'SEO & Growth',title:'On-page SEO setup',desc:'Page titles, descriptions, headings, internal links, image alt text, schema recommendations, and search-friendly content structure.',price:inr(3500),eta:'same day',rating:4.7,orders:87,seed:'svc-onpage-seo',tags:['express'],packageLabel:'Pack · up to 5 pages'},
-  {id:'s84',cat:'SEO & Growth',title:'Local SEO / Google profile kit',desc:'Business profile optimization, service descriptions, local keywords, review prompts, post ideas, and location-page guidance.',price:inr(3000),eta:'same day',rating:4.7,orders:118,seed:'svc-local-seo',tags:['popular'],packageLabel:'Pack · local starter'},
-  {id:'s85',cat:'SEO & Growth',title:'Analytics & conversion setup',desc:'Measurement plan for traffic, events, forms, purchases, and conversion actions with a clear reporting checklist.',price:inr(5000),eta:'1–2 days',rating:4.8,orders:63,seed:'svc-analytics',tags:['best'],packageLabel:'Single · tracking setup'},
-  {id:'s86',cat:'E-commerce & Marketplace',title:'Shopify / store product page',desc:'Product page layout, benefit-led copy, imagery direction, trust blocks, FAQs, and mobile-first conversion improvements.',price:inr(4500),eta:'same day',rating:4.8,orders:96,seed:'svc-store-page',tags:['popular'],packageLabel:'Single · 1 product page'},
-  {id:'s87',cat:'E-commerce & Marketplace',title:'Marketplace listing optimization',desc:'Search-friendly title, bullets, description, image sequence, comparison points, and enhanced content structure for a listing.',price:inr(3000),eta:'same day',rating:4.7,orders:132,seed:'svc-market-listing',tags:['popular'],packageLabel:'Single · 1 listing'},
-  {id:'s88',cat:'E-commerce & Marketplace',title:'Digital product storefront kit',desc:'Storefront structure for templates, downloads, and services with collections, product cards, banners, FAQs, and purchase CTAs.',price:inr(6500),eta:'1–2 days',rating:4.8,orders:58,seed:'svc-digital-store',tags:['best'],packageLabel:'Pack · storefront starter'},
-  {id:'s89',cat:'E-commerce & Marketplace',title:'Product catalogue design',desc:'Organized digital or print catalogue with product hierarchy, specs, pricing tables, imagery, and a share-ready PDF.',price:inr(5000),eta:'same day',rating:4.6,orders:79,seed:'svc-catalogue',tags:[],packageLabel:'Pack · up to 12 products'},
-  {id:'s90',cat:'Business Operations',title:'SOP & process documentation',desc:'Turn a repeatable workflow into a clear step-by-step operating procedure with roles, inputs, checks, and handoff points.',price:inr(3500),eta:'same day',rating:4.8,orders:74,seed:'svc-sop',tags:['popular'],packageLabel:'Single · 1 process'},
-  {id:'s91',cat:'Business Operations',title:'Proposal / quotation template kit',desc:'Professional reusable templates for proposals, quotations, scopes, timelines, pricing, terms, and client approvals.',price:inr(3000),eta:'same day',rating:4.7,orders:91,seed:'svc-proposal',tags:['express'],packageLabel:'Pack · 5 templates'},
-  {id:'s92',cat:'Business Operations',title:'Business plan / pitch document',desc:'Structured business or project document with executive summary, market context, offering, roadmap, financial outline, and design polish.',price:inr(6500),eta:'1–2 days',rating:4.8,orders:47,seed:'svc-business-plan',tags:['best'],packageLabel:'Pack · up to 15 pages'},
-  {id:'s93',cat:'Business Operations',title:'CRM workspace setup',desc:'Organize contacts, stages, tasks, notes, follow-ups, and reporting in a practical CRM workspace with a team handoff guide.',price:inr(5500),eta:'1–2 days',rating:4.7,orders:52,seed:'svc-crm-setup',tags:['popular'],packageLabel:'Single · starter workspace'}
+  {id:'s63',cat:'Branding',title:'Complete brand identity system',desc:'Logo family, color system, typography, imagery direction, icons, patterns, social avatar, and a cohesive editable source file.',price:inr(12000),eta:'2â€“3 days',rating:4.9,orders:184,seed:'svc-brand-system',tags:['popular','best'],packageLabel:'Pack  -  full identity'},
+  {id:'s64',cat:'Branding',title:'Brand guidelines / brand book',desc:'Detailed brand rulebook covering logo use, color values, typography, layout, photography, voice, examples, and do not guidance.',price:inr(6500),eta:'1â€“2 days',rating:4.9,orders:126,seed:'svc-brand-guidelines',tags:['best'],packageLabel:'Pack  -  up to 20 pages'},
+  {id:'s65',cat:'Branding',title:'Brand strategy & positioning',desc:'Audience, differentiation, positioning statement, brand personality, messaging pillars, and a practical creative direction brief.',price:inr(7500),eta:'1â€“2 days',rating:4.8,orders:98,seed:'svc-brand-strategy',tags:['popular'],packageLabel:'Single  -  strategy pack'},
+  {id:'s66',cat:'Branding',title:'Business naming + tagline',desc:'Name directions, availability-check checklist, naming rationale, tagline options, and a recommended verbal identity route.',price:inr(3500),eta:'same day',rating:4.7,orders:142,seed:'svc-naming',tags:['express','popular'],packageLabel:'Pack  -  20 directions'},
+  {id:'s67',cat:'Branding',title:'Logo refresh / redesign',desc:'Modernize an existing mark while protecting recognition, with refined proportions, responsive versions, and export-ready files.',price:inr(4000),eta:'same day',rating:4.8,orders:210,seed:'svc-logo-refresh',tags:['popular'],packageLabel:'Pack  -  2 routes'},
+  {id:'s68',cat:'Branding',title:'Custom icon & illustration set',desc:'Branded icons or simple illustrations for a website, app, product, or presentation with consistent stroke and color rules.',price:inr(4500),eta:'same day',rating:4.7,orders:76,seed:'svc-brand-icons',tags:[],packageLabel:'Pack  -  12 icons'},
+  {id:'s69',cat:'Branding',title:'Brand voice & messaging kit',desc:'Tone of voice, elevator pitch, value proposition, bio, headline options, CTA bank, and reusable messaging examples.',price:inr(4500),eta:'same day',rating:4.8,orders:81,seed:'svc-brand-voice',tags:['popular'],packageLabel:'Pack  -  messaging system'},
+  {id:'s70',cat:'Branding',title:'Social brand template pack',desc:'Reusable branded templates for posts, stories, reels covers, profile headers, and announcements across key platforms.',price:inr(5000),eta:'same day',rating:4.8,orders:156,seed:'svc-brand-social',tags:['popular','best'],packageLabel:'Pack  -  12 templates'},
+  {id:'s71',cat:'Branding',title:'Stationery & email signature kit',desc:'Letterhead, invoice, quotation, business card, email signature, and document header using your approved brand identity.',price:inr(3000),eta:'same day',rating:4.6,orders:93,seed:'svc-stationery',tags:['express'],packageLabel:'Pack  -  6 assets'},
+  {id:'s72',cat:'Branding',title:'Brand audit & improvement plan',desc:'Review your current identity across logo, color, typography, web, social, and customer touchpoints with prioritized fixes.',price:inr(2500),eta:'same day',rating:4.7,orders:64,seed:'svc-brand-audit',tags:['express'],packageLabel:'Single  -  audit report'},
+  {id:'s73',cat:'Writing & Translation',title:'Website copywriting pack',desc:'Conversion-focused copy for a complete small website including headlines, sections, CTAs, trust points, and FAQs.',price:inr(6000),eta:'1â€“2 days',rating:4.8,orders:138,seed:'svc-copy-pack',tags:['popular'],packageLabel:'Pack  -  up to 5 pages'},
+  {id:'s74',cat:'Writing & Translation',title:'Blog / article writing',desc:'Well-structured original article with research outline, headings, readable formatting, suggested visuals, and SEO metadata.',price:inr(1800),eta:'same day',rating:4.7,orders:205,seed:'svc-blog',tags:['express'],packageLabel:'Single  -  up to 1200 words'},
+  {id:'s75',cat:'Writing & Translation',title:'Product descriptions pack',desc:'Clear benefit-led product copy with feature hierarchy, use cases, specs, search terms, and consistent brand voice.',price:inr(2500),eta:'same day',rating:4.8,orders:117,seed:'svc-product-copy',tags:['popular'],packageLabel:'Pack  -  10 products'},
+  {id:'s76',cat:'Writing & Translation',title:'Translation & localization',desc:'Natural localization of web, app, marketing, or product content with terminology consistency and context review.',price:inr(1500),eta:'same day',rating:4.7,orders:86,seed:'svc-translation',tags:['express'],packageLabel:'Pack  -  up to 1000 words'},
+  {id:'s77',cat:'Writing & Translation',title:'Editing & proofreading',desc:'Grammar, clarity, structure, tone, consistency, and final polish for professional documents and customer-facing content.',price:inr(1200),eta:'same day',rating:4.8,orders:174,seed:'svc-proofread',tags:['express'],packageLabel:'Single  -  up to 2000 words'},
+  {id:'s78',cat:'Photography & Image',title:'Product photo retouching pack',desc:'Clean, color-correct, crop, and polish product images for websites, catalogues, marketplaces, and social campaigns.',price:inr(2500),eta:'same day',rating:4.8,orders:194,seed:'svc-product-retouch',tags:['popular'],packageLabel:'Pack  -  10 images'},
+  {id:'s79',cat:'Photography & Image',title:'Image background & composite pack',desc:'Remove backgrounds, create clean composites, add realistic shadows, and deliver transparent or marketplace-ready exports.',price:inr(1500),eta:'same day',rating:4.7,orders:246,seed:'svc-image-composite',tags:['express'],packageLabel:'Pack  -  10 images'},
+  {id:'s80',cat:'Photography & Image',title:'Photo color grading',desc:'Consistent exposure, white balance, skin tones, contrast, and editorial color treatment for a cohesive image set.',price:inr(2000),eta:'same day',rating:4.6,orders:72,seed:'svc-color-grade',tags:[],packageLabel:'Pack  -  15 images'},
+  {id:'s81',cat:'Photography & Image',title:'Creative moodboard & art direction',desc:'Reference board, composition direction, lighting, prop guidance, shot list, and visual route for a campaign or product shoot.',price:inr(3500),eta:'same day',rating:4.8,orders:61,seed:'svc-art-direction',tags:['popular'],packageLabel:'Single  -  direction pack'},
+  {id:'s82',cat:'SEO & Growth',title:'SEO audit & action plan',desc:'Technical, on-page, content, and competitor review with prioritized fixes, keyword opportunities, and a practical growth roadmap.',price:inr(4500),eta:'same day',rating:4.8,orders:104,seed:'svc-seo-audit',tags:['popular','best'],packageLabel:'Single  -  audit report'},
+  {id:'s83',cat:'SEO & Growth',title:'On-page SEO setup',desc:'Page titles, descriptions, headings, internal links, image alt text, schema recommendations, and search-friendly content structure.',price:inr(3500),eta:'same day',rating:4.7,orders:87,seed:'svc-onpage-seo',tags:['express'],packageLabel:'Pack  -  up to 5 pages'},
+  {id:'s84',cat:'SEO & Growth',title:'Local SEO / Google profile kit',desc:'Business profile optimization, service descriptions, local keywords, review prompts, post ideas, and location-page guidance.',price:inr(3000),eta:'same day',rating:4.7,orders:118,seed:'svc-local-seo',tags:['popular'],packageLabel:'Pack  -  local starter'},
+  {id:'s85',cat:'SEO & Growth',title:'Analytics & conversion setup',desc:'Measurement plan for traffic, events, forms, purchases, and conversion actions with a clear reporting checklist.',price:inr(5000),eta:'1â€“2 days',rating:4.8,orders:63,seed:'svc-analytics',tags:['best'],packageLabel:'Single  -  tracking setup'},
+  {id:'s86',cat:'E-commerce & Marketplace',title:'Shopify / store product page',desc:'Product page layout, benefit-led copy, imagery direction, trust blocks, FAQs, and mobile-first conversion improvements.',price:inr(4500),eta:'same day',rating:4.8,orders:96,seed:'svc-store-page',tags:['popular'],packageLabel:'Single  -  1 product page'},
+  {id:'s87',cat:'E-commerce & Marketplace',title:'Marketplace listing optimization',desc:'Search-friendly title, bullets, description, image sequence, comparison points, and enhanced content structure for a listing.',price:inr(3000),eta:'same day',rating:4.7,orders:132,seed:'svc-market-listing',tags:['popular'],packageLabel:'Single  -  1 listing'},
+  {id:'s88',cat:'E-commerce & Marketplace',title:'Digital product storefront kit',desc:'Storefront structure for templates, downloads, and services with collections, product cards, banners, FAQs, and purchase CTAs.',price:inr(6500),eta:'1â€“2 days',rating:4.8,orders:58,seed:'svc-digital-store',tags:['best'],packageLabel:'Pack  -  storefront starter'},
+  {id:'s89',cat:'E-commerce & Marketplace',title:'Product catalogue design',desc:'Organized digital or print catalogue with product hierarchy, specs, pricing tables, imagery, and a share-ready PDF.',price:inr(5000),eta:'same day',rating:4.6,orders:79,seed:'svc-catalogue',tags:[],packageLabel:'Pack  -  up to 12 products'},
+  {id:'s90',cat:'Business Operations',title:'SOP & process documentation',desc:'Turn a repeatable workflow into a clear step-by-step operating procedure with roles, inputs, checks, and handoff points.',price:inr(3500),eta:'same day',rating:4.8,orders:74,seed:'svc-sop',tags:['popular'],packageLabel:'Single  -  1 process'},
+  {id:'s91',cat:'Business Operations',title:'Proposal / quotation template kit',desc:'Professional reusable templates for proposals, quotations, scopes, timelines, pricing, terms, and client approvals.',price:inr(3000),eta:'same day',rating:4.7,orders:91,seed:'svc-proposal',tags:['express'],packageLabel:'Pack  -  5 templates'},
+  {id:'s92',cat:'Business Operations',title:'Business plan / pitch document',desc:'Structured business or project document with executive summary, market context, offering, roadmap, financial outline, and design polish.',price:inr(6500),eta:'1â€“2 days',rating:4.8,orders:47,seed:'svc-business-plan',tags:['best'],packageLabel:'Pack  -  up to 15 pages'},
+  {id:'s93',cat:'Business Operations',title:'CRM workspace setup',desc:'Organize contacts, stages, tasks, notes, follow-ups, and reporting in a practical CRM workspace with a team handoff guide.',price:inr(5500),eta:'1â€“2 days',rating:4.7,orders:52,seed:'svc-crm-setup',tags:['popular'],packageLabel:'Single  -  starter workspace'}
 );
 
 let activeSvcCat = 'All';
@@ -2441,17 +2444,17 @@ function renderServices(){
         s.tags.includes('best') ? '<span class="svc-badge best">Bestseller</span>' : ''
       ].join('');
       const ctrl = qty>0
-        ? `<div class="svc-stepper"><button onclick="event.stopPropagation();changeSvcQty('${s.id}',-1)">−</button><span>${qty}</span><button onclick="event.stopPropagation();changeSvcQty('${s.id}',1)">+</button></div>`
+        ? `<div class="svc-stepper"><button onclick="event.stopPropagation();changeSvcQty('${s.id}',-1)">âˆ’</button><span>${qty}</span><button onclick="event.stopPropagation();changeSvcQty('${s.id}',1)">+</button></div>`
         : `<button class="svc-add" onclick="event.stopPropagation();openSvcModal('${s.id}')">ADD</button>`;
       html += `
         <div class="svc-item">
           <div>
             <div class="svc-badges">${badges}</div>
             <h4>${s.title}</h4>
-            <div class="svc-rating">★ ${s.rating.toFixed(1)} · ${s.orders}+ orders</div>
+            <div class="svc-rating">â˜… ${s.rating.toFixed(1)}  -  ${s.orders}+ orders</div>
             <p class="svc-desc">${s.desc}</p>
             <div><span class="svc-price">${formatMoney(s.price)}</span><span class="svc-eta">${s.eta} turnaround</span></div>
-            <div class="svc-package">${s.packageLabel||'Custom brief · 2 revisions included'}</div>
+            <div class="svc-package">${s.packageLabel||'Custom brief  -  2 revisions included'}</div>
           </div>
           <div class="svc-media">
             <img src="https://picsum.photos/seed/${s.seed}/240/240" alt="" loading="lazy">
@@ -2467,7 +2470,7 @@ function openSvcModal(id){
   pendingService = bespokeServices.find(s=>s.id===id);
   if(!pendingService) return;
   document.getElementById('svcModalTitle').textContent = pendingService.title;
-  document.getElementById('svcModalSub').textContent = `${formatMoney(pendingService.price)} · ${pendingService.eta} · Two revision rounds included; third revision quoted separately.`;
+  document.getElementById('svcModalSub').textContent = `${formatMoney(pendingService.price)}  -  ${pendingService.eta}  -  Two revision rounds included; third revision quoted separately.`;
   document.getElementById('svcStyle').value = 'Clean and minimal';
   document.getElementById('svcNotes').value = '';
   document.getElementById('svcEmail').value = '';
@@ -2524,12 +2527,12 @@ function confirmAddService(){
     price: pendingService.price,
     qty: 1,
     thumb: 'https://picsum.photos/seed/'+pendingService.seed+'/200/200',
-    meta: metaParts.join(' · '),
+    meta: metaParts.join('  -  '),
     references: pendingReferenceNames.slice(),
     assetFiles:['Bespoke creative delivery'],
     canvaDraft: canvaRequestId ? {id:canvaRequestId,status:'queued',message:'Waiting to send your brief to Canva'} : null
   });
-  toast('Bespoke brief added — we’ll use your style and references');
+  toast("Bespoke brief added - we'll use your style and references");
   createSharedProject({serviceForCanva, style, notes, email, phone, referenceNames:pendingReferenceNames.slice()});
   closeSvcModal();
   if(createCanvaDraft){
@@ -2540,7 +2543,7 @@ function confirmAddService(){
 
 async function createSharedProject({serviceForCanva, style, notes, email, phone, referenceNames}){
   try{
-    const response=await fetch('/api/projects/create',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({buyer_email:email,buyer_name:currentUser?.name||'',service_id:serviceForCanva.id,service_title:serviceForCanva.title,style,brief:notes||'Creative brief submitted through Makers Row.',phone,reference_names:referenceNames})});
+    const response=await fetch('/api/projects/create',{method:'POST',headers:authHeaders({'Content-Type':'application/json'}),body:JSON.stringify({buyer_email:email,buyer_name:currentUser?.name||'',service_id:serviceForCanva.id,service_title:serviceForCanva.title,style,brief:notes||'Creative brief submitted through Get It Done.',phone,reference_names:referenceNames})});
     const payload=await response.json();
     if(!response.ok) throw new Error(payload.error||'Could not send brief to the designer');
     const line=cart.find(item=>item.kind==='bespoke' && item.serviceId===serviceForCanva.id);
@@ -2559,7 +2562,7 @@ async function requestCanvaDraft({title, style, notes, referenceFiles, requestId
   const imageFiles=referenceFiles.filter(file=>file.type.startsWith('image/'));
   const unsupported=referenceFiles.length-imageFiles.length;
   setCanvaDraftStatus(requestId,'creating','Sending your brief and references to Canva');
-  toast('Sending your brief to Canva…');
+  toast('Sending your brief to Canvaâ€¦');
   try{
     const assetIds=[];
     for(const file of imageFiles){
@@ -2595,12 +2598,12 @@ async function requestCanvaDraft({title, style, notes, referenceFiles, requestId
         const designUrl=status.job.result?.design?.url;
         if(designUrl) window.open(designUrl,'_blank','noopener');
         setCanvaDraftStatus(requestId,'ready','Your Canva draft is ready',designUrl||'');
-        toast('Your Canva draft is ready'+(unsupported?' — some non-image references stay in your brief.':''));
+        toast('Your Canva draft is ready'+(unsupported?' â€” some non-image references stay in your brief.':''));
         return;
       }
       if(status.job?.status==='failed') throw new Error('Canva could not create the draft.');
     }
-    toast('Canva is still creating your draft — check your brief again shortly.');
+    toast('Canva is still creating your draft â€” check your brief again shortly.');
   }catch(error){
     setCanvaDraftStatus(requestId,'failed','Draft not created: '+error.message);
     toast(error.message+' Your brief is still saved in the client CRM.');
@@ -2670,7 +2673,7 @@ function submitListing(e){
   const category = document.getElementById('slCategory').value;
   const enteredPrice = parseFloat(document.getElementById('slPrice').value)||0;
   const minimum = currency==='INR'?MIN_INR_PRICE:MIN_USD_PRICE;
-  if(enteredPrice<minimum){ toast('Creator prices start at '+(currency==='INR'?'₹150':'$2.50')); return; }
+  if(enteredPrice<minimum){ toast('Creator prices start at '+(currency==='INR'?'INR 150':'$2.50')); return; }
   const price = toUSD(enteredPrice);
   const newItem = {
     id:'p_new_'+Date.now(),
@@ -2685,7 +2688,7 @@ function submitListing(e){
   };
   marketplace.unshift(newItem);
   persistMarketplace();
-  toast(currentUser ? 'Your listing is live — creator dashboard updated' : '"'+title+'" is live in the marketplace');
+  toast(currentUser ? 'Your listing is live â€” creator dashboard updated' : '"'+title+'" is live in the marketplace');
   e.target.reset();
   sellFileURL=null;
   assetFileNames=[];
@@ -2952,5 +2955,25 @@ document.addEventListener('DOMContentLoaded', ()=>{
   if(params.get('page') === 'bespoke') showPage('bespoke');
 });
 </script>
+<script>
+/* Keep customer-facing copy readable when older UTF-8 exports contain mojibake. */
+(function(){
+  const replacements={
+    '\u00e2\u20ac\u201d':' - ','\u00e2\u20ac\u201c':' - ','\u00e2\u0080\u0093':'-','\u00e2\u2020\u2019':'->','\u00e2\u2020\u2014':'->','\u00e2\u20ac\u00a6':'...','\u00e2\u009c\u00a6':'*','\u00e2\u02dc\u2026':'*','\u00e2\u009c\u0093':'✓','\u00c3\u2014':'x','\u00c3\u00a9':'e','\u00c2\u00b7':' - '
+  };
+  function clean(value){return Object.entries(replacements).reduce((text,[from,to])=>text.split(from).join(to),value);}
+  function walk(root){
+    const nodes=root.querySelectorAll ? root.querySelectorAll('*') : [];
+    nodes.forEach(node=>{
+      node.childNodes.forEach(child=>{if(child.nodeType===3){const next=clean(child.nodeValue);if(next!==child.nodeValue)child.nodeValue=next;}});
+      ['placeholder','title','aria-label'].forEach(attr=>{if(node.hasAttribute(attr)){const next=clean(node.getAttribute(attr));if(next!==node.getAttribute(attr))node.setAttribute(attr,next);}});
+    });
+  }
+  const run=()=>walk(document);
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
+  new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+})();
+</script>
 </body>
 </html>
+
