@@ -1,0 +1,12 @@
+{
+  "name": "Get It Done",
+  "short_name": "Get It Done",
+  "description": "Fast, personalized digital work and creative services.",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#E8EDF4",
+  "theme_color": "#12141A",
+  "orientation": "portrait-primary",
+  "icons": [{ "src": "/assets/app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}

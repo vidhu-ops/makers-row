@@ -3,7 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#12141A">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Get It Done">
 <title>Get It Done | Fast personalized digital work</title>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/assets/app-icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/app-icon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
@@ -817,6 +825,7 @@
     .trust-bar{gap:14px;font-size:0.68rem;}
   }
   @media(max-width:600px){
+    body{overflow-x:hidden;-webkit-text-size-adjust:100%;}
     .wrap{padding:0 16px;}
     .headbar{padding:12px 16px;}
     .logo{font-size:1.12rem;}
@@ -1079,7 +1088,7 @@
       <div class="market-stats">
         <div class="market-stat"><strong>16+</strong><span>ready-to-buy listings</span></div>
         <div class="market-stat"><strong>4.8/5</strong><span>average buyer rating</span></div>
-        <div class="market-stat"><strong>Today</strong><span>same-day Bespoke work</span></div>
+        <div class="market-stat"><strong>1 day</strong><span>standard creative delivery</span></div>
       </div>
     </div>
     <span class="eyebrow">The marketplace</span>
@@ -2452,6 +2461,12 @@ function filteredServices(){
   });
 }
 
+function serviceTurnaround(service){
+  if(['Apps & Software','Automation & Integrations'].includes(service.cat)) return '3-5 days';
+  if(service.cat==='Backend & Servers') return '2-4 days';
+  return 'Within 1 day';
+}
+
 function renderServices(){
   const catsEl = document.getElementById('svcCats');
   const menuEl = document.getElementById('svcMenu');
@@ -2494,7 +2509,7 @@ function renderServices(){
             <h4>${s.title}</h4>
             <div class="svc-rating">â˜… ${s.rating.toFixed(1)}  -  ${s.orders}+ orders</div>
             <p class="svc-desc">${s.desc}</p>
-            <div><span class="svc-price">${formatMoney(s.price)}</span><span class="svc-eta">${s.eta} turnaround</span></div>
+            <div><span class="svc-price">${formatMoney(s.price)}</span><span class="svc-eta">${serviceTurnaround(s)} turnaround</span></div>
             <div class="svc-package">${s.packageLabel||'Custom brief  -  2 revisions included'}</div>
           </div>
           <div class="svc-media">
@@ -2511,7 +2526,7 @@ function openSvcModal(id){
   pendingService = bespokeServices.find(s=>s.id===id);
   if(!pendingService) return;
   document.getElementById('svcModalTitle').textContent = pendingService.title;
-  document.getElementById('svcModalSub').textContent = `${formatMoney(pendingService.price)}  -  ${pendingService.eta}  -  Two revision rounds included; third revision quoted separately.`;
+  document.getElementById('svcModalSub').textContent = `${formatMoney(pendingService.price)}  -  ${serviceTurnaround(pendingService)}  -  Two revision rounds included; third revision quoted separately.`;
   document.getElementById('svcStyle').value = 'Clean and minimal';
   document.getElementById('svcNotes').value = '';
   document.getElementById('svcEmail').value = '';
@@ -2555,7 +2570,7 @@ function confirmAddService(){
   const referenceFiles = Array.from(document.getElementById('svcReferences').files || []);
   const canvaRequestId = createCanvaDraft ? 'draft_'+Date.now()+'_'+Math.random().toString(36).slice(2,8) : null;
   if(!email){ toast('Add an email so the designer knows where to send the draft'); document.getElementById('svcEmail').focus(); return; }
-  const metaParts = [pendingService.eta, 'Style: '+style, '2 revisions included'];
+  const metaParts = [serviceTurnaround(pendingService), 'Style: '+style, '2 revisions included'];
   if(email) metaParts.push(email);
   if(phone) metaParts.push(phone);
   if(notes) metaParts.push(notes.slice(0,60));
@@ -3049,6 +3064,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   function scanTextNodes(){const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let node;while(node=walker.nextNode()){const next=repair(node.nodeValue);if(next!==node.nodeValue)node.nodeValue=next;}}
   const run=()=>{scan(document);scanTextNodes();fixQuantityControls();};if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();new MutationObserver(run).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
 })();
+</script>
+<script>
+  if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('/service-worker.js').catch(()=>{}));}
 </script>
 </body>
 </html>
